@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import store from "../redux/store";
 import { onUpdateWallet } from "../redux/action/wallet";
 import { Provider } from "react-redux";
@@ -13,15 +13,16 @@ function MyApp({ Component, pageProps,...props }: { Component: any; pageProps: a
 
   useEffect(() => {
     // @ts-ignore
-    window.nearInitPromise = initContract().then(({ contract, currentUser, nearConfig, walletCollection }) => {
+    window.nearInitPromise = initContract().then(({ contract, currentUser, nearConfig, walletConnection }) => {
         store.dispatch(
           onUpdateWallet({
             contract,
             currentUser,
             nearConfig,
-            walletCollection,
+            walletConnection,
           })
         );
+        console.log(contract, currentUser, nearConfig, walletConnection)
         return Promise.resolve();
       })
       .then(() => {
@@ -31,10 +32,11 @@ function MyApp({ Component, pageProps,...props }: { Component: any; pageProps: a
         });
       })
       .catch(console.error);
-  });
+  },[]);
+
   return (
     <>
-      {/* <div className="form_bg"/> */}
+      <div className="form_bg z-0"/>
         {state.isConnected?(
           <Provider store={store}>
           <Layout {...props} >

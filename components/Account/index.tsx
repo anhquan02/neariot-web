@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { Fragment, memo, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
+import StorageIcon from '@mui/icons-material/Storage';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
@@ -27,7 +28,7 @@ const Account = memo((props: any) => {
     {
       id: "my-storage",
       label: "My Storage",
-      icon: DeveloperBoardIcon,
+      icon: StorageIcon,
       router: "/box/my-storage",
     },
   ];
@@ -53,8 +54,8 @@ const Account = memo((props: any) => {
   };
 
   const onRequestSignOut = () => {
-    const { walletCollection } = wallet;
-    walletCollection.signOut();
+    const { walletConnection } = wallet;
+    walletConnection.signOut();
     router.push("/");
   };
 
@@ -81,6 +82,7 @@ const Account = memo((props: any) => {
 
   const onRequestConnectWallet = () => {
     const { nearConfig, walletConnection } = wallet;
+    console.log(walletConnection);
     walletConnection?.requestSignIn?.(nearConfig?.contractName);
   };
 
@@ -93,40 +95,52 @@ const Account = memo((props: any) => {
       popoverRight = window?.screen?.width - 15;
     }
     return (
-      <div className="">
-        <button onClick={onOpenAccountPopover} className="">
-          <AccountCircleIcon className="" />
-          <div className="">{accountId}</div>
-          <ArrowDropDownIcon className="" />
+      //   <div className="border-0 rounded-xl bg-gradient-to-r from-teal-300 to-cyan-600 text-white py-2 px-2">
+      <div className="border-0 rounded-xl bg-indigo-600 text-white py-2 px-2">
+        <button
+          onClick={onOpenAccountPopover}
+          className="flex md:justify-between mx-2 text-2xl"
+        >
+          <AccountCircleIcon className="mx-1 my-auto" />
+          <div className="mx-1 my-auto">{accountId}</div>
+          <ArrowDropDownIcon className="my-auto" />
         </button>
         {popoverVisible && (
-          <div className="">
-            {aMenu.map((item, index) => {
-              return (
-                <Fragment key={index}>
-                  <div className="" onClick={() => onNavItemClick(item.router)}>
-                    <item.icon className="" />
-                    {item.label}
-                  </div>
-                  <hr className="my-4 md:min-w-full" />
-                </Fragment>
-              );
-            })}
-            <div className="" onClick={onRequestSignOut}>
-              <LogoutSharpIcon className="" />
-              Log out
-            </div>
+          <>
+          <div className="md:min-w-[200px] absolute mx-4 z-30" onMouseLeave={() =>onCloseAccountPopover}>
+              <div className="w-[20px] h-[20px] rotate-45 bg-white shadow-xl  mt-3 p-3 md:ml-[65%] "/>
           </div>
+            <div
+              className="absolute md:min-w-[200px] px-4 py-5 mt-5 text-slate-800 bg-white rounded-xl z-40 shadow-xl ">
+              {aMenu.map((item, index) => {
+                return (
+                  <Fragment key={index}>
+                    <div
+                      className="font-semibold"
+                      onClick={() => onNavItemClick(item.router)}
+                    >
+                      <item.icon className="mx-2" />
+                      {item.label}
+                    </div>
+                    <hr className="my-4 md:min-w-full" />
+                  </Fragment>
+                );
+              })}
+              <div className="font-semibold mx-2" onClick={onRequestSignOut}>
+                <LogoutSharpIcon className="mr-2" />
+                Log out
+              </div>
+            </div>
+          </>
         )}
         <Popover
           id={popoverId}
           open={popoverOpen}
           anchorEl={anchorEl}
           onClose={onCloseAccountPopover}
-          anchorPosition={{ top: 70, left: popoverRight }}
           anchorOrigin={{
             vertical: "bottom",
-            horizontal: "right",
+            horizontal: "left",
           }}
           transformOrigin={{
             vertical: "top",
@@ -146,8 +160,8 @@ const Account = memo((props: any) => {
   };
 
   const onRenderScene = () => {
-    const { walletCollection } = wallet;
-    const isSigned = walletCollection?.isSignedIn?.();
+    const { walletConnection } = wallet;
+    const isSigned = walletConnection?.isSignedIn?.();
     if (isSigned) {
       return onRenderAccountDetail();
     }

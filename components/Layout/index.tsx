@@ -25,7 +25,7 @@ const Layout = (props:any) =>{
     const {children} = props;
 
     return(
-        <div className={styles.root}>
+        <>
             <Head {...props}>
                 <title>Some Title</title>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,16 +34,16 @@ const Layout = (props:any) =>{
                 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet" />
                 <link rel="icon" href="/logo.png" />
             </Head>
-            <div className={styles.header} style={scrolling ? { background: '#fff' } : {}}>
+            <div className="" style={scrolling ? { background: '#fff' } : {}}>
                 <Header />
             </div>
-            <div className={styles.body}>
-                <div className={styles.main}>{children}</div>
+            <div className="">
+                <div className="z-10">{children}</div>
                 {/* <div className={styles.footer}>
                     <Footer />
                 </div> */}
             </div>
-        </div>
+        </>
     )
 }
 
