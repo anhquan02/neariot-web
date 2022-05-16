@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps,...props }: { Component: any; pageProps: a
   const [state,setState] = useState({isConnected:false})
 
   useEffect(() => {
-    //@ts-ignore
+    // @ts-ignore
     window.nearInitPromise = initContract().then(({ contract, currentUser, nearConfig, walletCollection }) => {
         store.dispatch(
           onUpdateWallet({
@@ -34,7 +34,7 @@ function MyApp({ Component, pageProps,...props }: { Component: any; pageProps: a
   });
   return (
     <>
-      <div className="form_bg"/>
+      {/* <div className="form_bg"/> */}
         {state.isConnected?(
           <Provider store={store}>
           <Layout {...props} >

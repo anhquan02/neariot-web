@@ -1,63 +1,43 @@
-import React from 'react';
-import styles from './Header.module.scss';
-// import Account from '../Account';
-import NavItem from '../NavItem';
-import DateRangeOutlinedIcon from '@mui/icons-material/DateRangeOutlined';
-import SummarizeOutlinedIcon from '@mui/icons-material/SummarizeOutlined';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import EventIcon from '@mui/icons-material/Event';
-import { withRouter, useRouter } from 'next/router';
-import Image from 'next/image';
-import Logo from './lnc.svg';
+import { Button } from "@mui/material";
 
-const Header = () => {
-    const router = useRouter();
+import { memo } from "react";
+import Account from "../Account";
 
-    const getActiveClassName = () => {        
-        return router.pathname;
-    };
-    const cPath = getActiveClassName();
-
-    const onLogoClick = () => {
-        router.push('/');
-    };
-
-    return (
-        <div className={styles.root}>
-            <div className={styles.nav}>
-                <div className={styles.logo_text} onClick={onLogoClick}>
-                    dSuite
-                    <FiberManualRecordIcon className={styles.logo_dot} />
-                    <div className={styles.line} />
-                    <div className={styles.logo_lnc}>
-                        <Image src={Logo} layout="fill" alt={'Error'} priority={true} />
-                    </div>
-                </div>
-                <div className={styles.nav_item}>
-                    <NavItem
-                        icon={<SummarizeOutlinedIcon className={styles.nav_icon} />}
-                        content={'FORM'}
-                        href={'/form'}
-                        actived={cPath.indexOf('/form') === 0}
-                    />
-                </div>
-                <div className={styles.nav_item}>
-                    <NavItem icon={<EventIcon className={styles.nav_icon} />} content={'EVENT'} href={'/event'} actived={cPath.indexOf('/event') === 0} />
-                </div>
-                <div className={styles.nav_item}>
-                    <NavItem
-                        icon={<DateRangeOutlinedIcon className={styles.nav_icon} />}
-                        content={'CALENDAR'}
-                        href={'/calendar'}
-                        actived={cPath.indexOf('/calendar') === 0}
-                    />
-                </div>
-            </div>
-            <div className={styles.account}>
-                {/* <Account /> */}
-            </div>
+const Header = memo((props: any) => {
+  return (
+    <>
+      <nav className="top-0 z-10 bg-transparent w-full p-4 items-center flex md:flex-nowrap md:justify-start md:flex-row">
+        <div className="w-full mx-auto items-center flex md:flex-nowrap md:px-10 px-4">
+          <div className="flex justify-start md:w-auto ">
+            <a href="#">
+              <span className="sr-only">Workflow</span>
+              <img
+                className="h-8 w-auto sm:h-10"
+                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                alt=""
+              />
+            </a>
+            <span className="px-4 text-2xl font-semibold align-middle items-center my-auto">Name</span>
+          </div>     
+          <div className="flex justify-start md:w-auto items-center">
+            <button className="px-4 py-auto text-xl text-slate-800">
+              Usecase
+            </button>
+            <button className="px-4 py-auto text-xl text-slate-800">
+              Pricing
+            </button>
+            <button className="px-4 py-auto text-xl text-slate-800">
+              Docs
+            </button>
+            <button className="px-4 py-auto text-xl text-slate-800">
+              Help
+            </button>
+          </div>  
         </div>
-    );
-};
+          <div className="flex justify-end md:w-auto md:flex-nowrap md:min-w-[200px] items-center"><Account /></div>   
+      </nav>
+    </>
+  );
+});
 
-export default withRouter(Header);
+export default Header;
