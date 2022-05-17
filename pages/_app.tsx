@@ -5,7 +5,7 @@ import { onUpdateWallet } from "../redux/action/wallet";
 import { Provider } from "react-redux";
 import Layout from "../components/Layout";
 import { initContract } from "../backed/util";
-import { hotjar } from "react-hotjar";
+
 
 function MyApp({ Component, pageProps,...props }: { Component: any; pageProps: any }) {
 
@@ -25,8 +25,7 @@ function MyApp({ Component, pageProps,...props }: { Component: any; pageProps: a
         console.log(contract, currentUser, nearConfig, walletConnection)
         return Promise.resolve();
       })
-      .then(() => {
-        hotjar.initialize(2962642, 6);
+      .then(() => {        
         setState({
           isConnected: true,
         });

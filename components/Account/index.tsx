@@ -74,7 +74,7 @@ const Account = memo((props: any) => {
 
   const onRenderSignInButton = () => {
     return (
-      <div className="" onClick={onRequestConnectWallet}>
+      <div className="border-0 rounded-xl bg-indigo-600 text-white py-3 px-4" onClick={onRequestConnectWallet}>
         <button>Connect the wallet</button>
       </div>
     );
@@ -96,7 +96,7 @@ const Account = memo((props: any) => {
     }
     return (
       //   <div className="border-0 rounded-xl bg-gradient-to-r from-teal-300 to-cyan-600 text-white py-2 px-2">
-      <div className="border-0 rounded-xl bg-indigo-600 text-white py-2 px-2">
+      <div className="border-0 rounded-xl bg-indigo-600 text-white py-2 px-4">
         <button
           onClick={onOpenAccountPopover}
           className="flex md:justify-between mx-2 text-2xl"
