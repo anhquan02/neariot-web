@@ -3,7 +3,7 @@ import { memo } from "react";
 const Footer = memo((props: any) => {
   return (
     
-      <footer className="p-4 md:flex md:items-center md:justify-between md:p-6  bottom-0 w-full bg-transparent  shadow-inner  z-20 absolute ">
+      <footer className="p-4 md:flex md:items-center md:justify-between md:p-6  bottom-0 w-full bg-transparent  shadow-inner  z-20  ">
         <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
           © 2022{" "}
           <a href="#" className="hover:underline">

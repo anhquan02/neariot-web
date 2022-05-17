@@ -26,50 +26,50 @@ const Card = memo(
     const onClickDeleteStorage = () => {
       onClickDelete?.(id);
     };
-    
+
     const onClickDetailStorage = useCallback(() => {
       onClickCard?.(id);
-    },[onClickCard]);
+    }, [onClickCard]);
 
     return (
       <>
-        <div className="w-full h-full border rounded-xl drop-shadow-lg bg-white ">
+        <div className="w-full h-full border rounded-xl drop-shadow-lg shadow-indigo-500/50 bg-white">
           <div
             className="cursor-pointer"
             onClick={() => onClickDetailStorage()}
           >
             <div className="mt-2 mx-2 ">
               <label className="text-slate-800 font-semibold ">ID: </label>
-              <span className="text-sm">{id}</span>
+              <span className="text-lg">{id}</span>
             </div>
-            <hr className="my-2 md:min-w-fit mx-2" />
-            <div className="mx-2">
-              <div className="mx-2 my-2">
-                <label className="text-lg font-semibold text-slate-700">
+            <hr className="my-2 md:min-w-fit mx-2 border-slate-400" />
+            <div className="mx-2 ">
+              <div className="mx-2 my-2 flex flex-nowrap flex-row ">
+                <label className="text-lg font-semibold text-slate-700 mr-8 w-4/12 whitespace-nowrap">
                   Name:{" "}
                 </label>
-                <span className="text-sm">{name}</span>
+                <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden ">{name}</span>
               </div>
-              <div className="mx-2 my-2">
-                <label className="text-lg font-semibold text-slate-700">
+              <div className="mx-2 my-2 flex flex-nowrap flex-row">
+                <label className="text-lg font-semibold text-slate-700 mr-8 w-4/12 whitespace-nowrap">
                   Create At:{" "}
                 </label>
-                <span className="text-sm">{create_at}</span>
+                <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden">{create_at}</span>
               </div>
               {status && (
-                <div className="mx-2 my-2">
-                  <label className="text-lg font-semibold text-slate-700">
+                <div className="mx-2 my-2 flex flex-nowrap flex-row">
+                  <label className="text-lg font-semibold text-slate-700 mr-8 w-4/12 whitespace-nowrap">
                     status:{" "}
                   </label>
-                  <span className="text-sm">{status}</span>
+                  <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden">{status}</span>
                 </div>
               )}
               {owner_id && (
-                <div className="mx-2 my-2">
-                  <label className="text-lg font-semibold text-slate-700">
+                <div className="mx-2 my-2 flex flex-nowrap flex-row">
+                  <label className="text-lg font-semibold text-slate-700 mr-8 w-4/12 whitespace-nowrap">
                     Owner:{" "}
                   </label>
-                  <span className="text-sm">{owner_id}</span>
+                  <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden">{owner_id}</span>
                 </div>
               )}
             </div>

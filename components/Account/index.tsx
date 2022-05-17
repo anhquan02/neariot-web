@@ -6,7 +6,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
-import { Popover } from "@mui/material";
+import CustomButton from "../CustomButton";
 
 const Account = memo((props: any) => {
   const wallet = useSelector((statex: any) => statex.wallet);
@@ -23,13 +23,13 @@ const Account = memo((props: any) => {
       id: "my-box",
       label: "My Box",
       icon: DeveloperBoardIcon,
-      router: "/box/my-box",
+      router: "/box",
     },
     {
       id: "my-storage",
       label: "My Storage",
       icon: StorageIcon,
-      router: "/box/my-storage",
+      router: "/storage",
     },
   ];
 
@@ -74,32 +74,29 @@ const Account = memo((props: any) => {
 
   const onRenderSignInButton = () => {
     return (
-      <div className="border-0 rounded-xl bg-indigo-600 text-white py-3 px-4" onClick={onRequestConnectWallet}>
-        <button>Connect the wallet</button>
-      </div>
+      // <div className="border-0 rounded-xl bg-indigo-600 text-white py-3 px-4" onClick={onRequestConnectWallet}>
+      //   <button>Connect the wallet</button>
+      // </div>
+      <CustomButton label="Connect the wallet" className_box="border-0 rounded-xl bg-indigo-600 text-white py-3 px-4" className_button="" onClickButton={onRequestConnectWallet} />
     );
   };
 
   const onRequestConnectWallet = () => {
     const { nearConfig, walletConnection } = wallet;
-    console.log(walletConnection);
     walletConnection?.requestSignIn?.(nearConfig?.contractName);
   };
 
   const onRenderAccountDetail = () => {
     const { walletConnection } = wallet;
-    const { anchorEl, popoverOpen, popoverId } = state;
+
     const accountId = walletConnection?.getAccountId?.();
-    let popoverRight = 1000;
-    if (typeof window !== "undefined") {
-      popoverRight = window?.screen?.width - 15;
-    }
+
     return (
       //   <div className="border-0 rounded-xl bg-gradient-to-r from-teal-300 to-cyan-600 text-white py-2 px-2">
-      <div className="border-0 rounded-xl bg-indigo-600 text-white py-2 px-4">
+      <div className=" border-0 rounded-xl bg-indigo-600 text-white py-2 md:px-4">
         <button
           onClick={onOpenAccountPopover}
-          className="flex md:justify-between mx-2 text-2xl"
+          className="flex md:justify-between mx-2 md:text-2xl sm:text-sm"
         >
           <AccountCircleIcon className="mx-1 my-auto" />
           <div className="mx-1 my-auto">{accountId}</div>
@@ -108,7 +105,7 @@ const Account = memo((props: any) => {
         {popoverVisible && (
           <>
           <div className="md:min-w-[200px] absolute mx-4 z-30" onMouseLeave={() =>onCloseAccountPopover}>
-              <div className="w-[20px] h-[20px] rotate-45 bg-white shadow-xl  mt-3 p-3 md:ml-[65%] "/>
+              <div className="w-[20px] h-[20px] rotate-45 bg-white shadow-xl  mt-3 p-3 ml-[65%] "/>
           </div>
             <div
               className="absolute md:min-w-[200px] px-4 py-5 mt-5 text-slate-800 bg-white rounded-xl z-40 shadow-xl ">
@@ -132,29 +129,7 @@ const Account = memo((props: any) => {
               </div>
             </div>
           </>
-        )}
-        <Popover
-          id={popoverId}
-          open={popoverOpen}
-          anchorEl={anchorEl}
-          onClose={onCloseAccountPopover}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          className=""
-        >
-          <div className="">
-            <button onClick={onRequestSignOut} className="">
-              <LogoutSharpIcon className="" />
-              <div className="">Logout</div>
-            </button>
-          </div>
-        </Popover>
+        )}        
       </div>
     );
   };

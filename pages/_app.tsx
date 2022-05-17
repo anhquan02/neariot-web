@@ -22,7 +22,6 @@ function MyApp({ Component, pageProps,...props }: { Component: any; pageProps: a
             walletConnection,
           })
         );
-        console.log(contract, currentUser, nearConfig, walletConnection)
         return Promise.resolve();
       })
       .then(() => {        

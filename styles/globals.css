@@ -15,7 +15,7 @@
     rgba(50, 22, 128, 1) 93%
   );
   background-size: cover;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   filter: blur(20rem);
   opacity: 0.6;
