@@ -1,6 +1,7 @@
 import { memo } from "react";
-import CustomButton from "../../components/CustomButton";
-import Explore from "../../components/Explore";
+import CustomButton from "../../../components/CustomButton";
+import Explore from "../../../components/Explore";
+
 
 const CreateScreen = memo((props: any) => {
   const handleCreateStorage = () => {};
@@ -81,5 +82,7 @@ const CreateScreen = memo((props: any) => {
     </>
   );
 });
+
+CreateScreen.displayName ="create_screen"
 
 export default CreateScreen;

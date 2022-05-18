@@ -30,4 +30,6 @@ const CustomButton = memo(({className_box,className_button,className_icon,label,
   );
 });
 
+CustomButton.displayName = "custom_button"
+
 export default CustomButton;

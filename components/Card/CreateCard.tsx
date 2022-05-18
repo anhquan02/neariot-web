@@ -34,4 +34,6 @@ const CreateCard = memo(({ label, _className, onCreate, welcome }: Props) => {
   );
 });
 
+CreateCard.displayName = "create_card"
+
 export default CreateCard;

@@ -38,4 +38,6 @@ const Footer = memo((props: any) => {
   );
 });
 
+Footer.displayName = "footer"
+
 export default Footer

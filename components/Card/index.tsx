@@ -23,9 +23,9 @@ const Card = memo(
     onClickCard,
     onClickDelete,
   }: Props) => {
-    const onClickDeleteStorage = () => {
+    const onClickDeleteStorage = useCallback(() => {
       onClickDelete?.(id);
-    };
+    }, [onClickDelete]);
 
     const onClickDetailStorage = useCallback(() => {
       onClickCard?.(id);
@@ -48,20 +48,26 @@ const Card = memo(
                 <label className="text-lg font-semibold text-slate-700 mr-8 w-4/12 whitespace-nowrap">
                   Name:{" "}
                 </label>
-                <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden ">{name}</span>
+                <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden ">
+                  {name}
+                </span>
               </div>
               <div className="mx-2 my-2 flex flex-nowrap flex-row">
                 <label className="text-lg font-semibold text-slate-700 mr-8 w-4/12 whitespace-nowrap">
                   Create At:{" "}
                 </label>
-                <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden">{create_at}</span>
+                <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden">
+                  {create_at}
+                </span>
               </div>
               {status && (
                 <div className="mx-2 my-2 flex flex-nowrap flex-row">
                   <label className="text-lg font-semibold text-slate-700 mr-8 w-4/12 whitespace-nowrap">
                     status:{" "}
                   </label>
-                  <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden">{status}</span>
+                  <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden">
+                    {status}
+                  </span>
                 </div>
               )}
               {owner_id && (
@@ -69,7 +75,9 @@ const Card = memo(
                   <label className="text-lg font-semibold text-slate-700 mr-8 w-4/12 whitespace-nowrap">
                     Owner:{" "}
                   </label>
-                  <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden">{owner_id}</span>
+                  <span className="text-lg my-auto items-stretch w-8/12 whitespace-nowrap overflow-hidden">
+                    {owner_id}
+                  </span>
                 </div>
               )}
             </div>
@@ -90,5 +98,7 @@ const Card = memo(
     );
   }
 );
+
+Card.displayName = "card";
 
 export default Card;

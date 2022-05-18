@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { Fragment, memo, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import DeveloperBoardIcon from "@mui/icons-material/DeveloperBoard";
-import StorageIcon from '@mui/icons-material/Storage';
+import StorageIcon from "@mui/icons-material/Storage";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
@@ -77,7 +77,12 @@ const Account = memo((props: any) => {
       // <div className="border-0 rounded-xl bg-indigo-600 text-white py-3 px-4" onClick={onRequestConnectWallet}>
       //   <button>Connect the wallet</button>
       // </div>
-      <CustomButton label="Connect the wallet" className_box="border-0 rounded-xl bg-indigo-600 text-white py-3 px-4" className_button="" onClickButton={onRequestConnectWallet} />
+      <CustomButton
+        label="Connect the wallet"
+        className_box="border-0 rounded-xl bg-indigo-600 text-white py-3 px-4"
+        className_button=""
+        onClickButton={onRequestConnectWallet}
+      />
     );
   };
 
@@ -104,11 +109,13 @@ const Account = memo((props: any) => {
         </button>
         {popoverVisible && (
           <>
-          <div className="md:min-w-[200px] absolute mx-4 z-30" onMouseLeave={() =>onCloseAccountPopover}>
-              <div className="w-[20px] h-[20px] rotate-45 bg-white shadow-xl  mt-3 p-3 ml-[65%] "/>
-          </div>
             <div
-              className="absolute md:min-w-[200px] px-4 py-5 mt-5 text-slate-800 bg-white rounded-xl z-40 shadow-xl ">
+              className="md:min-w-[200px] absolute mx-4 z-30"
+              onMouseLeave={() => onCloseAccountPopover}
+            >
+              <div className="w-[20px] h-[20px] rotate-45 bg-white shadow-xl  mt-3 p-3 ml-[65%] " />
+            </div>
+            <div className="absolute md:min-w-[200px] px-4 py-5 mt-5 text-slate-800 bg-white rounded-xl z-40 shadow-xl ">
               {aMenu.map((item, index) => {
                 return (
                   <Fragment key={index}>
@@ -129,7 +136,7 @@ const Account = memo((props: any) => {
               </div>
             </div>
           </>
-        )}        
+        )}
       </div>
     );
   };
@@ -145,5 +152,7 @@ const Account = memo((props: any) => {
 
   return <>{onRenderScene()}</>;
 });
+
+Account.displayName = "account";
 
 export default Account;

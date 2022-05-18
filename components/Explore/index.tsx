@@ -65,4 +65,6 @@ const Explore = memo((props: any) => {
   );
 });
 
+Explore.displayName = "explore"
+
 export default Explore;

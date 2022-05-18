@@ -50,7 +50,7 @@ const Storage = memo((props: any) => {
                   className="mx-auto justify-center items-center"
                   onClick={handleCreateStorage}
                 >
-                  You dont have any storage, let's create?
+                  You dont have any storage, lets create?
                 </button>
               </div>
             </div>
@@ -111,5 +111,7 @@ const Storage = memo((props: any) => {
     </>
   );
 });
+
+Storage.displayName = "storage_screen"
 
 export default Storage;
