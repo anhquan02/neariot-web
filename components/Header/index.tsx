@@ -17,7 +17,7 @@ const Header = memo((props: any) => {
                 <span className="sr-only">Workflow</span>
                 <img
                   className="md:h-20 md:w-20 h-10 w-auto sm:h-10 sm:w-10 visible object-fill my-auto"
-                  src="./logo.svg"
+                  src="/logo.svg"
                   // src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                   alt=""
                 />
@@ -73,7 +73,7 @@ const Header = memo((props: any) => {
                     <span className="sr-only">Workflow</span>
                     <img
                       className="md:h-20 md:w-20 h-10 w-auto sm:h-10 sm:w-10 visible object-fill my-auto"
-                      src="./logo.svg"
+                      src="/logo.svg"
                       // src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                       alt=""
                     />
