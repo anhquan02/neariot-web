@@ -98,7 +98,7 @@ const Account = memo((props: any) => {
 
     return (
       //   <div className="border-0 rounded-xl bg-gradient-to-r from-teal-300 to-cyan-600 text-white py-2 px-2">
-      <div className=" border-0 rounded-xl bg-indigo-600 text-white py-2 md:px-4">
+      <div className=" border-0 rounded-xl bg-indigo-600 text-white py-3 md:px-4">
         <button
           onClick={onOpenAccountPopover}
           className="flex md:justify-between mx-2 md:text-2xl sm:text-sm"
@@ -110,12 +110,12 @@ const Account = memo((props: any) => {
         {popoverVisible && (
           <>
             <div
-              className="md:min-w-[200px] absolute mx-4 z-30"
+              className="md:min-w-[200px] absolute mx-4 z-30 "
               onMouseLeave={() => onCloseAccountPopover}
             >
-              <div className="w-[20px] h-[20px] rotate-45 bg-white shadow-xl  mt-3 p-3 ml-[65%] " />
+              <div className="w-[20px] h-[20px] rotate-45 bg-white shadow-slate-300 shadow-inner  mt-3 p-3 ml-[65%]  " />
             </div>
-            <div className="absolute md:min-w-[200px] px-4 py-5 mt-5 text-slate-800 bg-white rounded-xl z-40 shadow-xl ">
+            <div className="absolute md:min-w-[200px] px-4 py-5 mt-5 text-slate-800 bg-white rounded-xl z-40 drop-shadow-xl shadow-xl ">
               {aMenu.map((item, index) => {
                 return (
                   <Fragment key={index}>

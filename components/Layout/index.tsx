@@ -42,7 +42,7 @@ const Layout = (props: any) => {
           href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/logo.png" />
+        <link rel="icon" href="/neariot.ico" />
       </Head>
       <div className="" style={scrolling ? { background: "#fff" } : {}}>
         <Header />

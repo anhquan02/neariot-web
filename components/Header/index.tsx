@@ -9,20 +9,21 @@ const Header = memo((props: any) => {
 
   return (
     <>
-      <nav className="top-0 z-20 bg-transparent w-full p-4 items-center flex md:flex-nowrap md:justify-start md:flex-row border-b-1 shadow-lg md:left-0 md:top-0 md:overflow-y-auto md:overflow-hidden ">
-        <div className="w-full mx-auto items-center flex md:flex-nowrap md:px-10 px-4">
-          <div className="flex justify-start md:w-auto ">
+      <nav className="top-0 z-20 bg-white w-full p-4 items-center flex md:flex-nowrap md:justify-start md:flex-row border-b-1 shadow-lg md:left-0 md:top-0 md:overflow-y-auto md:overflow-hidden ">
+        <div className="w-full mx-auto items-center flex md:flex-nowrap md:px-10 px-4 h-full">
+          <div className="flex justify-start md:w-auto md:h-14 items-center align-middle ">
             <Link href={"/"}>
               <a href="#">
                 <span className="sr-only">Workflow</span>
                 <img
-                  className="h-8 w-auto sm:h-10 visible object-contain"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                  className="md:h-20 md:w-20 h-10 w-auto sm:h-10 sm:w-10 visible object-fill my-auto"
+                  src="./logo.svg"
+                  // src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                   alt=""
                 />
               </a>
             </Link>
-            <span className="md:flex px-4 text-2xl font-semibold align-middle items-center my-auto md:visible hidden ">
+            <span className="md:flex px-4 text-2xl font-semibold align-middle items-center my-auto md:visible hidden text-indigo-800 ">
               Neariot
             </span>
             <div
@@ -71,8 +72,9 @@ const Header = memo((props: any) => {
                   >
                     <span className="sr-only">Workflow</span>
                     <img
-                      className="h-8 w-auto sm:h-10 visible object-contain"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                      className="md:h-20 md:w-20 h-10 w-auto sm:h-10 sm:w-10 visible object-fill my-auto"
+                      src="./logo.svg"
+                      // src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                       alt=""
                     />
                   </a>
