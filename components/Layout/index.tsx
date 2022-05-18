@@ -27,7 +27,7 @@ const Layout = (props: any) => {
   return (
     <>
       <Head {...props}>
-        <title>Some Title</title>
+        <title>Neariot</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
