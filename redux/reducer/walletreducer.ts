@@ -35,13 +35,13 @@ const onUpdateWallet = ({
   contract,
   currentUser,
   nearConfig,
-  walletCollection,
+  walletConnection,
 }: any) => {
   return {
     contract,
     currentUser,
     nearConfig,
-    walletCollection,
+    walletConnection,
   };
 };
 
