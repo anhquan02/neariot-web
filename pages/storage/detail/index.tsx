@@ -46,7 +46,7 @@ const DetailScreen = memo(() => {
             {/* <div className="grid grid-cols-2 gap-y-4 overflow-auto"> */}
             <div className="flex flex-row w-full py-2">
               <div className="flex mx-2 w-3/12">Storage Name:</div>
-              <div className="flex mx-2 w-9/12">Ciuz's Storage</div>
+              <div className="flex mx-2 w-9/12">Ciuz&aposs Storage</div>
             </div>
             <div className="flex flex-row w-full py-2">
               <div className="flex mx-2 w-3/12">Decription:</div>
@@ -108,7 +108,7 @@ const DetailScreen = memo(() => {
             </div>
             {data?.map((item, index) => {
               return (
-                <div className="flex flex-row w-full py-2 overflow-x-auto ">
+                <div className="flex flex-row w-full py-2 overflow-x-auto " key={index}>
                   <div className="flex w-1/12 pl-2">{index}</div>
                   <div className="flex w-8/12 ">{item.value}</div>
                   <div className="flex w-3/12 flex-wrap overflow-x-hidden">
