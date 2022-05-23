@@ -1,10 +1,37 @@
-import { memo } from "react";
+import { useRouter } from "next/router";
+import { memo, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import CustomButton from "../../../components/CustomButton";
 import Explore from "../../../components/Explore";
 
-
 const CreateScreen = memo((props: any) => {
-  const handleCreateStorage = () => {};
+  const wallet = useSelector((state: any) => state.wallet);
+  const [name, setName] = useState("");
+  const [descriptions, setDescriptions] = useState("");
+
+  const router = useRouter();
+
+  const [user, setUser] = useState(null);
+
+  const handleCreateStorage = async (e:any) => {
+    e.preventDefault();
+    const { contract } = wallet;
+    // console.log(contract)
+    await contract
+      ?.new_cluster?.(
+        {
+          name: name,
+          descriptions: descriptions,
+        },
+        50000000000000
+      )
+      .then((res: any) => {
+        console.log(res);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -29,6 +56,9 @@ const CreateScreen = memo((props: any) => {
                   type="text"
                   className="border-0 px-3 py-3 placeholder-slate-400 text-slate-600 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full overflow-x-hidden"
                   placeholder="Type something here"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -41,6 +71,9 @@ const CreateScreen = memo((props: any) => {
                 <textarea
                   placeholder="Type something here"
                   className="border-0 px-3 py-3 placeholder-slate-400 text-slate-600 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full my-auto overflow-x-hidden"
+                  onChange={(e) => {
+                    setDescriptions(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -72,7 +105,7 @@ const CreateScreen = memo((props: any) => {
               <CustomButton
                 className_box="px-2 py-2 lg:w-8/12 md:w-6/12 w-full mx-auto my-4"
                 className_button="py-2"
-                onClickButton={handleCreateStorage}
+                onClickButton={(e)=>{handleCreateStorage}}
               />
             </div>
           </form>
@@ -83,6 +116,6 @@ const CreateScreen = memo((props: any) => {
   );
 });
 
-CreateScreen.displayName ="create_screen"
+CreateScreen.displayName = "create_screen";
 
 export default CreateScreen;

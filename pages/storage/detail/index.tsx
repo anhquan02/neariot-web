@@ -97,22 +97,23 @@ const DetailScreen = memo(() => {
         <div className="flex lg:flex-nowrap flex-wrap w-full pb-8">
           <div className="lg:w-8/12 md:w-10/12 w-full h-auto bg-white rounded-xl my-4 p-4 flex lg:flex-nowrap flex-col mx-auto">
             <div className="flex flex-row w-full py-2 ">
-              <div className="text-center align-middle mx-auto items-center w-full text-xl font-semibold">
+              <div className="text-center align-middle mx-auto items-center w-full text-xl font-semibold border-b border-black pb-4">
                 Your last 100 value
               </div>
             </div>
             <div className="flex flex-row w-full py-2 overflow-x-auto">
               <div className="flex text-lg w-1/12">STT</div>
-              <div className="flex text-lg w-3/12">Update Time</div>
               <div className="flex text-lg w-8/12">Value</div>
+              <div className="flex text-lg w-3/12">Update Time</div>
             </div>
             {data?.map((item, index) => {
               return (
-                <div className="flex flex-row w-full py-2 overflow-x-auto hover:bg-slate-700">
-                  <div className="flex w-1/12 pl-2">{index}</div>                  
-                  <div className="flex w-3/12">{item.time}</div>
-                  <div className="flex w-8/12 ">
-                    {item.value}
+                <div className="flex flex-row w-full py-2 overflow-x-auto ">
+                  <div className="flex w-1/12 pl-2">{index}</div>
+                  <div className="flex w-8/12 ">{item.value}</div>
+                  <div className="flex w-3/12 flex-wrap overflow-x-hidden">
+                    <div className="">doaklsndoisadjosalndsalkndalksndalks</div>
+                    {item.time}
                   </div>
                 </div>
               );

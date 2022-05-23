@@ -26,10 +26,10 @@ export async function initContract() {
 
     const contract = await new nearAPI.Contract(walletConnection.account(), nearConfig.contractName, {
         viewMethods: [
-            'view_method',
+            'get_cluster',
         ],
         changeMethods: [
-            'change_method',            
+            'new_cluster',            
         ],
         sender: walletConnection.getAccountId(),
     });
