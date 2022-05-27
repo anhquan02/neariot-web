@@ -37,14 +37,14 @@ const DetailScreen = memo(() => {
       )
       .then((res: any) => {
         if (res) {
-          console.log(res);
-          // setData({
-          //   id: res.id,
-          //   name: res.name,
-          //   description: res.description,
-          //   api_key: res.api_key,
-          //   data: res.data,
-          // });
+          
+          setData({
+            id: res.id,
+            name: res.name,
+            description: res.description,
+            api_key: res.api_key,
+            data: res.data,
+          });
         } else {
           console.log(res);
           router.back();
