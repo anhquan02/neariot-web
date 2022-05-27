@@ -50,7 +50,7 @@ const Storage = memo((props: any) => {
                   className="mx-auto justify-center items-center"
                   onClick={handleCreateStorage}
                 >
-                  You dont have any storage, lets create?
+                  You dont have any cluster, lets create?
                 </button>
               </div>
             </div>
