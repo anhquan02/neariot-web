@@ -4,31 +4,31 @@ import CreateCard from "../../components/Card/CreateCard";
 import SearchIcon from "@mui/icons-material/Search";
 import Explore from "../../components/Explore";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const Storage = memo((props: any) => {
   const [data, setData] = useState<any[]>();
   const router = useRouter();
+  const wallet = useSelector((statex: any) => statex.wallet);
 
   useEffect(() => {
-    const sampleData = [
-      {
-        id: "1",
-        name: "neariot-1",
-        create_at: "2022",
-      },
-      {
-        id: "2",
-        name: "neariot-2",
-        create_at: "2022",
-      },
-      {
-        id: "3",
-        name: "neariot-3",
-        create_at: "2022",
-      },
-    ];
-    setData(sampleData);
-    // setData([])
+    const { contract, walletConnection } = wallet;
+
+    if (!walletConnection.isSignedIn) {
+      setData([]);
+    }
+
+    (async () => {
+      await contract
+        ?.get_clusters()
+        .then((res: any) => {
+          setData(res);
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+    })();
+    
   }, []);
 
   const handleClickDetail = (id: any) => {
@@ -112,6 +112,6 @@ const Storage = memo((props: any) => {
   );
 });
 
-Storage.displayName = "storage_screen"
+Storage.displayName = "storage_screen";
 
 export default Storage;
