@@ -38,9 +38,9 @@ const Card = memo(
             className="cursor-pointer"
             onClick={() => onClickDetailStorage()}
           >
-            <div className="mt-2 mx-2 ">
+            <div className="mt-2 mx-2 overflow-x-hidden ">
               <label className="text-slate-800 font-semibold ">ID: </label>
-              <span className="text-lg">{id}</span>
+              <span className="text-lg ">{id}</span>
             </div>
             <hr className="my-2 md:min-w-fit mx-2 border-slate-400" />
             <div className="mx-2 ">
