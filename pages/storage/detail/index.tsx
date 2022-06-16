@@ -4,9 +4,12 @@ import CustomButton from "../../../components/CustomButton";
 import Explore from "../../../components/Explore";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { sha256 } from 'crypto-hash';
 
 const DetailScreen = memo(() => {
+  const [storageId, setStorageId] = useState<any>('');
   const [data, setData] = useState<any>();
+  const [apiKey, setApiKey] = useState<string>('');
   const [updateData, setUpdateData] = useState<any[]>();
   const wallet = useSelector((state: any) => state.wallet);
   const router = useRouter();
@@ -17,6 +20,12 @@ const DetailScreen = memo(() => {
       await getDetail();
     })();
   }, []);
+
+  useEffect(() => {
+    if (router.query.id) {
+      setStorageId(router.query.id);
+    }
+  }, [router])
 
   const getDetail = async () => {
     const { id } = query;
@@ -37,7 +46,7 @@ const DetailScreen = memo(() => {
       )
       .then((res: any) => {
         if (res) {
-          
+
           setData({
             id: res.id,
             name: res.name,
@@ -78,11 +87,35 @@ const DetailScreen = memo(() => {
     setUpdateData(sampleDate);
   };
 
-  const handleEdit = () => {};
+  const handleEdit = () => { };
 
-  const handleGetAPIKey = () => {};
+  const handleGetAPIKey = async (secrectKey: String = "hiudaysgdyguasbhcsyg") => {
+    const { contract, walletConnection } = wallet;
+    const userId = walletConnection.getAccountId();
+    let raw_api_key = secrectKey + userId + storageId + Date.now().toString();
+    let generatedApikey = await sha256(raw_api_key);
+    let apiKeyHash = await sha256(generatedApikey);
+    await contract
+      ?.set_apikey_hash(
+        {
+          id: storageId,
+          apikey_hash: apiKeyHash,
+        },
+      )
+      .then((res: any) => {
+        if (res) {
+          navigator.clipboard.writeText(generatedApikey);
+          setApiKey(generatedApikey);
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
 
-  const handleDeleteStorage = () => {};
+  const handleDeleteStorage = () => { };
 
   return (
     <>
