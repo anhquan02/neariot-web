@@ -28,14 +28,24 @@ const Storage = memo((props: any) => {
           console.log(error);
         });
     })();
-    
   }, []);
 
   const handleClickDetail = (id: any) => {
     alert(id);
   };
 
+  const onRequestConnectWallet = () => {
+    const { nearConfig, walletConnection } = wallet;
+    walletConnection?.requestSignIn?.(nearConfig?.contractName);
+};
+
   const handleCreateStorage = () => {
+    const { walletConnection } = wallet;
+    const userId = walletConnection.getAccountId();
+    if (userId === "") {
+      onRequestConnectWallet();
+      return;
+    }
     router.push("/storage/create");
   };
 

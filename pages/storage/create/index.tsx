@@ -29,62 +29,65 @@ const CreateScreen = memo((props: any) => {
     setSnackMsg(msg);
   };
 
-  const handleCreateStorage = useCallback(async (e: any) => {
-    e.preventDefault();
+  const handleCreateStorage = useCallback(
+    async (e: any) => {
+      e.preventDefault();
 
-    // if (user == null) {
-    //   return onShowResult({
-    //     type: "error",
-    //     msg: "System busy! try again later",
-    //   });
-    // }
-    if (name === "" || name === null || typeof name === "undefined") {
-      setNameError(true);
-      return onShowResult({
-        type: "error",
-        msg: "Name could not be empty",
-      });
-    }
-    if (
-      descriptions === "" ||
-      descriptions === null ||
-      typeof descriptions === "undefined"
-    ) {
-      setDesError(true);
-      return onShowResult({
-        type: "error",
-        msg: "Description could not be empty",
-      });
-    }
+      // if (user == null) {
+      //   return onShowResult({
+      //     type: "error",
+      //     msg: "System busy! try again later",
+      //   });
+      // }
+      if (name === "" || name === null || typeof name === "undefined") {
+        setNameError(true);
+        return onShowResult({
+          type: "error",
+          msg: "Name could not be empty",
+        });
+      }
+      if (
+        descriptions === "" ||
+        descriptions === null ||
+        typeof descriptions === "undefined"
+      ) {
+        setDesError(true);
+        return onShowResult({
+          type: "error",
+          msg: "Description could not be empty",
+        });
+      }
 
-    setOpenLoading(true);
-    const { contract } = wallet;
-    // console.log(contract)
-    await contract
-      ?.new_cluster?.(
-        {
-          name: name,
-          description: descriptions,
-        },
-        50000000000000
-      )
-      .then((res: any) => {
-        if (res) {
-          router.push("/storage/detail?id=" + res);
-        } else {
+      setOpenLoading(true);
+      const { contract } = wallet;
+      // console.log(contract)
+      await contract
+        ?.new_cluster?.(
+          {
+            name: name,
+            description: descriptions,
+          },
+          50000000000000
+        )
+        .then((res: any) => {
+          if (res) {
+            router.push("/storage/detail?id=" + res);
+          } else {
+            onShowResult({
+              type: "error",
+              msg: "Creat form failure",
+            });
+          }
+        })
+        .catch((error: any) => {
           onShowResult({
             type: "error",
-            msg: "Creat form failure",
+            msg: String(error),
           });
-        }
-      })
-      .catch((error: any) => {
-        onShowResult({
-          type: "error",
-          msg: String(error),
         });
-      });
-  }, [name, descriptions]);
+    },
+    [name, descriptions]
+  );
 
   return (
     <>
@@ -105,7 +108,7 @@ const CreateScreen = memo((props: any) => {
         </div>
         <hr className="w-full md:mx-4  md:max-w-[40%] border-slate-400 mb-8" />
         <div className="w-full lg:px-48 md:px-32 sm:px-16">
-          <form className="">
+          <form className="" onSubmit={handleCreateStorage}>
             <div className="flex md:flex-row flex-col">
               <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
                 <label htmlFor="inpName">Name </label>
@@ -145,6 +148,7 @@ const CreateScreen = memo((props: any) => {
               <div className="lg:w-2/12 ml-auto lg:mr-2 md:w-4/12 h-4 md:mx-2 my-auto "></div>
               <div className="overflow-x-auto md:w-8/12 lg:w-10/12 flex">
                 <input
+                  required
                   type="checkbox"
                   className=" align-middle my-auto lg:w-4 md:w-8 mx-2 "
                 />
@@ -157,6 +161,7 @@ const CreateScreen = memo((props: any) => {
               <div className="lg:w-2/12 ml-auto lg:mr-2 md:w-4/12 h-4 md:mx-2 my-auto "></div>
               <div className="overflow-x-auto md:w-8/12 lg:w-10/12 flex">
                 <input
+                  required
                   type="checkbox"
                   className=" align-middle my-auto lg:w-4 md:w-8 mx-2 "
                 />
@@ -169,7 +174,7 @@ const CreateScreen = memo((props: any) => {
               <CustomButton
                 className_box="px-2 py-2 lg:w-6/12 md:w-4/12 w-full mx-auto my-4"
                 className_button="py-2"
-                onClickButton={handleCreateStorage}
+                // onClickButton={handleCreateStorage}
               />
             </div>
           </form>
