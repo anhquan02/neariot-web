@@ -1,4 +1,4 @@
-const CONTRACT_NAME = 'neariot.testnet';
+const CONTRACT_NAME = 'ciuz.testnet';
 
 function getConfig(env) {
     switch (env) {

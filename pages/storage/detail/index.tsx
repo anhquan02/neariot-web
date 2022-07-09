@@ -1,16 +1,21 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
+import SaveIcon from "@mui/icons-material/Save";
 import CustomButton from "../../../components/CustomButton";
 import Explore from "../../../components/Explore";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import { sha256 } from 'crypto-hash';
+import { sha256 } from "crypto-hash";
+import { formatDate } from "../../../helpers/Utils";
 
 const DetailScreen = memo(() => {
-  const [storageId, setStorageId] = useState<any>('');
+  const [storageId, setStorageId] = useState<any>("");
   const [data, setData] = useState<any>();
-  const [apiKey, setApiKey] = useState<string>('');
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [apiKey, setApiKey] = useState<string>("");
   const [updateData, setUpdateData] = useState<any[]>();
+  const [isEditing, setIsEditing] = useState(false);
   const wallet = useSelector((state: any) => state.wallet);
   const router = useRouter();
   const { query } = router;
@@ -25,7 +30,7 @@ const DetailScreen = memo(() => {
     if (router.query.id) {
       setStorageId(router.query.id);
     }
-  }, [router])
+  }, [router]);
 
   const getDetail = async () => {
     const { id } = query;
@@ -46,14 +51,15 @@ const DetailScreen = memo(() => {
       )
       .then((res: any) => {
         if (res) {
-
           setData({
             id: res.id,
             name: res.name,
             description: res.description,
-            api_key: res.api_key,
+            apikey_hash: res.apikey_hash,
             data: res.data,
           });
+          setName(res.name);
+          setDescription(res.description);
         } else {
           console.log(res);
           router.back();
@@ -87,21 +93,136 @@ const DetailScreen = memo(() => {
     setUpdateData(sampleDate);
   };
 
-  const handleEdit = () => { };
+  const handleEdit = async () => {
+    const { id } = query;
+    const { contract } = wallet;
+    await contract
+      ?.set_cluster(
+        {
+          id: id,
+          name: name,
+          description: description,
+        },
+        50000000000000
+      )
+      .then((res: any) => {
+        if (res) {
+          setData({
+            ...data,
+            name: name,
+            description: description,
+          });          
+          setIsEditing(false);
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
 
-  const handleGetAPIKey = async (secrectKey: String = "hiudaysgdyguasbhcsyg") => {
+  const Storage = useCallback(() => {
+    if (!isEditing) {
+      return (
+        <div className="lg:w-6/12 w-full h-auto bg-white md:mx-4 rounded-xl my-4 p-2 flex lg:flex-nowrap flex-col">
+          {/* <div className="grid grid-cols-2 gap-y-4 overflow-auto"> */}
+          <div className="flex flex-row w-full py-2">
+            <div className="flex mx-2 w-3/12">Storage Name:</div>
+            <div className="flex mx-2 w-8/12">{data?.name || ""}</div>
+          </div>
+          <div className="flex flex-row w-full py-2">
+            <div className="flex mx-2 w-3/12">Decription:</div>
+            <div className="flex mx-2 w-8/12">
+              <span className="flex-start flex w-full">
+                {data?.description || ""}
+              </span>
+            </div>
+            <div
+              className="flex px-2  my-auto cursor-pointer hover:ring hover:outline-none items-center h-full align-middle"
+              onClick={() => {
+                setIsEditing(true);
+              }}
+            >
+              <EditIcon className="item-center" />
+            </div>
+          </div>
+          <div className="flex flex-row w-full py-2">
+            <div className="flex mx-2 w-3/12">Create At:</div>
+            <div className="flex mx-2 w-8/12">{formatDate(Date.now())}</div>
+          </div>
+          <div className="flex flex-row w-full py-2">
+            <div className="flex mx-2 w-3/12">Update At</div>
+            <div className="flex mx-2 w-8/12">{formatDate(Date.now())}</div>
+          </div>
+          {/* </div> */}
+        </div>
+      );
+    }
+    return (
+      <div className="lg:w-6/12 w-full h-auto bg-white md:mx-4 rounded-xl my-4 p-2 flex lg:flex-nowrap flex-col">
+        {/* <div className="grid grid-cols-2 gap-y-4 overflow-auto"> */}
+        <div className="flex flex-row w-full py-2">
+          <div className="flex mx-2 w-3/12">Storage Name:</div>
+          <input
+            type="text"
+            className="flex mx-2 w-8/12 bg-slate-300 px-2"
+            name=""
+            id=""
+            autoFocus
+            defaultValue={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
+        <div className="flex flex-row w-full py-2">
+          <div className="flex mx-2 w-3/12">Decription:</div>
+          <div className="flex mx-2 w-8/12">
+            <input
+              type="text"
+              className="flex-start flex w-full bg-slate-300 px-2"
+              name=""
+              id=""
+              defaultValue={description}
+              onChange={(e) => {
+                setDescription(e.target.value);
+              }}
+            />
+          </div>
+          <div
+            className="flex my-auto cursor-pointer hover:ring hover:outline-none items-center h-full align-middle"
+            onClick={handleEdit}
+          >
+            <SaveIcon className="item-center" />
+          </div>
+        </div>
+        <div className="flex flex-row w-full py-2">
+          <div className="flex mx-2 w-3/12">Create At:</div>
+          <div className="flex mx-2 w-8/12">{formatDate(Date.now())}</div>
+        </div>
+        <div className="flex flex-row w-full py-2">
+          <div className="flex mx-2 w-3/12">Update At</div>
+          <div className="flex mx-2 w-8/12">{formatDate(Date.now())}</div>
+        </div>
+        {/* </div> */}
+      </div>
+    );
+  }, [data, isEditing]);
+
+  const handleGetAPIKey = async (
+    secrectKey: String = "hiudaysgdyguasbhcsyg"
+  ) => {
     const { contract, walletConnection } = wallet;
     const userId = walletConnection.getAccountId();
     let raw_api_key = secrectKey + userId + storageId + Date.now().toString();
     let generatedApikey = await sha256(raw_api_key);
     let apiKeyHash = await sha256(generatedApikey);
     await contract
-      ?.set_apikey_hash(
-        {
-          id: storageId,
-          apikey_hash: apiKeyHash,
-        },
-      )
+      ?.set_apikey_hash({
+        id: storageId,
+        apikey_hash: apiKeyHash,
+      })
       .then((res: any) => {
         if (res) {
           navigator.clipboard.writeText(generatedApikey);
@@ -115,42 +236,13 @@ const DetailScreen = memo(() => {
       });
   };
 
-  const handleDeleteStorage = () => { };
+  const handleDeleteStorage = () => {};
 
   return (
     <>
       <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8">
         <div className="flex lg:flex-nowrap flex-wrap w-full pb-12">
-          <div className="lg:w-6/12 w-full h-auto bg-white md:mx-4 rounded-xl my-4 p-2 flex lg:flex-nowrap flex-col">
-            {/* <div className="grid grid-cols-2 gap-y-4 overflow-auto"> */}
-            <div className="flex flex-row w-full py-2">
-              <div className="flex mx-2 w-3/12">Storage Name:</div>
-              <div className="flex mx-2 w-9/12">{data?.name || ""}</div>
-            </div>
-            <div className="flex flex-row w-full py-2">
-              <div className="flex mx-2 w-3/12">Decription:</div>
-              <div className="flex mx-2 w-9/12">
-                <span className="flex-start flex ">
-                  {data?.description || ""}
-                </span>
-                <div
-                  className="flex px-2 my-auto cursor-pointer hover:ring hover:outline-none items-center h-full align-middle"
-                  onClick={handleEdit}
-                >
-                  <EditIcon />
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-row w-full py-2">
-              <div className="flex mx-2 w-3/12">Create At:</div>
-              <div className="flex mx-2 w-9/12">{Date.now()}</div>
-            </div>
-            <div className="flex flex-row w-full py-2">
-              <div className="flex mx-2 w-3/12">Update At</div>
-              <div className="flex mx-2 w-9/12">{Date.now()}</div>
-            </div>
-            {/* </div> */}
-          </div>
+          {Storage()}
           <div className="lg:w-6/12 w-full h-auto bg-transparent md:mx-4 rounded-xl my-4 p-2 flex lg:flex-nowrap flex-row">
             <div className="flex md:flex-nowrap md:flex-row flex-col w-full h-auto items-center align-middle my-auto py-2">
               <div className="flex md:w-6/12 w-full md:justify-end md:mx-4 mx-2 align-middle items-center md:py-4 py-2">

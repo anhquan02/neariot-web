@@ -29,9 +29,20 @@ const CreateScreen = memo((props: any) => {
     setSnackMsg(msg);
   };
 
+  const onRequestConnectWallet = () => {
+    const { nearConfig, walletConnection } = wallet;
+    walletConnection?.requestSignIn?.(nearConfig?.contractName);
+  };
+
   const handleCreateStorage = useCallback(
     async (e: any) => {
       e.preventDefault();
+      const { walletConnection } = wallet;
+      const userId = walletConnection.getAccountId();
+      if (userId === "") {
+        onRequestConnectWallet();
+        return;
+      }
 
       // if (user == null) {
       //   return onShowResult({

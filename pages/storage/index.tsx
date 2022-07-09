@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import Card from "../../components/Card";
 import CreateCard from "../../components/Card/CreateCard";
 import SearchIcon from "@mui/icons-material/Search";
@@ -37,7 +37,7 @@ const Storage = memo((props: any) => {
   const onRequestConnectWallet = () => {
     const { nearConfig, walletConnection } = wallet;
     walletConnection?.requestSignIn?.(nearConfig?.contractName);
-};
+  };
 
   const handleCreateStorage = () => {
     const { walletConnection } = wallet;
@@ -49,7 +49,7 @@ const Storage = memo((props: any) => {
     router.push("/storage/create");
   };
 
-  const Storage = () => {
+  const Storage = useCallback(() => {
     if (data?.length == 0) {
       return (
         <>
@@ -86,7 +86,7 @@ const Storage = memo((props: any) => {
         </div>
       </>
     );
-  };
+  },[data]);
 
   return (
     <>
