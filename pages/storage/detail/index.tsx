@@ -1,4 +1,11 @@
-import { memo, useCallback, useEffect, useLayoutEffect, useState } from "react";
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CustomButton from "../../../components/CustomButton";
@@ -7,6 +14,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { sha256 } from "crypto-hash";
 import { formatDate } from "../../../helpers/Utils";
+import Notify from "../../../components/Notify";
 
 const DetailScreen = memo(() => {
   const [storageId, setStorageId] = useState<any>("");
@@ -16,6 +24,11 @@ const DetailScreen = memo(() => {
   const [apiKey, setApiKey] = useState<string>("");
   const [updateData, setUpdateData] = useState<any[]>();
   const [isEditing, setIsEditing] = useState(false);
+  const [openLoading, setOpenLoading] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [alertType, setAlertType] = useState("success");
+  const [snackMsg, setSnackMsg] = useState("");
+  const param = useRef<any>({ name: "", description: "" });
   const wallet = useSelector((state: any) => state.wallet);
   const router = useRouter();
   const { query } = router;
@@ -41,7 +54,7 @@ const DetailScreen = memo(() => {
       return;
     }
     const { contract } = wallet;
-
+    setOpenLoading(true);
     await contract
       ?.get_cluster_data(
         {
@@ -58,8 +71,10 @@ const DetailScreen = memo(() => {
             apikey_hash: res.apikey_hash,
             data: res.data,
           });
+          param.current = { name: res.name, description: res.description };
           setName(res.name);
           setDescription(res.description);
+          setOpenLoading(false);
         } else {
           console.log(res);
           router.back();
@@ -93,26 +108,60 @@ const DetailScreen = memo(() => {
     setUpdateData(sampleDate);
   };
 
-  const handleEdit = async () => {
-    const { id } = query;
-    const { contract } = wallet;
+  const handleEdit = useCallback(
+    async (e: any) => {
+      e.preventDefault();
+      const { id } = query;
+      const { contract } = wallet;
+      setOpenLoading(true);
+      await contract
+        ?.set_cluster(
+          {
+            id: id,
+            name: param.current.name,
+            description: param.current.description,
+          },
+          50000000000000
+        )
+        .then((res: any) => {
+          if (res) {
+            setData({
+              id: res.id,
+              name: res.name,
+              description: res.description,
+              apikey_hash: res.apikey_hash,
+              data: res.data,
+            });
+            setIsEditing(false);
+            setOpenLoading(false);
+          } else {
+            console.log(res);
+          }
+        })
+        .catch((error: any) => {
+          console.log(error);
+        });
+    },
+    [name, description]
+  );
+
+  const handleGetAPIKey = async (
+    secrectKey: String = "hiudaysgdyguasbhcsyg"
+  ) => {
+    const { contract, walletConnection } = wallet;
+    const userId = walletConnection.getAccountId();
+    let raw_api_key = secrectKey + userId + storageId + Date.now().toString();
+    let generatedApikey = await sha256(raw_api_key);
+    let apiKeyHash = await sha256(generatedApikey);
     await contract
-      ?.set_cluster(
-        {
-          id: id,
-          name: name,
-          description: description,
-        },
-        50000000000000
-      )
+      ?.set_apikey_hash({
+        id: storageId,
+        apikey_hash: apiKeyHash,
+      })
       .then((res: any) => {
         if (res) {
-          setData({
-            ...data,
-            name: name,
-            description: description,
-          });          
-          setIsEditing(false);
+          navigator.clipboard.writeText(generatedApikey);
+          setApiKey(generatedApikey);
         } else {
           console.log(res);
         }
@@ -120,6 +169,33 @@ const DetailScreen = memo(() => {
       .catch((error: any) => {
         console.log(error);
       });
+  };
+
+  const handleDeleteStorage = async () => {
+    const { id } = query;
+    const { contract } = wallet;
+    setOpenLoading(true);
+    await contract
+      ?.remove_cluster(
+        {
+          id: id,
+        },
+        50000000000000
+      )
+      .then((res: any) => {
+        if (res) {
+          router.push("/storage");
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
+  const onCloseSnack = () => {
+    setOpenSnack(false);
   };
 
   const Storage = useCallback(() => {
@@ -173,6 +249,7 @@ const DetailScreen = memo(() => {
             defaultValue={name}
             onChange={(e) => {
               setName(e.target.value);
+              param.current = { ...param.current, name: e.target.value };
             }}
           />
         </div>
@@ -187,6 +264,10 @@ const DetailScreen = memo(() => {
               defaultValue={description}
               onChange={(e) => {
                 setDescription(e.target.value);
+                param.current = {
+                  ...param.current,
+                  description: e.target.value,
+                };
               }}
             />
           </div>
@@ -210,36 +291,15 @@ const DetailScreen = memo(() => {
     );
   }, [data, isEditing]);
 
-  const handleGetAPIKey = async (
-    secrectKey: String = "hiudaysgdyguasbhcsyg"
-  ) => {
-    const { contract, walletConnection } = wallet;
-    const userId = walletConnection.getAccountId();
-    let raw_api_key = secrectKey + userId + storageId + Date.now().toString();
-    let generatedApikey = await sha256(raw_api_key);
-    let apiKeyHash = await sha256(generatedApikey);
-    await contract
-      ?.set_apikey_hash({
-        id: storageId,
-        apikey_hash: apiKeyHash,
-      })
-      .then((res: any) => {
-        if (res) {
-          navigator.clipboard.writeText(generatedApikey);
-          setApiKey(generatedApikey);
-        } else {
-          console.log(res);
-        }
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-  };
-
-  const handleDeleteStorage = () => {};
-
   return (
     <>
+      <Notify
+        openLoading={openLoading}
+        openSnack={openSnack}
+        alertType={alertType}
+        snackMsg={snackMsg}
+        onClose={onCloseSnack}
+      />
       <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8">
         <div className="flex lg:flex-nowrap flex-wrap w-full pb-12">
           {Storage()}
