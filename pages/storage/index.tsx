@@ -1,15 +1,20 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import Card from "../../components/Card";
 import CreateCard from "../../components/Card/CreateCard";
 import SearchIcon from "@mui/icons-material/Search";
 import Explore from "../../components/Explore";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import Notify from "../../components/Notify";
 
 const Storage = memo((props: any) => {
   const [data, setData] = useState<any[]>();
   const router = useRouter();
   const wallet = useSelector((statex: any) => statex.wallet);
+  const [openLoading, setOpenLoading] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [alertType, setAlertType] = useState("success");
+  const [snackMsg, setSnackMsg] = useState("");
 
   useEffect(() => {
     const { contract, walletConnection } = wallet;
@@ -28,18 +33,54 @@ const Storage = memo((props: any) => {
           console.log(error);
         });
     })();
-    
-  }, []);
+  }, [openLoading]);
 
   const handleClickDetail = (id: any) => {
-    alert(id);
+    router.push(`/storage/detail?id=${id}`);
+  };
+
+  const handleDeleteStorage = async (id: any) => {
+    const { contract } = wallet;
+    setOpenLoading(true);
+    await contract
+      ?.remove_cluster(
+        {
+          id: id,
+        },
+        50000000000000
+      )
+      .then((res: any) => {
+        if (res) {
+          setOpenLoading(false);
+        } else {
+          console.log(res);
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
+  const onRequestConnectWallet = () => {
+    const { nearConfig, walletConnection } = wallet;
+    walletConnection?.requestSignIn?.(nearConfig?.contractName);
   };
 
   const handleCreateStorage = () => {
+    const { walletConnection } = wallet;
+    const userId = walletConnection.getAccountId();
+    if (userId === "") {
+      onRequestConnectWallet();
+      return;
+    }
     router.push("/storage/create");
   };
 
-  const Storage = () => {
+  const onCloseSnack = () => {
+    setOpenSnack(false);
+  };
+
+  const Storage = useCallback(() => {
     if (data?.length == 0) {
       return (
         <>
@@ -69,17 +110,29 @@ const Storage = memo((props: any) => {
                 id={item.id}
                 name={item.name}
                 create_at={item.create_at}
-                onClickCard={(id) => handleClickDetail(id)}
+                onClickCard={(id) => {
+                  handleClickDetail(id);
+                }}
+                onClickDelete={(id) => {
+                  handleDeleteStorage(id);
+                }}
               />
             );
           })}
         </div>
       </>
     );
-  };
+  }, [data]);
 
   return (
     <>
+      <Notify
+        openLoading={openLoading}
+        openSnack={openSnack}
+        alertType={alertType}
+        snackMsg={snackMsg}
+        onClose={onCloseSnack}
+      />
       <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 sm:px-8 px-4 sm:mx-auto">
         <CreateCard
           label="Create new key value storage"
