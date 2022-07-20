@@ -22,6 +22,8 @@ const DetailScreen = memo(() => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [apiKey, setApiKey] = useState<string>("");
+  const [showModal, setShowModal] = useState(false);
+  const [secrectKey, setSecrectKey] = useState("");
   const [updateData, setUpdateData] = useState<any[]>();
   const [isEditing, setIsEditing] = useState(false);
   const [openLoading, setOpenLoading] = useState(false);
@@ -70,6 +72,8 @@ const DetailScreen = memo(() => {
             description: res.description,
             apikey_hash: res.apikey_hash,
             data: res.data,
+            create_at: formatDate(res.create_at / 1000000),
+            update_at: formatDate(res.update_at / 1000000),
           });
           param.current = { name: res.name, description: res.description };
           setName(res.name);
@@ -145,14 +149,13 @@ const DetailScreen = memo(() => {
     [name, description]
   );
 
-  const handleGetAPIKey = async (
-    secrectKey: String = "hiudaysgdyguasbhcsyg"
-  ) => {
+  const handleGetAPIKey = useCallback(async () => {
     const { contract, walletConnection } = wallet;
     const userId = walletConnection.getAccountId();
     let raw_api_key = secrectKey + userId + storageId + Date.now().toString();
     let generatedApikey = await sha256(raw_api_key);
     let apiKeyHash = await sha256(generatedApikey);
+    setOpenLoading(true);
     await contract
       ?.set_apikey_hash({
         id: storageId,
@@ -162,14 +165,21 @@ const DetailScreen = memo(() => {
         if (res) {
           navigator.clipboard.writeText(generatedApikey);
           setApiKey(generatedApikey);
+          onShowResult({
+            type: "success",
+            msg: "Your API has been copied to your clipboard!",
+          });
         } else {
           console.log(res);
         }
       })
       .catch((error: any) => {
-        console.log(error);
+        onShowResult({
+          type: "error",
+          msg: String(error),
+        });
       });
-  };
+  }, [secrectKey]);
 
   const handleDeleteStorage = async () => {
     const { id } = query;
@@ -196,6 +206,13 @@ const DetailScreen = memo(() => {
 
   const onCloseSnack = () => {
     setOpenSnack(false);
+  };
+
+  const onShowResult = ({ type, msg }: any) => {
+    setOpenSnack(true);
+    setOpenLoading(false);
+    setAlertType(type);
+    setSnackMsg(msg);
   };
 
   const Storage = useCallback(() => {
@@ -225,11 +242,11 @@ const DetailScreen = memo(() => {
           </div>
           <div className="flex flex-row w-full py-2">
             <div className="flex mx-2 w-3/12">Create At:</div>
-            <div className="flex mx-2 w-8/12">{formatDate(Date.now())}</div>
+            <div className="flex mx-2 w-8/12">{data?.create_at}</div>
           </div>
           <div className="flex flex-row w-full py-2">
             <div className="flex mx-2 w-3/12">Update At</div>
-            <div className="flex mx-2 w-8/12">{formatDate(Date.now())}</div>
+            <div className="flex mx-2 w-8/12">{data?.update_at}</div>
           </div>
           {/* </div> */}
         </div>
@@ -300,6 +317,44 @@ const DetailScreen = memo(() => {
         snackMsg={snackMsg}
         onClose={onCloseSnack}
       />
+      {showModal && (
+        <>
+          <div
+            className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-40 outline-none focus:outline-none bg-gray-500 bg-opacity-70 rounded"
+            onClick={() => setShowModal(false)}
+          ></div>
+          <div className="fixed w-auto my-auto items-center inset-0 mx-auto  max-w-3xl max-h-fit shadow-2xl shadow-black sm:w-4/12 z-50 rounded">
+            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full h-full bg-white outline-none focus:outline-none">
+              <div className="flex items-start justify-center p-5 border-b border-solid border-gray-300 rounded ">
+                <h3 className="text-3xl font=semibold">
+                  Generate your API Key
+                </h3>
+              </div>
+              <div className="relative p-6 flex">
+                <form className="bg-gray-200 shadow-md rounded  pt-6 pb-8 w-full">
+                  <label className="text-black text-sm font-bold mb-1 w-3/12 mx-4">
+                    Secret Key
+                  </label>
+                  <input
+                    className="shadow appearance-none border-slate-700 border rounded py-2 px-2 text-black w-9/12"
+                    onChange={(e) => {
+                      setSecrectKey(e.target.value);
+                    }}
+                  />
+                </form>
+              </div>
+              <div className="flex items-center justify-center p-6 border-t border-solid border-blueGray-200 rounded-b">
+                <CustomButton
+                  label="Generate your API Key"
+                  className_box="my-auto md:py-4 py-2 "
+                  className_button="p-2"
+                  onClickButton={handleGetAPIKey}
+                />
+              </div>
+            </div>
+          </div>
+        </>
+      )}
       <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8">
         <div className="flex lg:flex-nowrap flex-wrap w-full pb-12">
           {Storage()}
@@ -310,7 +365,9 @@ const DetailScreen = memo(() => {
                   label="Get API Key"
                   className_box="my-auto md:py-4 py-2 "
                   className_button="p-2"
-                  onClickButton={handleGetAPIKey}
+                  onClickButton={() => {
+                    setShowModal(true);
+                  }}
                 />
               </div>
               <div className="flex md:w-6/12 w-full md:justify-start md:mx-4 mx-2 align-middle items-center md:py-4 py-2">
@@ -328,7 +385,7 @@ const DetailScreen = memo(() => {
           <div className="lg:w-8/12 md:w-10/12 w-full h-auto bg-white rounded-xl my-4 p-4 flex lg:flex-nowrap flex-col mx-auto">
             <div className="flex flex-row w-full py-2 ">
               <div className="text-center align-middle mx-auto items-center w-full text-xl font-semibold border-b border-black pb-4">
-                Your last 100 value
+                Your Last Update
               </div>
             </div>
             <div className="flex flex-row w-full py-2 overflow-x-auto">

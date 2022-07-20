@@ -3,6 +3,9 @@ export const formatDate = (date:any) => {
     var dd = d.getDate();
     var mm = d.getMonth() + 1; //January is 0!
     var yyyy = d.getFullYear();
-    d = mm + '/' + dd + '/' + yyyy;
+    var hours = d.getHours();
+    var minutes = "0" + d.getMinutes();
+    var seconds = "0" + d.getSeconds();
+    d = mm + '/' + dd + '/' + yyyy + " "+hours +":" +minutes.substr(-2) + ":" +seconds.substr(-2);
     return d;
   };
