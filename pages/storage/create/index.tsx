@@ -164,6 +164,7 @@ const CreateScreen = memo((props: any) => {
                   className=" align-middle my-auto lg:w-4 md:w-8 mx-2 "
                   id="check1"
                   onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Please check this box to continue')}
+                  onInput={e=>(e.target as HTMLInputElement).setCustomValidity('')}
                 />
                 <label className="" htmlFor="check1">
                   {`By clicking the submit button below, I hereby agree to and accept the following terms and conditions`}
@@ -179,6 +180,7 @@ const CreateScreen = memo((props: any) => {
                   className=" align-middle my-auto lg:w-4 md:w-8 mx-2 "
                   id="check2"
                   onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Please check this box to continue')}
+                  onInput={e=>(e.target as HTMLInputElement).setCustomValidity('')}
                 />
                 <label className="" htmlFor="check2" >
                   {`By clicking the submit button below, you will spend 0.1 NEAR as a fee for this storage`}
