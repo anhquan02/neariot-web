@@ -135,6 +135,8 @@ const DetailScreen = memo(() => {
               description: res.description,
               apikey_hash: res.apikey_hash,
               data: res.data,
+              create_at: formatDate(res.create_at / 1000000),
+              update_at: formatDate(res.update_at / 1000000),
             });
             setIsEditing(false);
             setOpenLoading(false);
@@ -297,11 +299,11 @@ const DetailScreen = memo(() => {
         </div>
         <div className="flex flex-row w-full py-2">
           <div className="flex mx-2 w-3/12">Create At:</div>
-          <div className="flex mx-2 w-8/12">{formatDate(Date.now())}</div>
+          <div className="flex mx-2 w-8/12">{data?.create_at}</div>
         </div>
         <div className="flex flex-row w-full py-2">
           <div className="flex mx-2 w-3/12">Update At</div>
-          <div className="flex mx-2 w-8/12">{formatDate(Date.now())}</div>
+          <div className="flex mx-2 w-8/12">{data?.update_at}</div>
         </div>
         {/* </div> */}
       </div>
