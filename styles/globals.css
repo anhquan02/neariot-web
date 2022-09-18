@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .form_bg {
-  background: rgb(105, 102, 147);
+  /* background: rgb(105, 102, 147);
   background: linear-gradient(
     124deg,
     rgba(105, 102, 147, 1) 6%,
@@ -13,7 +13,7 @@
     rgba(112, 64, 223, 1) 72%,
     rgba(77, 38, 184, 1) 84%,
     rgba(50, 22, 128, 1) 93%
-  );
+  ); */
   background-size: cover;
   width: 100vw;
   height: 100vh;
