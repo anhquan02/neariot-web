@@ -53,18 +53,11 @@ export const generateUserId = () => {
     });
 };
 
-export function initWeb3Storage({ token }) {
-    if (!token) {
-        throw new Error('SB0005: token is required');
-    }
+export function initWeb3Storage(token) {
     const apiKey = token;
-
-    const web3Connector = new Web3Connector({ apiKey });
-
+    const web3Connector = new Web3Connector(apiKey);
     return {
         apiKey: web3Connector.apiKey,
         web3Connector: web3Connector,
-    }
-
-    
+    }   
 }

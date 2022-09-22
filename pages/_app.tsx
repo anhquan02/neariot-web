@@ -41,13 +41,14 @@ function MyApp({
 
   useEffect(() => {
     // @ts-ignore
-    let {apiKey, web3Connector} = window.nearInitPromise = initWeb3Storage(process.env.WEB3_STORAGE_KEY)
+    let {apiKey, web3Connector} = window.nearInitPromise = initWeb3Storage(process.env.NEXT_PUBLIC_WEB3_STORAGE_KEY);
     store.dispatch(
       onUpdateStorage({
         apiKey,
         web3Connector,
       })
     );
+
   }, []);
 
   return (

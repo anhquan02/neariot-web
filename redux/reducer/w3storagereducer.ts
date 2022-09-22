@@ -2,15 +2,15 @@ import { CLEAR_STORAGE, UPDATE_STORAGE } from "../action/w3storage";
 
 interface State {
   apiKey: "";
-  web3StorageConnector: {};
+  web3Connector: {};
 }
 
 const initState: State = {
   apiKey: "",
-  web3StorageConnector: {},
+  web3Connector: {},
 };
 
-const StorageReducer = (state = initState, content: any) => {
+const W3StorageReducer = (state = initState, content: any) => {
   const { type, value } = content;
 
   switch (type) {
@@ -29,12 +29,12 @@ const onClearStorage = () => {
 
 const onUpdateStorage = ({
   apiKey,
-  web3StorageConnector,
+  web3Connector,
 }: any) => {
   return {
     apiKey,
-    web3StorageConnector,
+    web3Connector,
   };
 };
 
-export default StorageReducer
+export default W3StorageReducer
