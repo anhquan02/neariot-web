@@ -22,6 +22,18 @@ export default class Web3Connector {
         return cid
     };
 
+    setFile = async (file) => {
+        const cid = await this.client.put(file);
+        return cid  
+    };
+
+    getFile = async (cid) => {
+        const res = await this.client?.get?.(cid);
+        const files = await res.files();
+        const file = files[0];
+        return file;
+    };
+
 }
 
 function makeFileObjects(filename, content) {
@@ -30,13 +42,3 @@ function makeFileObjects(filename, content) {
     ]
     return files
 }
-
-function streamToString(stream, cb) {
-    const chunks = [];
-    stream.on('data', (chunk) => {
-      chunks.push(chunk.toString());
-    });
-    stream.on('end', () => {
-      cb(chunks.join(''));
-    });
-  }

@@ -60,23 +60,6 @@ const Sandbox = memo((props: any) => {
     setOpenSnack(false);
   };
 
-  const onTestButton = () => {
-    const { apiKey, web3Connector } = w3storage;
-    console.log("Clicked");
-
-    web3Connector
-      .setData("test.txt", {
-        data: "Hello World",
-        id: 11
-      })
-      .then(async (cid: string) => {
-        console.log("CID: ", cid);
-        web3Connector.getData(cid).then((data: any) => {
-          console.log("Completed! => ", data);
-        });
-      });
-  };
-
   const Project = useCallback(() => {
     if (data?.length == 0) {
       return (
@@ -132,11 +115,6 @@ const Sandbox = memo((props: any) => {
           label="Start new Project"
           welcome="Sandbox"
           onCreate={() => handleCreateProject()}
-        />
-        <CreateCard
-          label="Test"
-          welcome="Sandbox"
-          onCreate={() => onTestButton()}
         />
         <div className="w-full flex pb-12 md:px-2 justify-between">
           <div className="">
