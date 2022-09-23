@@ -11,6 +11,7 @@ const Sandbox = memo((props: any) => {
   const [data, setData] = useState<any[]>();
   const router = useRouter();
   const wallet = useSelector((statex: any) => statex.wallet);
+  const w3storage = useSelector((statex: any) => statex.w3storage);
   const [openLoading, setOpenLoading] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [alertType, setAlertType] = useState("success");

@@ -1,5 +1,7 @@
 import getConfig from './config';
 import * as nearAPI from 'near-api-js';
+import { Web3Storage } from 'web3.storage';
+import Web3Connector from './web3Connector';
 
 const nearConfig = getConfig('testnet');
 // const nearConfig = getConfig('mainnet');
@@ -43,7 +45,6 @@ export async function initContract() {
     return { contract, currentUser, nearConfig, walletConnection };
 }
 
-
 export const generateUserId = () => {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
         var r = (Math.random() * 16) | 0,
@@ -51,3 +52,12 @@ export const generateUserId = () => {
         return v.toString(16);
     });
 };
+
+export function initWeb3Storage(token) {
+    const apiKey = token;
+    const web3Connector = new Web3Connector(apiKey);
+    return {
+        apiKey: web3Connector.apiKey,
+        web3Connector: web3Connector,
+    }   
+}
