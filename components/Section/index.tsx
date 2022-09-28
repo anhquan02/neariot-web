@@ -20,7 +20,7 @@ const Section = memo(
             src={
               "https://img.freepik.com/premium-photo/astronaut-outer-open-space-planet-earth-stars-provide-background-erforming-space-planet-earth-sunrise-sunset-our-home-iss-elements-this-image-furnished-by-nasa_150455-16829.jpg?w=1380"
             }
-            className="w-full md:h-64 h-48 object-cover rounded-lg"
+            className="w-full md:h-96 h-80 object-cover rounded-lg"
           />
         );
       } else if (type === "video") {
@@ -32,6 +32,7 @@ const Section = memo(
             title="Ngủ sớm đi em - DucMinh ( Prod. by GC )"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen={true}
+            className="object-cover rounded-lg"
           ></iframe>
         );
       }

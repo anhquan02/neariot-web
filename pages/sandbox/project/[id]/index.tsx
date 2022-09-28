@@ -1,26 +1,130 @@
 import { useRouter } from "next/router";
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import LineChart from "../../../../components/Chart/LineChart";
 import Section from "../../../../components/Section";
 import { formatDate } from "../../../../helpers/Utils";
 import HelpIcon from "@mui/icons-material/Help";
 import { Popover, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { ProjectData } from "../../../../helpers/types";
+import Notify from "../../../../components/Notify";
 
 const DetailProcjet = memo(() => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const [data, setData] = useState<ProjectData>({
+    id: "",
+    owner: "",
+    name: "",
+    type: "",
+    descriptions: "",
+    repository: "",
+    created_at: "",
+    noSetting: true,
+    pledgers: 0,
+    project_target: 0,
+    avg_rate: 0,
+    project_rate: 0,
+  });
+  const [openLoading, setOpenLoading] = useState(false);
+  const [openSnack, setOpenSnack] = useState(false);
+  const [alertType, setAlertType] = useState("success");
+  const [snackMsg, setSnackMsg] = useState("");
+  const wallet = useSelector((state: any) => state.wallet);
+  const web3storage = useSelector((statex: any) => statex.w3storage);
   const router = useRouter();
+
+  const onCloseSnack = () => {
+    setOpenSnack(false);
+  };
+
+  const onShowResult = ({ type, msg }: any) => {
+    setOpenSnack(true);
+    setOpenLoading(false);
+    setAlertType(type);
+    setSnackMsg(msg);
+  };
+
+  const onRequestConnectWallet = () => {
+    const { nearConfig, walletConnection } = wallet;
+    walletConnection?.requestSignIn?.(nearConfig?.contractName);
+  };
+
+  useEffect(() => {
+    const { id } = router.query;
+    setOpenLoading(true);
+    const { walletConnection } = wallet;
+    const userId = walletConnection.getAccountId();
+    if (userId === "") {
+      onRequestConnectWallet();
+      return;
+    }
+
+    (async () => {
+      const project = await getProject(id);
+      const _data = await getDataWeb3(project.metadata);
+      setData({
+        id: project.id,
+        owner: _data.owner,
+        name: _data.name,
+        type: _data.type,
+        descriptions: _data.descriptions,
+        repository: _data.repository,
+        created_at: project.created_at,
+        noSetting: _data.noSetting,
+        data: _data.data,
+        section: _data.section,
+        pledgers: project.total_pledge + "",
+        project_target: _data.project_target + "",
+        avg_rate: project.avg_rate + "",
+        project_rate: _data.project_rate + "",
+      });
+      setOpenLoading(false);
+    })();
+  }, []);
+
+  const getDataWeb3 = async (cid: any) => {
+    const { web3Connector } = web3storage;
+    return await web3Connector
+      .getData(cid)
+      .then((res: any) => {
+        return JSON.parse(res.content);
+      })
+      .catch((err: any) => {
+        onShowResult({
+          type: "error",
+          msg: String(err),
+        });
+      });
+  };
+
+  const getProject = async (id: any) => {
+    const { walletConnection, contract } = wallet;
+    return await contract
+      .get_project({ id: id }, 50000000000000)
+      .catch((error: any) => {
+        onShowResult({
+          type: "error",
+          msg: String(error),
+        });
+      });
+  };
 
   const handleNewSection = () => {
     router.push(`/sandbox/project/${router.query.id}/new-section`);
   };
 
-  const renderButton = () => {
-    const owner = true;
-    const noSetting = false;
+  const renderButton = useCallback(() => {
+    const owner = data.owner;
+    const noSetting = data.noSetting;
     if (owner) {
       return (
         <>
-          <button className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center">
+          <button
+            className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center"
+            onClick={() => {
+              router.push(`/sandbox/project/${router.query.id}/setting`);
+            }}
+          >
             Setting
           </button>
           <button className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center">
@@ -63,7 +167,7 @@ const DetailProcjet = memo(() => {
         </button>
       </>
     );
-  };
+  }, [data]);
 
   const renderProjectData = () => {
     const data = true;
@@ -97,6 +201,13 @@ const DetailProcjet = memo(() => {
 
   return (
     <>
+      <Notify
+        openLoading={openLoading}
+        openSnack={openSnack}
+        alertType={alertType}
+        snackMsg={snackMsg}
+        onClose={onCloseSnack}
+      />
       <div className="w-full mb-12"></div>
       <div className="w-full lg:px-16 sm:px-8">
         <div className="flex md:flex-row flex-col p-4 justify-between">
@@ -104,31 +215,31 @@ const DetailProcjet = memo(() => {
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 w-3/12">Project Name: </div>
               <span className="flex mx-2 w-9/12 px-2 overflow-x-auto">
-                Something here
+                {data.name}
               </span>
             </div>
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 w-3/12">Description: </div>
-              <span className="flex mx-2 w-9/12 px-2 overflow-x-auto">
-                Something here
+              <span className="flex mx-2 w-9/12 px-2 overflow-x-auto overflow-y-auto">
+                {data.descriptions}
               </span>
             </div>
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 w-3/12">Repository: </div>
               <span className="flex mx-2 w-9/12 px-2 overflow-x-auto">
-                github.com/anhquan02
+                {data?.repository}
               </span>
             </div>
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 w-3/12">Type: </div>
               <span className="flex mx-2 w-9/12 px-2 overflow-x-auto">
-                Public
+                {data.type == "0" ? "Public" : "Private"}
               </span>
             </div>
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 w-3/12">Create At: </div>
               <span className="flex mx-2 w-9/12 px-2 overflow-x-auto">
-                {formatDate(new Date())}
+                {formatDate(data.created_at / 1000000)}
               </span>
             </div>
           </div>
@@ -140,13 +251,13 @@ const DetailProcjet = memo(() => {
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 md:w-4/12 w-2/12">Project Target: </div>
               <span className="flex mx-2 md:w-8/12 w-full px-2 overflow-x-auto">
-                100/1000 NEAR
+                {data.pledgers + "/" + data.project_target} NEAR
               </span>
             </div>
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 md:w-4/12 w-2/12">Project Rate: </div>
               <span className="flex mx-2 md:w-8/12 w-full px-2 overflow-x-auto">
-                4/5
+                {data.avg_rate + "/" + data.project_rate}
               </span>
             </div>
           </div>
@@ -155,6 +266,7 @@ const DetailProcjet = memo(() => {
           <div className="flex justify-between items-center pb-2">
             <div className=" items-center align-middle h-full text-lg text-slate-800">
               <Typography
+                component={"span"}
                 aria-owns={open ? "mouse-over-popover" : undefined}
                 aria-haspopup="true"
                 onMouseEnter={handlePopoverOpen}
@@ -186,7 +298,7 @@ const DetailProcjet = memo(() => {
                 onClose={handlePopoverClose}
                 disableRestoreFocus
               >
-                <Typography sx={{ p: 1 }} className="w-64">
+                <Typography component={"div"} sx={{ p: 1 }} className="w-64">
                   Share your realtime update about your project to help
                   investors can learn more.
                 </Typography>
