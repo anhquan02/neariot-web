@@ -18,7 +18,7 @@ const CreateCard = memo(({ label, _className, onCreate, welcome }: Props) => {
           </label>
         </div>
         <div
-          className="bg-white flex flex-wrap flex-col border shadow-lg rounded-xl mx-auto my-2 py-2 cursor-pointer lg:w-3/12 md:w-4/12 sm:w-6/12 items-center w-full"
+          className="bg-white flex flex-wrap flex-col border shadow-indigo-500 shadow-lg rounded-xl mx-auto my-2 py-2 cursor-pointer lg:w-3/12 md:w-4/12 sm:w-6/12 items-center w-full"
           onClick={onCreate}
         >
           <AddIcon className="items-center mx-auto mt-4" fontSize="large" />

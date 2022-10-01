@@ -7,7 +7,7 @@ const Home = () => {
   const router = useRouter();
 
   const onClickSandbox = () => {
-    alert("Sandbox");
+    router.push("/sandbox");
   };
 
   const onClickStorage = () => {

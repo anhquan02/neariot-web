@@ -9,7 +9,7 @@ const Header = memo((props: any) => {
 
   return (
     <>
-      <nav className="top-0 z-20 bg-white w-full p-4 items-center flex md:flex-nowrap md:justify-start md:flex-row border-b-1 shadow-lg md:left-0 md:top-0 md:overflow-y-auto md:overflow-hidden ">
+      <nav className="top-0 z-20 bg-white w-full p-4 items-center flex md:flex-nowrap md:justify-start md:flex-row border-b-1 shadow-lg md:left-0 md:top-0 md:overflow-y-auto md:overflow-hidden shadow-indigo-500/50 ">
         <div className="w-full mx-auto items-center flex md:flex-nowrap md:px-10 px-4 h-full">
           <div className="flex justify-start md:w-auto md:h-14 items-center align-middle ">
             <Link href={"/"}>

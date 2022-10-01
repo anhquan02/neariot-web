@@ -33,7 +33,7 @@ const Card = memo(
 
     return (
       <>
-        <div className="w-full h-full border rounded-xl drop-shadow-lg shadow-indigo-500/50 bg-white">
+        <div className="w-full h-full border rounded-xl drop-shadow-lg shadow-md  shadow-indigo-500 bg-white">
           <div
             className="cursor-pointer"
             onClick={() => onClickDetailStorage()}
