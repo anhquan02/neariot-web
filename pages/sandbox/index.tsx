@@ -46,15 +46,16 @@ const Sandbox = memo((props: any) => {
     walletConnection?.requestSignIn?.(nearConfig?.contractName);
   };
 
-  const handleCreateProject = () => {
-    const { walletConnection } = wallet;
+  const handleCreateProject = useCallback(async () => {
+    const { walletConnection, contract } = wallet;
     const userId = walletConnection.getAccountId();
     if (userId === "") {
       onRequestConnectWallet();
       return;
     }
+    await contract.join({}, 50000000000000);
     router.push("/sandbox/create");
-  };
+  }, []);
 
   const onCloseSnack = () => {
     setOpenSnack(false);

@@ -7,9 +7,10 @@ import Notify from "../../../components/Notify";
 
 const CreateScreen = memo((props: any) => {
   const wallet = useSelector((state: any) => state.wallet);
+  const web3storage = useSelector((statex: any) => statex.w3storage);
   const [name, setName] = useState("");
   const [descriptions, setDescriptions] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("0");
   const [repository, setRepository] = useState("");
   const [fee, setFee] = useState("");
   const [nameError, setNameError] = useState(false);
@@ -71,40 +72,95 @@ const CreateScreen = memo((props: any) => {
           msg: "Description could not be empty",
         });
       }
+      if (type === "" || type === null || typeof type === "undefined") {
+        return onShowResult({
+          type: "error",
+          msg: "Type could not be empty",
+        });
+      }
 
-      //   setOpenLoading(true);
+      const data = {
+        owner: userId,
+        name,
+        descriptions,
+        type,
+        repository,
+        fee,
+        noSetting:true,
+        project_target:0,
+        project_rate:0,
+      };
+      console.log(data);
+
+      setOpenLoading(true);
+      const { web3Connector } = web3storage;
       const { contract } = wallet;
-      // console.log(contract)
-      //   await contract
-      //     ?.new_cluster?.(
-      //       {
-      //         name: name,
-      //         description: descriptions,
-      //       },
-      //       50000000000000
-      //     )
-      //     .then((res: any) => {
-      //       if (res) {
-      //         router.push("/storage/detail?id=" + res);
-      //       } else {
-      //         onShowResult({
-      //           type: "error",
-      //           msg: "Creat form failure",
-      //         });
-      //       }
-      //     })
-      //     .catch((error: any) => {
-      //       onShowResult({
-      //         type: "error",
-      //         msg: String(error),
-      //       });
-      //     });
+      const filename = userId + "_" + Date.now();
+      const cid = await web3Connector.setData(filename, data);
+
+      await contract
+        ?.create_project?.(
+          {
+            metadata: cid,
+          },
+          50000000000000
+        )
+        .then((res: any) => {
+          if (res.id) {
+            router.push("/sandbox/project/" + res.id);
+          } else {
+            onShowResult({
+              type: "error",
+              msg: "Create form failure",
+            });
+          }
+        })
+        .catch((error: any) => {
+          updateProject(userId, cid);
+          return;
+        });
     },
     [name, descriptions, type, fee, repository]
   );
-  useEffect(() => {
-    console.log(type);
-  }, [type]);
+
+  const updateProject = useCallback(async (user_id: any, cid: any) => {
+    const { contract } = wallet;
+    const project = await contract
+      ?.get_user_projects_created(
+        {
+          id: user_id,
+        },
+        50000000000000
+      )
+      .catch((error: any) => {
+        onShowResult({
+          type: "error",
+          msg: String(error),
+        });
+      });
+
+    await contract
+      ?.update_project(
+        {
+          id: project.id,
+          metadata: cid,
+        },
+        50000000000000
+      )
+      .then((res: any) => {
+        onShowResult({
+          type: "success",
+          msg: String("Suscess"),
+        });
+        router.push("/sandbox/project/" + project.id);
+      })
+      .catch((error: any) => {
+        onShowResult({
+          type: "error",
+          msg: String(error),
+        });
+      });
+  }, []);
 
   return (
     <>
@@ -125,7 +181,7 @@ const CreateScreen = memo((props: any) => {
         </div>
         <hr className="w-full md:mx-4  md:max-w-[40%] border-slate-400 mb-8" />
         <div className="w-full lg:px-48 md:px-32 sm:px-16">
-          <form className="" onSubmit={handleCreateProject}>
+          <form className="" onSubmit={handleCreateProject} method="post">
             <div className="flex md:flex-row flex-col">
               <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
                 <label htmlFor="inpName">Name </label>
