@@ -15,7 +15,7 @@ const About = () => {
           />
         </Grid>
         <Grid item xs={8} md={7}>
-          <Typography variant="h3" className={style.about.title}>
+          <Typography variant="h2" className={style.about.title}>
             ABOUT WEB
           </Typography>
           <br />
