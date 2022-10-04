@@ -6,7 +6,7 @@ import style from "./style";
 const Team = () => {
   return (
     <Box className={style.team.teamBox}>
-      <Grid container direction={"column"} marginLeft={30} paddingTop={10}>
+      <Grid container direction={"column"} marginLeft={25} paddingTop={10}>
         <Grid container spacing={16}>
           <Grid item>
             <Box className={style.team.avatarBox}>

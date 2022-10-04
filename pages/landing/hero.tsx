@@ -24,14 +24,13 @@ const Hero = () => {
             width: "226px",
             height: "54px",
             textTransform: "none",
-            backgroundImage: `url(${"/landing/button-bg.png"})`,
-            backgroundColor: "transparent",
+            backgroundColor: "#5825f4",
             borderRadius: "50px",
             borderColor: "transparent",
           }}
         >
           <Typography variant="h6" className={style.hero.buttonText}>
-            Start a Project
+            Explore Now
           </Typography>
         </Button>
       </Container>
