@@ -1,8 +1,8 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Button, Container, Grid, Typography } from "@mui/material";
-import style from "./style";
-import { useRouter } from 'next/router';
+import style from "../../styles/landingStyle";
+import { useRouter } from "next/router";
 
 const Hero = () => {
   const router = useRouter();
@@ -21,12 +21,8 @@ const Hero = () => {
           <br />
           Implementation is hard
         </Typography>
-        <Typography
-          variant="h4"
-          paddingTop={2}
-          sx={style.subtitle}
-        >
-          Don’t worry about failure you only have to be right one
+        <Typography variant="h4" paddingTop={2} sx={style.subtitle}>
+          Don&#39;t worry about failure you only have to be right one
         </Typography>
         <br />
         <br />
@@ -49,7 +45,9 @@ const Hero = () => {
               fontSize: "29.5px",
               fontFamily: "Arial",
             }}
-            onClick={() => {router.push("/home")}}
+            onClick={() => {
+              router.push("/home");
+            }}
           >
             Explore Now
           </Typography>

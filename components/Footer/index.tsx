@@ -1,6 +1,6 @@
 import { Grid, Link, Typography } from "@mui/material";
+import Image from "next/image";
 import { memo } from "react";
-import styles from "./style";
 
 interface TextContainer {
   title: string;
@@ -22,11 +22,11 @@ const Footer = memo((props: any) => {
         </Typography>
         {content.map((item, index) => {
           return (
-            <div>
+            <div key={index}>
               <Grid container spacing={1}>
                 {item.image !== "" && (
                   <Grid item xs={3} marginTop="10px">
-                    <img className="h-[20px] w-[24px]" src={item.image} />
+                    <Image width={"24px"} height={"20px"} src={item.image} />
                   </Grid>
                 )}
                 <Grid item xs={9}>
@@ -53,7 +53,7 @@ const Footer = memo((props: any) => {
   };
 
   return (
-    <footer className={styles.root}>
+    <footer className={"w-full h-[542px] bg-[url('/landing/footer-bg.png')]"}>
       <Grid container spacing={1}>
         <Grid item xs marginTop={25}>
           <div className="ml-40">

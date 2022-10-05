@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Button, Grid, Typography } from "@mui/material";
-import style from "./style";
+import style from "../../styles/landingStyle";
 
 const VisonAndMission = () => {
   return (
