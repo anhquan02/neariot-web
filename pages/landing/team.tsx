@@ -18,6 +18,7 @@ const Team = () => {
                 display="flex"
                 marginLeft={7}
                 paddingTop={28}
+                sx={style.team.memberName}
               >
                 Thuong Nguyen
               </Typography>
@@ -27,7 +28,8 @@ const Team = () => {
                 align="center"
                 alignItems="center"
                 display="flex"
-                marginLeft={6}
+                marginLeft={8}
+                sx={style.team.memberPosition}
               >
                 Chief Executive Officer
               </Typography>
@@ -44,6 +46,7 @@ const Team = () => {
                   display="flex"
                   marginLeft={10}
                   paddingTop={28}
+                  sx={style.team.memberName}
                 >
                   Hieu Pham
                 </Typography>
@@ -53,7 +56,8 @@ const Team = () => {
                   align="center"
                   alignItems="center"
                   display="flex"
-                  marginLeft={5}
+                  marginLeft={8}
+                  sx={style.team.memberPosition}
                 >
                   Chief Technology Officer
                 </Typography>
@@ -71,6 +75,7 @@ const Team = () => {
                   display="flex"
                   marginLeft={11}
                   paddingTop={28}
+                  sx={style.team.memberName}
                 >
                   Quan Le
                 </Typography>
@@ -80,7 +85,8 @@ const Team = () => {
                   align="center"
                   alignItems="center"
                   display="flex"
-                  marginLeft={7}
+                  marginLeft={9}
+                  sx={style.team.memberPosition}
                 >
                   Full-stack Developer
                 </Typography>
@@ -96,8 +102,9 @@ const Team = () => {
                   align="center"
                   alignItems="center"
                   display="flex"
-                  marginLeft={9}
+                  marginLeft={10}
                   paddingTop={28}
+                  sx={style.team.memberName}
                 >
                   Minh Hoang
                 </Typography>
@@ -107,7 +114,8 @@ const Team = () => {
                   align="center"
                   alignItems="center"
                   display="flex"
-                  marginLeft={12}
+                  marginLeft={13}
+                  sx={style.team.memberPosition}
                 >
                   Designer
                 </Typography>

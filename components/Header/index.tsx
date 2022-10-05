@@ -35,7 +35,7 @@ const Header = memo((props: any) => {
           </div>
           <div className="md:flex justify-start md:w-auto items-center md:visible hidden">
             <Link href={"/"}>
-              <a href="#" className="ml-80 px-4 py-auto text-xl text-slate-900 ">
+              <a href="#" className="px-4 py-auto text-xl text-slate-900 ">
                 Home
               </a>
             </Link>

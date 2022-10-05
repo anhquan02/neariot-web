@@ -8,24 +8,28 @@ const About = () => {
     <Box className={style.about.aboutBox}>
       <Grid container spacing={12} className={style.general.gridContainer}>
         <Grid item xs={6} md={5}>
-          <img
-            src="/landing/about-img.png"
-            // alt="My Team"
-            // className={style.about.largeImage}
-          />
+          <img src="/landing/about-img.png" />
         </Grid>
         <Grid item xs={8} md={7}>
-          <Typography variant="h2" className={style.about.title}>
+          <Typography
+            variant="h2"
+            sx={{
+              color: "#6e3cbc",
+              fontSize: "74.5px",
+              fontFamily: "Arial",
+              fontWeight: "bold",
+            }}
+          >
             ABOUT WEB
           </Typography>
           <br />
-          <Typography variant="h6" className={style.about.subtitle}>
+          <Typography variant="h6" sx={style.subtitle} className={style.about.subtitle}>
             Neariot campaigns make ideas into reality. It’s where creators share
             new visions for creative work with the communities that will come
             together to fund them.
           </Typography>
           <br />
-          <Typography variant="h6" className={style.about.subtitle}>
+          <Typography variant="h6" sx={style.subtitle} className={style.about.subtitle}>
             No matter what, creators always control how the work comes
             together—no 100-page grant applications, no donors demanding you
             modify your message, no last-minute edits from investors. When

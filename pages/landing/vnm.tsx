@@ -9,10 +9,10 @@ const VisonAndMission = () => {
       <Grid container spacing={2} className={style.vnm.customGrid}>
         <Typography
           variant="h2"
-          className={style.vnm.title}
           justifyContent="center"
           alignItems="center"
           paddingRight={10}
+          sx={style.vnm.title}
         >
           VISION AND MISSION
         </Typography>
@@ -23,11 +23,12 @@ const VisonAndMission = () => {
             <Grid item>
               <Typography
                 variant="h6"
-                className="text-[#372660] font-[RobotoSlab] py-[80px] w-3/4"
+                className="py-[80px] w-3/4"
                 display="flex"
                 align="left"
                 alignItems="center"
                 paddingLeft={20}
+                sx={style.vnm.subtitle}
               >
                 Starup can share infomation about their project to impress
                 investors
@@ -36,11 +37,12 @@ const VisonAndMission = () => {
             <Grid item>
               <Typography
                 variant="h6"
-                className="text-[#372660] font-[RobotoSlab] py-[80px] w-3/4"
+                className="py-[80px] w-3/4"
                 display="flex"
                 align="left"
                 alignItems="center"
                 paddingLeft={20}
+                sx={style.vnm.subtitle}
               >
                 Pledge to the project and get the benefit by buying an Offer
               </Typography>
@@ -49,19 +51,15 @@ const VisonAndMission = () => {
         </Grid>
         <Grid item xs={6} md={4}>
           <Box className={style.vnm.textBox}>
-            <Grid
-              container
-              spacing={6}
-              rowSpacing={1}
-              paddingLeft={7}
-            >
+            <Grid container spacing={6} rowSpacing={1} paddingLeft={7}>
               <Grid item xs={4} className="py-70 px-50 ml-10">
                 <Typography
                   variant="h4"
-                  className="text-[#e6e4ed] font-[RobotoSlab] py-20"
+                  className="text-[#e6e4ed] py-20"
                   align="center"
                   alignItems="center"
                   display="flex"
+                  sx={style.vnm.imageText}
                 >
                   Share the Idea
                 </Typography>
@@ -69,11 +67,12 @@ const VisonAndMission = () => {
               <Grid item xs={4}>
                 <Typography
                   variant="h4"
-                  className="text-[#6e3cbc] font-[RobotoSlab] py-[80px]"
+                  className="text-[#6e3cbc] py-[80px]"
                   display="flex"
                   align="center"
                   alignItems="center"
                   paddingLeft={13}
+                  sx={style.vnm.imageText}
                 >
                   Easy to Analysis
                 </Typography>
@@ -83,12 +82,13 @@ const VisonAndMission = () => {
               <Grid item xs={4}>
                 <Typography
                   variant="h4"
-                  className="text-[#6e3cbc] font-[RobotoSlab] py-[120px]"
+                  className="text-[#6e3cbc] py-[130px]"
                   display="flex"
                   align="center"
                   alignItems="center"
                   marginTop={1}
-                  paddingLeft={4}
+                  paddingLeft={6}
+                  sx={style.vnm.imageText}
                 >
                   Crownfunding
                 </Typography>
@@ -96,11 +96,12 @@ const VisonAndMission = () => {
               <Grid item xs={4}>
                 <Typography
                   variant="h4"
-                  className="text-[#e6e4ed] font-[RobotoSlab] py-[80px]"
+                  className="text-[#e6e4ed] py-[100px]"
                   display="flex"
                   align="center"
                   alignItems="center"
-                  paddingLeft={20}
+                  paddingLeft={21}
+                  sx={style.vnm.imageText}
                 >
                   Build Measure Learn
                 </Typography>
@@ -113,11 +114,12 @@ const VisonAndMission = () => {
             <Grid item>
               <Typography
                 variant="h6"
-                className="text-[#372660] font-[RobotoSlab] py-[80px] w-3/4"
+                className="py-[80px] w-3/4"
                 display="flex"
                 align="left"
                 alignItems="center"
                 paddingLeft={20}
+                sx={style.vnm.subtitle}
               >
                 Help investors easier to find the best fit project with
                 transparent data
@@ -126,11 +128,12 @@ const VisonAndMission = () => {
             <Grid item>
               <Typography
                 variant="h6"
-                className="text-[#372660] font-[RobotoSlab] py-[80px] w-3/4"
+                className="py-[80px] w-3/4"
                 display="flex"
                 align="left"
                 alignItems="center"
                 paddingLeft={20}
+                sx={style.vnm.subtitle}
               >
                 Approach with the lean startup methodology with Test and Voting
                 features
