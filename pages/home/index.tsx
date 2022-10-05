@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import StorageIcon from "@mui/icons-material/Storage";
 import { DeveloperBoard } from "@mui/icons-material";
 import CustomButton from "../../components/CustomButton";
+import Carousel from "../../components/Carousel";
 
 const Home = () => {
   const router = useRouter();
@@ -15,32 +16,20 @@ const Home = () => {
   };
 
   return (
-    <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8 ">
-      <div className="lg:w-4/12 md:w-6/12 px-4  w-full ml-auto py-2 lg:mr-5">
-        <CustomButton
-          label="Go to your sandbox"
-          onClickButton={onClickSandbox}
-          _icon={DeveloperBoard}
-          icon_size="large"
-          className_box="px-2 py-4"
-          className_button="py-4"
-        />
+    // <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8 ">
+    <div className="lg:py-16 md:py-12 py-8 flex lg:px-16 flex-nowrap md:flex-row flex-col md:w-full md:px-12 px-8">
+      <div className="md:w-8/12 mx-4 w-full pb-4">
+        <Carousel />
       </div>
-      <div className="lg:w-4/12 md:w-6/12 px-4 mr-auto w-full py-2 lg:ml-5">
-        <CustomButton
-          label="Go to your storages"
-          onClickButton={onClickStorage}
-          _icon={StorageIcon}
-          icon_size="large"
-          className_box="px-2 py-4"
-          className_button="py-4"
-        />
-        
+      <div className="md:w-4/12 bg-lightpurple h-screen mx-4 w-full items-center rounded pb-4">
+        <div className="bg-purple rounded items-center w-full text-center">
+          <label className="text-white align-middle font-semibold items-center text-lg">
+            Recommend
+          </label>
+        </div>
       </div>
     </div>
   );
 };
-
-
 
 export default Home;

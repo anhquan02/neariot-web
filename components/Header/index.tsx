@@ -9,51 +9,26 @@ const Header = memo((props: any) => {
 
   return (
     <>
-      <nav className="top-0 z-20 bg-white w-full p-4 items-center flex md:flex-nowrap md:justify-start md:flex-row border-b-1 shadow-lg md:left-0 md:top-0 md:overflow-y-auto md:overflow-hidden shadow-indigo-500/50 ">
-        <div className="w-full mx-auto items-center flex md:flex-nowrap md:px-10 px-4 h-full">
+      <nav className="top-0 z-20 bg-white w-full p-4 items-center flex md:flex-nowrap md:justify-start md:flex-row md:left-0 md:top-0 md:overflow-y-auto md:overflow-hidden ">
+        <div className="w-full mx-auto items-center flex md:flex-nowrap md:px-4 h-full">
           <div className="flex justify-start md:w-auto md:h-14 items-center align-middle ">
             <Link href={"/"}>
               <a href="#">
                 <span className="sr-only">Workflow</span>
                 <img
-                  className="md:h-20 md:w-20 h-10 w-auto sm:h-10 sm:w-10 visible object-fill my-auto"
-                  src="/logo.svg"
+                  className="  max-h-12 h-8 w-full visible object-fill my-auto"
+                  src="/logo.png"
                   // src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                   alt=""
                 />
               </a>
             </Link>
-            <span className="md:flex px-4 text-2xl font-semibold align-middle items-center my-auto md:visible hidden text-indigo-800 ">
-              Neariot
-            </span>
             <div
               className="flex md:hidden visible my-auto ml-2 cursor-pointer"
               onClick={() => setCollapeShow("visible")}
             >
               <DehazeIcon className="" fontSize="large" />
             </div>
-          </div>
-          <div className="md:flex justify-start md:w-auto items-center md:visible hidden">
-            <Link href={"/"}>
-              <a href="#" className="px-4 py-auto text-xl text-slate-900 ">
-                Usecase
-              </a>
-            </Link>
-            <Link href={"/"}>
-              <a href="#" className="px-4 py-auto text-xl text-slate-900 ">
-                Pricing
-              </a>
-            </Link>
-            <Link href={"/"}>
-              <a href="#" className="px-4 py-auto text-xl text-slate-900 ">
-                Docs
-              </a>
-            </Link>
-            <Link href={"/"}>
-              <a href="#" className="px-4 py-auto text-xl text-slate-900 ">
-                Help
-              </a>
-            </Link>
           </div>
         </div>
         <div
@@ -72,8 +47,8 @@ const Header = memo((props: any) => {
                   >
                     <span className="sr-only">Workflow</span>
                     <img
-                      className="md:h-20 md:w-20 h-10 w-auto sm:h-10 sm:w-10 visible object-fill my-auto"
-                      src="/logo.svg"
+                      className="  max-h-12 h-8 w-full visible object-fill my-auto"
+                      src="/logo.png"
                       // src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                       alt=""
                     />
@@ -93,7 +68,7 @@ const Header = memo((props: any) => {
                 <Link href={"/"}>
                   <a
                     href="#"
-                    className="px-4 py-auto text-xl text-slate-900 items-center "
+                    className="px-4 py-auto text-xl text-primary items-center "
                   >
                     Usecase
                   </a>
@@ -103,7 +78,7 @@ const Header = memo((props: any) => {
                 <Link href={"/"}>
                   <a
                     href="#"
-                    className="px-4 py-auto text-xl text-slate-900 items-center "
+                    className="px-4 py-auto text-xl text-primary items-center "
                   >
                     Pricing
                   </a>
@@ -113,7 +88,7 @@ const Header = memo((props: any) => {
                 <Link href={"/"}>
                   <a
                     href="#"
-                    className="px-4 py-auto text-xl text-slate-900 items-center "
+                    className="px-4 py-auto text-xl text-primary items-center "
                   >
                     Docs
                   </a>
@@ -123,7 +98,7 @@ const Header = memo((props: any) => {
                 <Link href={"/"}>
                   <a
                     href="#"
-                    className="px-4 py-auto text-xl text-slate-900 items-center "
+                    className="px-4 py-auto text-xl text-primary items-center "
                   >
                     Help
                   </a>
@@ -132,7 +107,42 @@ const Header = memo((props: any) => {
             </ul>
           </div>
         </div>
-
+        <div className="flex justify-end md:w-auto md:flex-nowrap">
+          <div className="md:flex justify-start md:w-auto items-center md:visible hidden">
+            <Link href={"/"}>
+              <a
+                href="#"
+                className="px-2 py-auto text-lg whitespace-nowrap text-primary "
+              >
+                Home
+              </a>
+            </Link>
+            <Link href={"/"}>
+              <a
+                href="#"
+                className="px-2 py-auto text-lg whitespace-nowrap text-primary "
+              >
+                Discovery
+              </a>
+            </Link>
+            <Link href={"/"}>
+              <a
+                href="#"
+                className="px-2 py-auto text-lg whitespace-nowrap text-primary "
+              >
+                Start a project
+              </a>
+            </Link>
+            <Link href={"/"}>
+              <a
+                href="#"
+                className="px-2 py-auto text-lg whitespace-nowrap text-primary "
+              >
+                About us
+              </a>
+            </Link>
+          </div>
+        </div>
         <div className="flex justify-end md:w-auto md:flex-nowrap md:min-w-[200px] items-center">
           <div className="md:mx-auto items-center">
             <Account />
@@ -143,6 +153,6 @@ const Header = memo((props: any) => {
   );
 });
 
-Header.displayName = "header"
+Header.displayName = "header";
 
 export default Header;
