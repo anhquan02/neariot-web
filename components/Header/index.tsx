@@ -16,16 +16,16 @@ const Header = memo((props: any) => {
               <a href="#">
                 <span className="sr-only">Workflow</span>
                 <img
-                  className="md:h-20 md:w-20 h-10 w-auto sm:h-10 sm:w-10 visible object-fill my-auto"
-                  src="/logo.svg"
+                  className="md:h-10 md:w-40 h-auto w-auto sm:h-10 sm:w-10 visible object-fill my-auto"
+                  src="/logo.png"
                   // src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
                   alt=""
                 />
               </a>
             </Link>
-            <span className="md:flex px-4 text-2xl font-semibold align-middle items-center my-auto md:visible hidden text-indigo-800 ">
+            {/* <span className="md:flex px-4 text-2xl font-semibold align-middle items-center my-auto md:visible hidden text-indigo-800 ">
               Neariot
-            </span>
+            </span> */}
             <div
               className="flex md:hidden visible my-auto ml-2 cursor-pointer"
               onClick={() => setCollapeShow("visible")}
@@ -36,22 +36,22 @@ const Header = memo((props: any) => {
           <div className="md:flex justify-start md:w-auto items-center md:visible hidden">
             <Link href={"/"}>
               <a href="#" className="px-4 py-auto text-xl text-slate-900 ">
-                Usecase
+                Home
               </a>
             </Link>
             <Link href={"/"}>
               <a href="#" className="px-4 py-auto text-xl text-slate-900 ">
-                Pricing
+                Discovery
               </a>
             </Link>
             <Link href={"/"}>
               <a href="#" className="px-4 py-auto text-xl text-slate-900 ">
-                Docs
+                Start a Project
               </a>
             </Link>
             <Link href={"/"}>
               <a href="#" className="px-4 py-auto text-xl text-slate-900 ">
-                Help
+                About Us
               </a>
             </Link>
           </div>
@@ -95,7 +95,7 @@ const Header = memo((props: any) => {
                     href="#"
                     className="px-4 py-auto text-xl text-slate-900 items-center "
                   >
-                    Usecase
+                    Home
                   </a>
                 </Link>
               </li>
@@ -105,7 +105,7 @@ const Header = memo((props: any) => {
                     href="#"
                     className="px-4 py-auto text-xl text-slate-900 items-center "
                   >
-                    Pricing
+                    Discovery
                   </a>
                 </Link>
               </li>
@@ -115,7 +115,7 @@ const Header = memo((props: any) => {
                     href="#"
                     className="px-4 py-auto text-xl text-slate-900 items-center "
                   >
-                    Docs
+                    Start a Project
                   </a>
                 </Link>
               </li>
@@ -125,7 +125,7 @@ const Header = memo((props: any) => {
                     href="#"
                     className="px-4 py-auto text-xl text-slate-900 items-center "
                   >
-                    Help
+                    About Us
                   </a>
                 </Link>
               </li>
