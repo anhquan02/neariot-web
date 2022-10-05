@@ -3,6 +3,7 @@ import Hero from "./hero";
 import About from "./about";
 import VisonAndMission from "./vnm";
 import Team from "./team";
+import { Grid } from "@mui/material";
 
 const styles = {
   hero: {
@@ -21,22 +22,21 @@ const styles = {
 
 const Landing = () => {
   const router = useRouter();
-
   return (
-    <div>
-      <div className={styles.hero.tab}>
+    <Grid container direction={"column"}>
+      <Grid item className={styles.hero.tab}>
         <Hero />
-      </div>
-      <div className={styles.about.tab}>
+      </Grid>
+      <Grid item className={styles.about.tab}>
         <About />
-      </div>
-      <div className={styles.vnm.tab}>
+      </Grid>
+      <Grid item className={styles.vnm.tab}>
         <VisonAndMission />
-      </div>
-      <div className={styles.team.tab}>
+      </Grid>
+      <Grid item className={styles.team.tab}>
         <Team />
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 
