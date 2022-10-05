@@ -63,7 +63,7 @@ const Header = memo((props: any) => {
                     href="#"
                     className="px-4 py-auto text-xl text-primary items-center "
                   >
-                    Usecase
+                    Home
                   </a>
                 </Link>
               </li>
@@ -73,7 +73,7 @@ const Header = memo((props: any) => {
                     href="#"
                     className="px-4 py-auto text-xl text-primary items-center "
                   >
-                    Pricing
+                    Discovery
                   </a>
                 </Link>
               </li>
@@ -83,7 +83,7 @@ const Header = memo((props: any) => {
                     href="#"
                     className="px-4 py-auto text-xl text-primary items-center "
                   >
-                    Docs
+                    Start a Project
                   </a>
                 </Link>
               </li>
@@ -93,7 +93,7 @@ const Header = memo((props: any) => {
                     href="#"
                     className="px-4 py-auto text-xl text-primary items-center "
                   >
-                    Help
+                    About Us
                   </a>
                 </Link>
               </li>
