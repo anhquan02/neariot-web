@@ -1,8 +1,22 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Button, Container, Grid, Typography } from "@mui/material";
-import style from "../../styles/landingStyle";
+// import style from "../../styles/landingStyle";
 import { useRouter } from "next/router";
+
+const style = {
+  hero: {
+      heroBox: "ml-auto mr-20 w-1/2",
+      title: "text-[#6e3cbc] text-[74.5px] font-[Arial]",
+      subtitle: "text-[#1b1a2d] text-[25.5px] font-[RobotoSlab] pl-1",
+      buttonText: "text-[#e2daf2] text-[29.5px] font-[Arial]",
+  },
+  subtitle: {
+      color: "#1b1a2d",
+      fontSize: "25.5px",
+      fontFamily: "RobotoSlab",
+  }
+};
 
 const Hero = () => {
   const router = useRouter();
