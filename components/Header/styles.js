@@ -1,5 +1,5 @@
 const styles = {
-  nav: "top-0 z-20 bg-white w-full p-4 items-center flex md:flex-nowrap md:justify-start md:flex-row md:left-0 md:top-0 md:overflow-y-auto md:overflow-hidden ",
+  nav: "top-0 z-20 bg-transparent w-full p-4 items-center flex md:flex-nowrap md:justify-start md:flex-row md:left-0 md:top-0 md:overflow-y-auto md:overflow-hidden ",
   content: {
     manual: {
       logoWrapper: "w-full mx-auto items-center flex md:flex-nowrap md:px-4 h-full",

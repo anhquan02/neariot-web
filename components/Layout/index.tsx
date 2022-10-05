@@ -44,16 +44,16 @@ const Layout = (props: any) => {
         />
         <link rel="icon" href="/neariot.ico" />
       </Head>
-      <div className="px-32 pt-8" style={scrolling ? { background: "#fff" } : {}}>
+      <div className="px-32 pt-8 absolute w-full" style={scrolling ? { background: "#fff" } : {}}>
         <Header />
       </div>
-      <div className="px-16">
+      <div className="">
         <div className="z-10 min-h-screen">{children}</div>
         {/* <div className={styles.footer}>
                     <Footer />
                 </div> */}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
