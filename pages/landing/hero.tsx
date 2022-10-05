@@ -2,8 +2,10 @@ import React from "react";
 import { Box } from "@mui/system";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import style from "./style";
+import { useRouter } from 'next/router';
 
 const Hero = () => {
+  const router = useRouter();
   return (
     <Box className={style.hero.heroBox}>
       <Container className="pt-40">
@@ -47,6 +49,7 @@ const Hero = () => {
               fontSize: "29.5px",
               fontFamily: "Arial",
             }}
+            onClick={() => {router.push("/home")}}
           >
             Explore Now
           </Typography>

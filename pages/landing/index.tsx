@@ -5,7 +5,7 @@ import styles from "./style";
 import VisonAndMission from "./vnm";
 import Team from "./team";
 
-const Home = () => {
+const Landing = () => {
   const router = useRouter();
 
   return (
@@ -26,4 +26,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Landing;
