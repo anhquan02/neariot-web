@@ -1,7 +1,6 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Button, Container, Grid, Typography } from "@mui/material";
-// import style from "../../styles/landingStyle";
 import { useRouter } from "next/router";
 
 const style = {
