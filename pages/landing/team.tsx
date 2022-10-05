@@ -1,7 +1,25 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Button, Grid, Typography } from "@mui/material";
-import style from "../../styles/landingStyle";
+// import style from "../../styles/landingStyle";
+
+const style = {
+  team: {
+    avatarBox: "w-[250px] h-[290px] bg-[url('/landing/team-img-box.png')]",
+    teamBox: "mr-auto ml-10 mb-20 w-full",
+    memberName: {
+      color: "#1b1a2d",
+      fontSize: "17.5px",
+      fontFamily: "Arial",
+      fontWeight: "bold",
+    },
+    memberPosition: {
+      color: "#1b1a2d",
+      fontSize: "12px",
+      fontFamily: "RobotoSlab",
+    },
+  },
+};
 
 interface MemberInfo {
   name: string;

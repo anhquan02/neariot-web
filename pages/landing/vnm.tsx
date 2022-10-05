@@ -1,7 +1,39 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Button, Grid, Typography } from "@mui/material";
-import style from "../../styles/landingStyle";
+// import style from "../../styles/landingStyle";
+
+const style = {
+  general: {
+      gridContainer: "",
+  },
+  vnm: {
+      vnmBox: "mr-auto ml-10 mb-20 w-full",
+      textBox: "mb-20 w-[534px] h-[534px] bg-[url('/landing/vm-img.png')]",
+      customGrid: "w-1/2 mr-20 mb-20 pt-40 justify-center display-grid grid-cols-2 grid-rows-2 gap-10",
+      largeImage: "object-fill h-[534px] w-[534px]",
+      title: {
+          color: "#6e3cbc",
+          fontSize: "74.5px",
+          fontFamily: "Arial",
+          fontWeight: "bold",
+      },
+      subtitle: {
+          color: "#372660",
+          fontSize: "25.5px",
+          fontFamily: "RobotoSlab",
+      },
+      imageText: {
+          fontSize: "29.5px",
+          fontFamily: "RobotoSlab",
+      }
+  },
+  subtitle: {
+      color: "#1b1a2d",
+      fontSize: "25.5px",
+      fontFamily: "RobotoSlab",
+  }
+};
 
 const VisonAndMission = () => {
   return (

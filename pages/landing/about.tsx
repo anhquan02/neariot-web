@@ -1,8 +1,24 @@
 import React from "react";
 import { Box } from "@mui/system";
 import { Button, Grid, Typography } from "@mui/material";
-import style from "../../styles/landingStyle";
 import Image from "next/image";
+
+const style = {
+  general: {
+    gridContainer: "",
+  },
+  about: {
+    aboutBox: "mr-auto ml-10 mt-[92px] w-full",
+    largeImage: "object-fill h-50 w-50",
+    title: "text-[#6e3cbc] text-[74.5px] font-[Arial] font-black",
+    subtitle: "mt-auto align-left w-2/3",
+  },
+  subtitle: {
+    color: "#1b1a2d",
+    fontSize: "25.5px",
+    fontFamily: "RobotoSlab",
+  },
+};
 
 const About = () => {
   return (
