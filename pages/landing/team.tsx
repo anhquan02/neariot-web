@@ -5,7 +5,7 @@ import { Button, Grid, Typography } from "@mui/material";
 const style = {
   team: {
     avatarBox: "w-[250px] h-[290px] bg-[url('/landing/team-img-box.png')]",
-    teamBox: "mr-auto ml-10 mb-20 w-full",
+    teamBox: "mb-20 w-full ",
     memberName: {
       color: "#1b1a2d",
       fontSize: "17.5px",
@@ -27,13 +27,15 @@ interface MemberInfo {
 }
 
 const Team = () => {
-  const generateMemberBox = (member: MemberInfo) => {
+  const generateMemberBox = (member: MemberInfo, index: any) => {
     return (
       <Grid
+        key={index}
         item
         sx={{
           height: "290px",
           width: "250px",
+          margin: "10px 20px",
         }}
       >
         <Box className={style.team.avatarBox}>
@@ -62,47 +64,56 @@ const Team = () => {
   };
 
   return (
-    <Box className={style.team.teamBox}>
-      <Grid container direction={"column"} marginLeft={25} paddingTop={5}>
-        <Grid container spacing={50} sx={{ paddingBottom: 35 }} display="flex">
-          {memberList.map((member) => generateMemberBox(member))}
-        </Grid>
-        <Grid container className="mt-20">
-          <Grid item>
-            <Typography
-              variant="h2"
-              display="flex"
-              marginLeft={40}
-              sx={{
-                color: "#6e3cbc",
-                fontSize: "78.5px",
-                fontFamily: "Arial",
-                fontWeight: "bold",
-              }}
-            >
-              Team Work Company
-            </Typography>
-            <Typography
-              variant="h6"
-              display="flex"
-              marginLeft={40}
-              marginTop={2}
-              align="center"
-              className="w-[783px]"
-              sx={{
-                color: "#1b1a2d",
-                fontSize: "25.5px",
-                fontFamily: "RobotoSlab",
-                fontWeight: "bold",
-              }}
-            >
-              Teamwork has the incredible power to increase productivity, job
-              satisfaction, and even each person&#39;s individual performance.
-            </Typography>
+    <div className="pb-40">
+      {/* <img
+        src="/landing/twc-bg.png"
+        alt="..."
+        className="w-full object-cover block "
+      /> */}
+      <Box className={style.team.teamBox}>
+        <Grid container direction={"column"}>
+          <Grid container display="flex" justifyContent={"center"}>
+            {memberList.map((member, index) =>
+              generateMemberBox(member, index)
+            )}
+          </Grid>
+          <Grid container className="mt-20">
+            <Grid item className="flex w-full ">
+              <div className="">
+                <Typography
+                  variant="h2"
+                  display="flex"
+                  className="w-full flex justify-center"
+                  sx={{
+                    color: "#6e3cbc",
+                    fontSize: "5vw",
+                    fontFamily: "Arial",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Team Work Company
+                </Typography>
+                <Typography
+                  variant="h6"
+                  display="flex"
+                  className="w-full flex justify-center mx-auto items-center text-center px-[20%] "
+                  sx={{
+                    color: "#1b1a2d",
+                    fontSize: "2vw",
+                    fontFamily: "RobotoSlab",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Teamwork has the incredible power to increase productivity,
+                  job satisfaction, and even each person&#39;s individual
+                  performance.
+                </Typography>
+              </div>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </div>
   );
 };
 

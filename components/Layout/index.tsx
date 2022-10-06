@@ -53,7 +53,7 @@ const Layout = (props: any) => {
                     <Footer />
                 </div> */}
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };
