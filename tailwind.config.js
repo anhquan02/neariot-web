@@ -12,7 +12,7 @@ module.exports = {
           DEFAULT: "#8a64c9",
           light: "#dfd4ee",
           dark: "#703eb8",
-          lighter:"#c0acde"
+          lighter:"#c1aedf"
         },
         lightpurple: "#dfd4ee",
       },

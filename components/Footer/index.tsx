@@ -15,7 +15,7 @@ const Footer = memo((props: any) => {
         <Typography
           variant="h6"
           className="text-[#6e3cbc]"
-          sx={{ fontWeight: "bold", fontSize: "1.5vw", fontFamily: "Arial" }}
+          sx={{ fontWeight: "bold", fontSize: "25.5px", fontFamily: "Arial" }}
           marginBottom={2}
         >
           {title}
@@ -33,7 +33,7 @@ const Footer = memo((props: any) => {
                   <Typography
                     variant="h6"
                     sx={{
-                      fontSize: "1vw",
+                      fontSize: "25.5px",
                       fontFamily: "RobotoSlab",
                       textDecoration: "none",
                     }}
@@ -53,30 +53,30 @@ const Footer = memo((props: any) => {
   };
 
   return (
-    <footer className={" w-full z-50  absolute bottom-0 bg-purple-lighter"}>
+    <footer className={"w-full h-[542px] bg-[url('/landing/footer-bg.png')]"}>
       <Grid container spacing={1}>
-        <Grid item xs>
+        <Grid item xs marginTop={25}>
           <div className="ml-40">
             {generateContainer("DEVPOST", devpostContainer)}
           </div>
         </Grid>
-        <Grid item xs>
+        <Grid item xs marginTop={25}>
           <div className="ml-20">
             {generateContainer("PORTFOLIO", portfolioContainer)}
           </div>
         </Grid>
-        <Grid item xs>
+        <Grid item xs marginTop={25}>
           <div className="ml-5">
             {generateContainer("HACKATHON", hackathonContainer)}
           </div>
         </Grid>
-        <Grid item xs={4}>
-          <div className="ml-24 ">
+        <Grid item xs={4} marginTop={25}>
+          <div className="ml-60 w-1/3 mb-10">
             {generateContainer("CONNECT", connectContainer)}
           </div>
         </Grid>
       </Grid>
-      <span className="text-xl text-gray-500 sm:text-center dark:text-gray-400 ml-20 ">
+      <span className="text-xl text-gray-500 sm:text-center dark:text-gray-400 ml-20 pt-20">
         © 2022{" "}
         <a href="#" className="hover:underline">
           Neariot

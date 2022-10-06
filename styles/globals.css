@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  position: relative;  
-}
 .form_bg {
   /* background: rgb(105, 102, 147);
   background: linear-gradient(
