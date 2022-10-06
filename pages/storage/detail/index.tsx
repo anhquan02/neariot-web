@@ -357,7 +357,7 @@ const DetailScreen = memo(() => {
           </div>
         </>
       )}
-      <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8">
+      <div className="pt-52 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8">
         <div className="flex lg:flex-nowrap flex-wrap w-full pb-12">
           {Storage()}
           <div className="lg:w-6/12 w-full h-auto bg-transparent md:mx-4 rounded-xl my-4 p-2 flex lg:flex-nowrap flex-row">

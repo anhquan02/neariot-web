@@ -3,7 +3,15 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import CustomButton from "../../../components/CustomButton";
 import Explore from "../../../components/Explore";
+import InputForm from "../../../components/Form/InputForm";
+import SelectForm from "../../../components/Form/SelectForm";
+import TextAreaForm from "../../../components/Form/TextAreaForm";
 import Notify from "../../../components/Notify";
+
+const options = [
+  { value: "0", label: "Public" },
+  { value: "1", label: "Private" },
+];
 
 const CreateScreen = memo((props: any) => {
   const wallet = useSelector((state: any) => state.wallet);
@@ -86,9 +94,9 @@ const CreateScreen = memo((props: any) => {
         type,
         repository,
         fee,
-        noSetting:true,
-        project_target:0,
-        project_rate:0,
+        noSetting: true,
+        project_target: 0,
+        project_rate: 0,
       };
       console.log(data);
 
@@ -171,7 +179,7 @@ const CreateScreen = memo((props: any) => {
         snackMsg={snackMsg}
         onClose={onCloseSnack}
       />
-      <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8">
+      <div className="pt-52 py-8 flex lg:px-16 flex-nowrap md:flex-row flex-col md:w-full md:px-12 px-8">
         <div className="mb-8 md:mx-4 w-full">
           <div className="pb-4">
             <label className="text-lg text-slate-800 ">
@@ -182,105 +190,40 @@ const CreateScreen = memo((props: any) => {
         <hr className="w-full md:mx-4  md:max-w-[40%] border-slate-400 mb-8" />
         <div className="w-full lg:px-48 md:px-32 sm:px-16">
           <form className="" onSubmit={handleCreateProject} method="post">
-            <div className="flex md:flex-row flex-col">
-              <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
-                <label htmlFor="inpName">Name </label>
-                <span className="text-red-700">*</span>
-              </div>
-              <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
-                <input
-                  id="inpName"
-                  type="text"
-                  name="inpName"
-                  className={
-                    "placeholder-slate-400 text-slate-600 border-0 px-3 py-3 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full overflow-x-hidden  shadow-indigo-500/50"
-                  }
-                  placeholder="Type something here"
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className="flex md:flex-row flex-col">
-              <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
-                <label htmlFor="inpDes">Decriptions </label>
-                <span className="text-red-700">*</span>
-              </div>
-              <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
-                <textarea
-                  id="inpDes"
-                  name="inpDes"
-                  placeholder="Type something here"
-                  className="border-0 px-3 py-3 placeholder-slate-400 text-slate-600 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full my-auto overflow-x-hidden shadow-indigo-500/50"
-                  onChange={(e) => {
-                    setDescriptions(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className="flex md:flex-row flex-col">
-              <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
-                <label>Type </label>
-                <span className="text-red-700">*</span>
-              </div>
-              <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
-                <select
-                  className={
-                    "placeholder-slate-400 text-slate-600 border-0 px-3 py-3 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full overflow-x-hidden shadow-indigo-500/50"
-                  }
-                  placeholder="Type something here"
-                  onChange={(e) => {
-                    setType(e.target.value);
-                  }}
-                >
-                  <option value="0" className="">
-                    Public
-                  </option>
-                  <option value="1" className="">
-                    Private
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div className="flex md:flex-row flex-col">
-              <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
-                <label htmlFor="inpRepository">Repository </label>
-              </div>
-              <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
-                <input
-                  id="inpRepository"
-                  type="text"
-                  name="inpRepository"
-                  className={
-                    "placeholder-slate-400 text-slate-600 border-0 px-3 py-3 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full overflow-x-hidden  shadow-indigo-500/50"
-                  }
-                  placeholder="Type something here"
-                  onChange={(e) => {
-                    setRepository(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
-            <div className="flex md:flex-row flex-col mb-2">
-              <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
-                <label htmlFor="inpFee">Subcribe Fee </label>
-              </div>
-              <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
-                <input
-                  id="inpFee"
-                  type="text"
-                  name="inpFee"
-                  className={
-                    "placeholder-slate-400 text-slate-600 border-0 px-3 py-3 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full overflow-x-hidden  shadow-indigo-500/50"
-                  }
-                  placeholder="Type something here"
-                  onChange={(e) => {
-                    setFee(e.target.value);
-                  }}
-                />
-              </div>
-            </div>
+            <InputForm
+              label="Name"
+              onchange={(value: any) => {
+                setName(value);
+              }}
+              required
+            />
+            <TextAreaForm
+              label="Descriptions"
+              onchange={(value: any) => {
+                setDescriptions(value);
+              }}
+              required
+            />
+            <SelectForm
+              label="Type"
+              options={options}
+              required
+              onchange={(value: any) => {
+                setType(value);
+              }}
+            />
+            <InputForm
+              label="Repository"
+              onchange={(value: any) => {
+                setRepository(value);
+              }}
+            />
+            <InputForm
+              label="Subcribe Fee"
+              onchange={(value: any) => {
+                setFee(value);
+              }}
+            />
             <div className="flex flex-nowrap flex-row mb-2">
               <div className="lg:w-2/12 ml-auto lg:mr-2 md:w-4/12 h-4 md:mx-2 my-auto "></div>
               <div className="overflow-x-auto md:w-8/12 lg:w-10/12 flex">

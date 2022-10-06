@@ -308,7 +308,7 @@ const SettingScreen = memo(() => {
     }
     return (
       <>
-        <div className="mb-8 md:mx-4 w-full flex justify-between">
+        <div className="pt-52 mb-8 md:mx-4 w-full flex justify-between">
           <div className="my-auto">
             <label className="text-lg text-slate-800 ">
               Change your project setting
