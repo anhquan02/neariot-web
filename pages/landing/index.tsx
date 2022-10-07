@@ -56,7 +56,6 @@ const Landing = () => {
         sx={{
           height: { xs: "full", md: "700px" },
           paddingBottom: { xs: 20, md: 0 },
-          marginTop: { xs: 40, md: 0 },
         }}
       >
         <Team />

@@ -17,7 +17,7 @@ const style = {
     vnmBox: "mr-auto ml-10 mb-20 w-full",
     textBox: "bg-[url('/landing/vm-img.png')]",
     customGrid:
-      "w-1/2 mr-20 mb-20 pt-40 justify-center display-grid grid-cols-2 grid-rows-2 gap-10",
+      "w-1/2 mr-20 justify-center display-grid grid-cols-2 grid-rows-2 gap-10",
     largeImage: "object-fill h-[534px] w-[534px]",
     title: {
       color: "#6e3cbc",
@@ -49,7 +49,10 @@ const style = {
 const VisonAndMission = () => {
   return (
     <Box className={style.vnm.vnmBox}>
-      <Grid container spacing={2} className={style.vnm.customGrid}>
+      <Grid container spacing={2} className={style.vnm.customGrid} sx={{
+        paddingTop: { xs: 5, md: 20 },
+        marginBottom: { xs: 0, md: 20 },
+      }}>
         <Typography
           variant="h2"
           justifyContent="center"
