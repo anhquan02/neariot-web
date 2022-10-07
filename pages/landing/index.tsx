@@ -7,47 +7,58 @@ import { Grid } from "@mui/material";
 
 const styles = {
   hero: {
-    // tab: "w-full h-[1158px] bg-[url('/landing/hero-bg.png')]",
-    tab: "w-full  ",
+    tab: "bg-[url('/landing/hero-bg.png')] w-full",
   },
   about: {
-    // tab: "w-full h-[704px] bg-[url('/landing/about-bg.png')]",
-    tab: "w-full ",
+    tab: "bg-[url('/landing/about-bg.png')] w-full",
   },
   vnm: {
-    // tab: "w-full h-[1104px] bg-[url('/landing/vnm-bg.png')]",
-    tab: "w-full ",
+    tab: "bg-[url('/landing/vnm-bg.png')] w-full",
   },
   team: {
-    // tab: "w-full h-[700px] bg-[url('/landing/twc-bg.png')]",
-    tab: "w-full ",
+    tab: "bg-[url('/landing/twc-bg.png')] w-full",
   },
 };
 
 const Landing = () => {
-  const router = useRouter();
   return (
-    <Grid container direction={"column"}>
-      <Grid item className={styles.hero.tab}>
+    <Grid container direction={"column"} columns={{ xs: 4, sm: 6, md: 8 }}>
+      <Grid
+        item
+        className={styles.hero.tab}
+        sx={{
+          height: { xs: "100vh", md: "1158px" },
+        }}
+      >
         <Hero />
       </Grid>
-      <Grid item className={styles.about.tab}>
+      <Grid
+        item
+        className={styles.about.tab}
+        sx={{
+          height: { xs: "100vh", md: "704px" },
+        }}
+      >
         <About />
       </Grid>
-      <Grid item className={styles.vnm.tab}>
+      <Grid
+        item
+        className={styles.vnm.tab}
+        sx={{
+          height: { xs: "100vh", md: "1104px" },
+        }}
+      >
         <VisonAndMission />
       </Grid>
-      <Grid item className={styles.team.tab}>
+      <Grid
+        item
+        className={styles.team.tab}
+        sx={{
+          height: { xs: "full", md: "700px" },
+          paddingBottom: { xs: 20, md: 0 },
+        }}
+      >
         <Team />
-      </Grid>
-      <Grid item>
-        <div className="relative">          
-          <img
-            src="/landing/footer-bg.png"
-            alt="..."
-            className="w-full object-cover block "
-          />
-        </div>
       </Grid>
     </Grid>
   );

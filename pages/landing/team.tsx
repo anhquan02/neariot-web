@@ -1,11 +1,18 @@
 import React from "react";
 import { Box } from "@mui/system";
-import { Button, Grid, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  Grid,
+  Typography,
+  CardMedia,
+  CardContent,
+} from "@mui/material";
 
 const style = {
   team: {
-    avatarBox: "w-[250px] h-[290px] bg-[url('/landing/team-img-box.png')]",
-    teamBox: "mb-20 w-full ",
+    avatarBox: "bg-[url('/landing/team-img-box.png')]",
+    teamBox: "w-full",
     memberName: {
       color: "#1b1a2d",
       fontSize: "17.5px",
@@ -18,6 +25,26 @@ const style = {
       fontFamily: "RobotoSlab",
     },
   },
+  title: {
+    color: "#6e3cbc",
+    fontSize: {
+      xs: "1.5rem",
+      sm: "3rem",
+      md: "3.5rem",
+      lg: "4rem",
+      xl: "4.5rem",
+    },
+    fontFamily: "Arial",
+    fontWeight: "bold",
+    width: { xs: "17rem", md: "auto" },
+  },
+  subtitle: {
+    color: "#1b1a2d",
+    fontSize: { xs: "1rem", md: "25.5px" },
+    fontFamily: "RobotoSlab",
+    fontWeight: "bold",
+    width: { xs: "20rem", md: "50rem" },
+  },
 };
 
 interface MemberInfo {
@@ -27,93 +54,116 @@ interface MemberInfo {
 }
 
 const Team = () => {
-  const generateMemberBox = (member: MemberInfo, index: any) => {
+  const generateMemberBox = (member: MemberInfo) => {
     return (
       <Grid
-        key={index}
         item
         sx={{
-          height: "290px",
-          width: "250px",
-          margin: "10px 20px",
+          height: { xs: "auto", md: "290px" },
+          width: { xs: "auto", md: "250px" },
         }}
       >
-        <Box className={style.team.avatarBox}>
-          <Typography
-            variant="h6"
-            className="text-[#1b1a2d]"
-            align="center"
-            alignItems="center"
-            paddingTop={28}
-            sx={style.team.memberName}
+        <Card
+          sx={{
+            // height: { xs: "auto", md: "290px" },
+            width: { xs: "auto", md: "250px" },
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            borderRadius: "none",
+            position: "absolute",
+          }}
+          className="object-fit: contain"
+        >
+          <CardMedia component="img" image="/landing/team-img-box.png" />
+          <CardContent
+            sx={{
+              marginTop: { xs: -36, md: -38 },
+            }}
           >
-            {member.name}
-          </Typography>
-          <Typography
-            variant="body1"
-            className="text-[#1b1a2d]"
-            align="center"
-            alignItems="center"
-            sx={style.team.memberPosition}
-          >
-            {member.position}
-          </Typography>
-        </Box>
+            <Typography
+              variant="h6"
+              className="text-[#1b1a2d]"
+              align="center"
+              alignItems="center"
+              paddingTop={28}
+              sx={style.team.memberName}
+            >
+              {member.name}
+            </Typography>
+            <Typography
+              variant="body1"
+              className="text-[#1b1a2d]"
+              align="center"
+              alignItems="center"
+              sx={style.team.memberPosition}
+            >
+              {member.position}
+            </Typography>
+          </CardContent>
+        </Card>
       </Grid>
     );
   };
 
   return (
-    <div className="pb-40">
-      {/* <img
-        src="/landing/twc-bg.png"
-        alt="..."
-        className="w-full object-cover block "
-      /> */}
-      <Box className={style.team.teamBox}>
-        <Grid container direction={"column"}>
-          <Grid container display="flex" justifyContent={"center"}>
-            {memberList.map((member, index) =>
-              generateMemberBox(member, index)
-            )}
-          </Grid>
-          <Grid container className="mt-20">
-            <Grid item className="flex w-full ">
-              <div className="">
-                <Typography
-                  variant="h2"
-                  display="flex"
-                  className="w-full flex justify-center"
-                  sx={{
-                    color: "#6e3cbc",
-                    fontSize: "5vw",
-                    fontFamily: "Arial",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Team Work Company
-                </Typography>
-                <Typography
-                  variant="h6"
-                  display="flex"
-                  className="w-full flex justify-center mx-auto items-center text-center px-[20%] "
-                  sx={{
-                    color: "#1b1a2d",
-                    fontSize: "2vw",
-                    fontFamily: "RobotoSlab",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Teamwork has the incredible power to increase productivity,
-                  job satisfaction, and even each person&#39;s individual
-                  performance.
-                </Typography>
-              </div>
-            </Grid>
+    <Box className={style.team.teamBox}>
+      <Grid
+        container
+        direction={"column"}
+        marginLeft={{
+          xs: "4rem",
+          md: 25,
+        }}
+        paddingTop={{ xs: 5, md: 20 }}
+        spacing={{
+          xs: 5,
+          md: 12,
+        }}
+      >
+        <Grid
+          container
+          direction={{ xs: "column", md: "row" }}
+          spacing={{ xs: 38, md: 50 }}
+        >
+          {memberList.map((member) => generateMemberBox(member))}
+        </Grid>
+        <Grid
+          container
+          sx={{
+            paddingTop: { xs: 45, md: 45 },
+          }}
+        >
+          <Grid item>
+            <Typography
+              variant="h2"
+              sx={style.title}
+              marginLeft={{
+                xs: 0,
+                md: 45,
+              }}
+            >
+              Team Work Company
+            </Typography>
+            <Typography
+              variant="h6"
+              align="center"
+              sx={style.subtitle}
+              marginLeft={{
+                xs: -5,
+                md: 40,
+              }}
+              marginTop={{
+                xs: 0,
+                md: 3,
+              }}
+            >
+              Teamwork has the incredible power to increase productivity, job
+              satisfaction, and even each person&#39;s individual performance.
+            </Typography>
           </Grid>
         </Grid>
-      </Box>
-    </div>
+      </Grid>
+    </Box>
   );
 };
 
