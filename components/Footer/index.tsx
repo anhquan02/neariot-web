@@ -1,4 +1,4 @@
-import { Grid, Link, Typography } from "@mui/material";
+import { Box, Container, Grid, Link, Typography } from "@mui/material";
 import Image from "next/image";
 import { memo } from "react";
 
@@ -53,37 +53,63 @@ const Footer = memo((props: any) => {
   };
 
   return (
-    <footer className={"w-full h-[542px] bg-[url('/landing/footer-bg.png')]"}>
-      <Grid container spacing={1}>
-        <Grid item xs marginTop={25}>
-          <div className="ml-40">
-            {generateContainer("DEVPOST", devpostContainer)}
-          </div>
+    <>
+      <footer className={"bg-[url('/landing/footer-bg.png')] w-full h-[542px] "}>
+        <Grid
+          container
+          spacing={1}
+          direction={{ xs: "column", md: "row" }}
+          sx={{
+            marginBottom: 3,
+            height: { xs: "auto", md: "100%" },
+          }}
+        >
+          <Grid item xs marginTop={{ xs: 5, md: 25 }}>
+            <Box
+              sx={{
+                marginLeft: { xs: 10, md: 15 },
+              }}
+            >
+              {generateContainer("DEVPOST", devpostContainer)}
+            </Box>
+          </Grid>
+          <Grid item xs marginTop={{ xs: 5, md: 25 }}>
+            <Box
+              sx={{
+                marginLeft: { xs: 10, md: 5 },
+              }}
+            >
+              {generateContainer("PORTFOLIO", portfolioContainer)}
+            </Box>
+          </Grid>
+          <Grid item xs marginTop={{ xs: 0, md: 25 }}>
+            <Box
+              sx={{
+                marginLeft: { xs: 10, md: 0 },
+              }}
+            >
+              {generateContainer("HACKATHON", hackathonContainer)}
+            </Box>
+          </Grid>
+          <Grid item xs={4} marginTop={{ xs: 0, md: 25 }}>
+            <Box
+              sx={{
+                marginLeft: { xs: 10, md: 20 },
+              }}
+            >
+              {generateContainer("CONNECT", connectContainer)}
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item xs marginTop={25}>
-          <div className="ml-20">
-            {generateContainer("PORTFOLIO", portfolioContainer)}
-          </div>
-        </Grid>
-        <Grid item xs marginTop={25}>
-          <div className="ml-5">
-            {generateContainer("HACKATHON", hackathonContainer)}
-          </div>
-        </Grid>
-        <Grid item xs={4} marginTop={25}>
-          <div className="ml-60 w-1/3 mb-10">
-            {generateContainer("CONNECT", connectContainer)}
-          </div>
-        </Grid>
-      </Grid>
-      <span className="text-xl text-gray-500 sm:text-center dark:text-gray-400 ml-20 pt-20">
-        © 2022{" "}
-        <a href="#" className="hover:underline">
-          Neariot
-        </a>
-        . All Rights Reserved.
-      </span>
-    </footer>
+        <span className="text-xl text-gray-500 sm:text-center dark:text-gray-400 ml-20 pt-20">
+          © 2022{" "}
+          <a href="#" className="hover:underline">
+            Neariot
+          </a>
+          . All Rights Reserved.
+        </span>
+      </footer>
+    </>
   );
 });
 

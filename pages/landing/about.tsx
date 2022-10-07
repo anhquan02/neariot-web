@@ -8,22 +8,30 @@ const style = {
     gridContainer: "",
   },
   about: {
-    aboutBox: "mr-auto ml-10 mt-[92px] w-full",
+    aboutBox: "mr-auto w-full",
     largeImage: "object-fill h-50 w-50",
     title: "text-[#6e3cbc] text-[74.5px] font-[Arial] font-black",
-    subtitle: "mt-auto align-left w-2/3",
+    subtitle: "align-left w-2/3",
   },
   subtitle: {
     color: "#1b1a2d",
-    fontSize: "25.5px",
+    fontSize: { xs: "1rem", md: "25.5px" },
     fontFamily: "RobotoSlab",
+    width: { xs: "20rem", md: "50rem" },
   },
 };
 
 const About = () => {
   return (
-    <Box className={style.about.aboutBox}>
-      <Grid container spacing={12} className={style.general.gridContainer}>
+    <Box
+      className={style.about.aboutBox}
+      sx={{ paddingBottom: { xs: 40 }, marginTop: { xs: "3rem", md: "92px" }, marginLeft: { xs: "2rem", md: "92px" } }}
+    >
+      <Grid
+        container
+        spacing={{ xs: 5, md: 12 }}
+        className={style.general.gridContainer}
+      >
         <Grid item xs={6} md={5}>
           <Image
             height={"550px"}
@@ -36,7 +44,13 @@ const About = () => {
             variant="h2"
             sx={{
               color: "#6e3cbc",
-              fontSize: "74.5px",
+              fontSize: {
+                xs: "2rem",
+                sm: "3rem",
+                md: "3.5rem",
+                lg: "4rem",
+                xl: "4.5rem",
+              },
               fontFamily: "Arial",
               fontWeight: "bold",
             }}

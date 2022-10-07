@@ -5,28 +5,39 @@ import { useRouter } from "next/router";
 
 const style = {
   hero: {
-      heroBox: "ml-auto mr-20 w-1/2",
-      title: "text-[#6e3cbc] text-[74.5px] font-[Arial]",
-      subtitle: "text-[#1b1a2d] text-[25.5px] font-[RobotoSlab] pl-1",
-      buttonText: "text-[#e2daf2] text-[29.5px] font-[Arial]",
+    heroBox: "w-full", // w-1/2 ml-auto mr-20
+    title: "text-[#6e3cbc] text-[74.5px] font-[Arial]",
+    subtitle: "text-[#1b1a2d] text-[25.5px] font-[RobotoSlab] pl-1",
+    buttonText: "text-[#e2daf2] text-[29.5px] font-[Arial]",
   },
   subtitle: {
-      color: "#1b1a2d",
-      fontSize: "25.5px",
-      fontFamily: "RobotoSlab",
+    color: "#1b1a2d",
+    fontSize: {xs: "1rem", md: "25.5px"},
+    fontFamily: "RobotoSlab",
+  },
+  buttonText: {
   }
 };
 
 const Hero = () => {
   const router = useRouter();
   return (
-    <Box className={style.hero.heroBox}>
+    <Box
+      className={style.hero.heroBox}
+    >
+      <Box className="w-1/2 ml-auto mr-20">
       <Container className="pt-40">
         <Typography
           variant="h1"
           sx={{
             color: "#6e3cbc",
-            fontSize: "74.5px",
+            fontSize: {
+              xs: "2rem",
+              sm: "3rem",
+              md: "3.5rem",
+              lg: "4rem",
+              xl: "4.5rem",
+            },
             fontFamily: "Arial",
           }}
         >
@@ -43,8 +54,6 @@ const Hero = () => {
           variant="contained"
           color="primary"
           sx={{
-            width: "226px",
-            height: "54px",
             textTransform: "none",
             backgroundColor: "#5825f4",
             borderRadius: "50px",
@@ -55,7 +64,7 @@ const Hero = () => {
             variant="h6"
             sx={{
               color: "#e2daf2",
-              fontSize: "29.5px",
+              fontSize: {md: "29.5px"},
               fontFamily: "Arial",
             }}
             onClick={() => {
@@ -66,6 +75,7 @@ const Hero = () => {
           </Typography>
         </Button>
       </Container>
+      </Box>
     </Box>
   );
 };

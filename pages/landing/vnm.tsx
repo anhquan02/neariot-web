@@ -1,38 +1,49 @@
 import React from "react";
-import { Box } from "@mui/system";
-import { Button, Grid, Typography } from "@mui/material";
-// import style from "../../styles/landingStyle";
+import { Box, Container } from "@mui/system";
+import {
+  Button,
+  Card,
+  CardMedia,
+  Grid,
+  Typography,
+  CardContent,
+} from "@mui/material";
 
 const style = {
   general: {
-      gridContainer: "",
+    gridContainer: "",
   },
   vnm: {
-      vnmBox: "mr-auto ml-10 mb-20 w-full",
-      textBox: "mb-20 w-[534px] h-[534px] bg-[url('/landing/vm-img.png')]",
-      customGrid: "w-1/2 mr-20 mb-20 pt-40 justify-center display-grid grid-cols-2 grid-rows-2 gap-10",
-      largeImage: "object-fill h-[534px] w-[534px]",
-      title: {
-          color: "#6e3cbc",
-          fontSize: "74.5px",
-          fontFamily: "Arial",
-          fontWeight: "bold",
+    vnmBox: "mr-auto ml-10 mb-20 w-full",
+    textBox: "bg-[url('/landing/vm-img.png')]",
+    customGrid:
+      "w-1/2 mr-20 mb-20 pt-40 justify-center display-grid grid-cols-2 grid-rows-2 gap-10",
+    largeImage: "object-fill h-[534px] w-[534px]",
+    title: {
+      color: "#6e3cbc",
+      fontSize: {
+        xs: "2rem",
+        sm: "3rem",
+        md: "3.5rem",
+        lg: "4rem",
+        xl: "4.5rem",
       },
-      subtitle: {
-          color: "#372660",
-          fontSize: "25.5px",
-          fontFamily: "RobotoSlab",
-      },
-      imageText: {
-          fontSize: "29.5px",
-          fontFamily: "RobotoSlab",
-      }
-  },
-  subtitle: {
-      color: "#1b1a2d",
-      fontSize: "25.5px",
+      fontFamily: "Arial",
+      fontWeight: "bold",
+    },
+    subtitle: {
+      color: "#372660",
+      fontSize: { xs: "1rem", md: "25.5px" },
       fontFamily: "RobotoSlab",
-  }
+      width: { xs: "20rem", md: "35rem" },
+      paddingLeft: { xs: 1, md: 10 },
+      paddingTop: { md: "100px" },
+    },
+    imageText: {
+      fontSize: { xs: "1rem", md: "29.5px" },
+      fontFamily: "RobotoSlab",
+    },
+  },
 };
 
 const VisonAndMission = () => {
@@ -49,17 +60,17 @@ const VisonAndMission = () => {
           VISION AND MISSION
         </Typography>
       </Grid>
-      <Grid container spacing={2} className={style.general.gridContainer}>
+      <Grid container spacing={2} direction={{ xs: "column", md: "row" }}>
         <Grid item xs={6} md={4}>
-          <Grid container direction={"column"}>
+          <Grid container direction={"column"} spacing={{ md: 8 }}>
             <Grid item>
               <Typography
                 variant="h6"
-                className="py-[80px] w-3/4"
+                className="w-3/4"
                 display="flex"
                 align="left"
                 alignItems="center"
-                paddingLeft={20}
+                // paddingLeft={20}
                 sx={style.vnm.subtitle}
               >
                 Starup can share infomation about their project to impress
@@ -69,11 +80,11 @@ const VisonAndMission = () => {
             <Grid item>
               <Typography
                 variant="h6"
-                className="py-[80px] w-3/4"
+                className="w-3/4"
                 display="flex"
                 align="left"
                 alignItems="center"
-                paddingLeft={20}
+                // paddingLeft={{xs: 1, md: 20}}
                 sx={style.vnm.subtitle}
               >
                 Pledge to the project and get the benefit by buying an Offer
@@ -82,75 +93,91 @@ const VisonAndMission = () => {
           </Grid>
         </Grid>
         <Grid item xs={6} md={4}>
-          <Box className={style.vnm.textBox}>
-            <Grid container spacing={6} rowSpacing={1} paddingLeft={7}>
-              <Grid item xs={4} className="py-70 px-50 ml-10">
-                <Typography
-                  variant="h4"
-                  className="text-[#e6e4ed] py-20"
-                  align="center"
-                  alignItems="center"
-                  display="flex"
-                  sx={style.vnm.imageText}
-                >
-                  Share the Idea
-                </Typography>
+          <Card
+            sx={{
+              position: "absolute",
+              backgroundColor: "transparent",
+              boxShadow: "none",
+              borderRadius: "none",
+              width: { xs: "75%", md: "534px" },
+              paddingLeft: { xs: 1, md: 0 },
+            }}
+            className="object-fit: contain"
+          >
+            <CardMedia component="img" image="/landing/vm-img.png" />
+            <CardContent>
+              <Grid container sx={{ marginTop: { xs: -31, md: -55 } }}>
+                <Grid item xs={4}>
+                  <Typography
+                    variant="h4"
+                    className="text-[#e6e4ed]"
+                    align="center"
+                    alignItems="center"
+                    sx={style.vnm.imageText}
+                    marginLeft={{ xs: 2, md: 6 }}
+                  >
+                    Share the Idea
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography
+                    variant="h4"
+                    className="text-[#6e3cbc]"
+                    align="center"
+                    alignItems="center"
+                    sx={style.vnm.imageText}
+                    marginLeft={{ xs: 11, md: 20 }}
+                    marginTop={{ xs: -1, md: -2 }}
+                  >
+                    Easy to Analysis
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <Typography
-                  variant="h4"
-                  className="text-[#6e3cbc] py-[80px]"
-                  display="flex"
-                  align="center"
-                  alignItems="center"
-                  paddingLeft={13}
-                  sx={style.vnm.imageText}
-                >
-                  Easy to Analysis
-                </Typography>
+              <Grid container sx={{ marginTop: { xs: 11, md: 21 } }}>
+                <Grid item xs={4}>
+                  <Typography
+                    variant="h4"
+                    className="text-[#6e3cbc]"
+                    align="center"
+                    alignItems="center"
+                    marginTop={1}
+                    sx={style.vnm.imageText}
+                    marginLeft={{ xs: 1, md: 4 }}
+                  >
+                    Crownfunding
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography
+                    variant="h4"
+                    className="text-[#e6e4ed]"
+                    align="center"
+                    alignItems="center"
+                    sx={style.vnm.imageText}
+                    marginTop={{ xs: -1, md: -3 }}
+                    marginLeft={{ xs: 11, md: 21 }}
+                  >
+                    Build Measure Learn
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container>
-              <Grid item xs={4}>
-                <Typography
-                  variant="h4"
-                  className="text-[#6e3cbc] py-[130px]"
-                  display="flex"
-                  align="center"
-                  alignItems="center"
-                  marginTop={1}
-                  paddingLeft={6}
-                  sx={style.vnm.imageText}
-                >
-                  Crownfunding
-                </Typography>
-              </Grid>
-              <Grid item xs={4}>
-                <Typography
-                  variant="h4"
-                  className="text-[#e6e4ed] py-[100px]"
-                  display="flex"
-                  align="center"
-                  alignItems="center"
-                  paddingLeft={21}
-                  sx={style.vnm.imageText}
-                >
-                  Build Measure Learn
-                </Typography>
-              </Grid>
-            </Grid>
-          </Box>
+            </CardContent>
+          </Card>
         </Grid>
         <Grid item xs={6} md={4}>
-          <Grid container direction={"column"}>
+          <Grid
+            container
+            direction={"column"}
+            spacing={{ md: 8 }}
+            paddingTop={{ xs: 37, md: 0 }}
+          >
             <Grid item>
               <Typography
                 variant="h6"
-                className="py-[80px] w-3/4"
+                className="w-3/4"
                 display="flex"
                 align="left"
                 alignItems="center"
-                paddingLeft={20}
                 sx={style.vnm.subtitle}
               >
                 Help investors easier to find the best fit project with
@@ -160,11 +187,11 @@ const VisonAndMission = () => {
             <Grid item>
               <Typography
                 variant="h6"
-                className="py-[80px] w-3/4"
+                className="w-3/4"
                 display="flex"
                 align="left"
                 alignItems="center"
-                paddingLeft={20}
+                // paddingLeft={20}
                 sx={style.vnm.subtitle}
               >
                 Approach with the lean startup methodology with Test and Voting
