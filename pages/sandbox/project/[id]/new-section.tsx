@@ -74,7 +74,7 @@ const NewSectionScreen = memo(() => {
   }, [type]);
   return (
     <>
-      <div className="lg:py-16 md:py-12 y-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8">
+      <div className="pt-52 y-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8">
         <div className="mb-8 md:mx-4 w-full">
           <div className="pb-4">
             <label htmlFor="" className="text-lg text-slate-800">

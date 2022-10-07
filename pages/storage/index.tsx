@@ -133,7 +133,7 @@ const Storage = memo((props: any) => {
         snackMsg={snackMsg}
         onClose={onCloseSnack}
       />
-      <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 sm:px-8 px-4 sm:mx-auto">
+      <div className="pt-52 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 sm:px-8 px-4 sm:mx-auto">
         <CreateCard
           label="Create new key value storage"
           welcome="Storage"

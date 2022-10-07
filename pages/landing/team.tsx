@@ -149,7 +149,7 @@ const Team = () => {
               align="center"
               sx={style.subtitle}
               marginLeft={{
-                xs: 0,
+                xs: -5,
                 md: 40,
               }}
               marginTop={{

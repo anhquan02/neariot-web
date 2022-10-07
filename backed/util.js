@@ -2,6 +2,7 @@ import getConfig from "./config";
 import * as nearAPI from "near-api-js";
 import { Web3Storage } from "web3.storage";
 import Web3Connector from "./web3Connector";
+import md5 from "md5";
 
 const nearConfig = getConfig("testnet");
 // const nearConfig = getConfig('mainnet');
@@ -68,4 +69,8 @@ export function initWeb3Storage(token) {
     apiKey: web3Connector.apiKey,
     web3Connector: web3Connector,
   };
+}
+
+export function generateKey(content) {
+  return md5(JSON.stringify(content));
 }

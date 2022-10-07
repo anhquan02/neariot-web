@@ -39,6 +39,7 @@ const Hero = () => {
               xl: "4.5rem",
             },
             fontFamily: "Arial",
+            marginTop: {xs: "5rem", md: "8rem"},
           }}
         >
           Ideas are easy
