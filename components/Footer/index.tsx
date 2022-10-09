@@ -15,7 +15,7 @@ const Footer = memo((props: any) => {
         <Typography
           variant="h6"
           className="text-[#6e3cbc]"
-          sx={{ fontWeight: "bold", fontSize: "25.5px", fontFamily: "Arial" }}
+          sx={{ fontWeight: "700", fontSize: "25.5px", fontFamily: "Arial" }}
           marginBottom={2}
         >
           {title}
@@ -23,19 +23,19 @@ const Footer = memo((props: any) => {
         {content.map((item, index) => {
           return (
             <div key={index}>
-              <Grid container spacing={1}>
+              <Grid container>
                 {item.image !== "" && (
-                  <Grid item xs={3} marginTop="10px">
+                  <Grid item xs={2} marginTop="10px">
                     <Image width={"24px"} height={"20px"} src={item.image} />
                   </Grid>
                 )}
                 <Grid item xs={9}>
                   <Typography
-                    variant="h6"
                     sx={{
                       fontSize: "25.5px",
                       fontFamily: "RobotoSlab",
                       textDecoration: "none",
+                      fontWeight: "500",
                     }}
                     component={Link}
                   >
@@ -54,7 +54,9 @@ const Footer = memo((props: any) => {
 
   return (
     <>
-      <footer className={"bg-[url('/landing/footer-bg.png')] w-full h-[542px] "}>
+      <footer
+        className={"bg-[url('/landing/footer-bg.png')] w-full h-[542px] "}
+      >
         <Grid
           container
           spacing={1}
