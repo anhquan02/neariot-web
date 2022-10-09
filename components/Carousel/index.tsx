@@ -124,7 +124,7 @@ const Carousel = () => {
           </button>
           <button
             type="button"
-            className="flex absolute bottom-4 left-8 z-30 justify-center items-center px-4 cursor-pointer group focus:outline-none bg-lightpurple text-darkpurple rounded-lg text-lg font-semibold"
+            className="flex absolute bottom-8 left-12 z-30 justify-center items-center px-4 cursor-pointer group focus:outline-none bg-lightpurple text-darkpurple rounded-lg text-lg font-semibold"
           >
             Invest Now
           </button>

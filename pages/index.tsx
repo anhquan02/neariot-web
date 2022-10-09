@@ -1,5 +1,5 @@
-import Home from "./home";
+import Landing from "./landing";
 
 export default function Index() {
-  return <Home />
+  return <Landing />
 } 
