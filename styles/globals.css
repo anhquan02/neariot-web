@@ -5,6 +5,10 @@
 body{
   position: relative;  
 }
+
+:root{
+  --body-font:"Arial"
+}
 .form_bg {
   /* background: rgb(105, 102, 147);
   background: linear-gradient(

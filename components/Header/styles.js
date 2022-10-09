@@ -6,7 +6,7 @@ const styles = {
       childStart:
         "flex justify-start md:w-auto md:h-14 items-center align-middle",
       childCenter: {
-        wrapper: "flex justify-center md:w-auto md:flex-nowrap",
+        wrapper: "flex justify-center md:w-auto md:flex-nowrap mr-6",
         content:
           "md:flex justify-start md:w-auto items-center md:visible hidden",
         link: "px-2 py-auto text-lg whitespace-nowrap text-primary ",

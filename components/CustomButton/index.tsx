@@ -27,7 +27,7 @@ const CustomButton = memo(
         <div
           className={
             className_box +
-            " bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-xl border-0  w-full  items-center h-full"
+            " bg-purple-dark shadow-lg text-white rounded-xl border-0  w-full  items-center h-full"
           }
         >
           <button
