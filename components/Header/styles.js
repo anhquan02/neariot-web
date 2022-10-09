@@ -9,7 +9,7 @@ const styles = {
         wrapper: "flex justify-center md:w-auto md:flex-nowrap mr-6",
         content:
           "md:flex justify-start md:w-auto items-center md:visible hidden",
-        link: "px-2 py-auto text-lg whitespace-nowrap text-primary ",
+        link: "px-2 py-auto text-lg whitespace-nowrap text-primary font-[400] text-[29.5px] mr-10 font-[Arial]",
       },
       img: "max-h-12 h-8 w-full visible object-fill my-auto",
       menuIcon: "flex md:hidden visible my-auto ml-2 cursor-pointer",

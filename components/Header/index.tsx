@@ -4,6 +4,7 @@ import DehazeIcon from "@mui/icons-material/Dehaze";
 import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
 import styles from "./styles";
+import { Typography } from "@mui/material";
 
 const Header = memo((props: any) => {
   const [collapseShow, setCollapeShow] = useState("hidden");

@@ -18,6 +18,11 @@ const style = {
     fontSize: { xs: "1rem", md: "25.5px" },
     fontFamily: "RobotoSlab",
     width: { xs: "20rem", md: "50rem" },
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "normal",
+    letterSpacing: "normal",
   },
 };
 
@@ -41,27 +46,29 @@ const About = () => {
         </Grid>
         <Grid item xs={8} md={7}>
           <Typography
-            variant="h2"
+            // variant="h2"
             sx={{
               color: "#6e3cbc",
               fontSize: {
                 xs: "2rem",
                 sm: "3rem",
-                md: "3.5rem",
-                lg: "4rem",
-                xl: "4.5rem",
+                md: "74.5px",
               },
               fontFamily: "Arial",
               fontWeight: "bold",
+              fontStretch: "normal",
+              fontStyle: "normal",
+              lineHeight: "normal",
+              letterSpacing: "normal",
             }}
           >
             ABOUT WEB
           </Typography>
           <br />
           <Typography
-            variant="h6"
+            // variant="h6"
             sx={style.subtitle}
-            className={style.about.subtitle}
+            // className={style.subtitle}
           >
             Neariot campaigns make ideas into reality. It&#39;s where creators
             share new visions for creative work with the communities that will
@@ -71,7 +78,7 @@ const About = () => {
           <Typography
             variant="h6"
             sx={style.subtitle}
-            className={style.about.subtitle}
+            // className={style.subtitle}
           >
             No matter what, creators always control how the work comes
             together—no 100-page grant applications, no donors demanding you

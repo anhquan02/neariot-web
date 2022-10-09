@@ -37,6 +37,10 @@ const style = {
     fontFamily: "Arial",
     fontWeight: "bold",
     width: { xs: "17rem", md: "auto" },
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "normal",
+    letterSpacing: "normal",
   },
   subtitle: {
     color: "#1b1a2d",
@@ -44,6 +48,10 @@ const style = {
     fontFamily: "RobotoSlab",
     fontWeight: "bold",
     width: { xs: "20rem", md: "50rem" },
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "normal",
+    letterSpacing: "normal",
   },
 };
 
@@ -81,7 +89,7 @@ const Team = () => {
             }}
           >
             <Typography
-              variant="h6"
+              // variant="h6"
               className="text-[#1b1a2d]"
               align="center"
               alignItems="center"
@@ -91,7 +99,7 @@ const Team = () => {
               {member.name}
             </Typography>
             <Typography
-              variant="body1"
+              // variant="body1"
               className="text-[#1b1a2d]"
               align="center"
               alignItems="center"
@@ -135,7 +143,7 @@ const Team = () => {
         >
           <Grid item>
             <Typography
-              variant="h2"
+              // variant="h2"
               sx={style.title}
               marginLeft={{
                 xs: 0,
@@ -145,7 +153,7 @@ const Team = () => {
               Team Work Company
             </Typography>
             <Typography
-              variant="h6"
+              // variant="h6"
               align="center"
               sx={style.subtitle}
               marginLeft={{

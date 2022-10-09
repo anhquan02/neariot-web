@@ -7,13 +7,19 @@ const style = {
   hero: {
     heroBox: "w-full", // w-1/2 ml-auto mr-20
     title: "text-[#6e3cbc] text-[74.5px] font-[Arial]",
-    subtitle: "text-[#1b1a2d] text-[25.5px] font-[RobotoSlab] pl-1",
     buttonText: "text-[#e2daf2] text-[29.5px] font-[Arial]",
   },
   subtitle: {
     color: "#1b1a2d",
     fontSize: {xs: "1rem", md: "25.5px"},
     fontFamily: "RobotoSlab",
+    paddingLeft: {xs: 0, md: 1},
+    width: {xs: "auto", md: "656px"},
+    fontWeight: "normal",
+    fontStretch: "normal",
+    fontStyle: "normal",
+    lineHeight: "normal",
+    letterSpacing: "normal",
   },
   buttonText: {
   }
@@ -28,25 +34,27 @@ const Hero = () => {
       <Box className="w-1/2 ml-auto mr-20">
       <Container className="pt-40">
         <Typography
-          variant="h1"
           sx={{
             color: "#6e3cbc",
             fontSize: {
               xs: "2rem",
               sm: "3rem",
-              md: "3.5rem",
-              lg: "4rem",
-              xl: "4.5rem",
+              md: "74.5px",
             },
             fontFamily: "Arial",
             marginTop: {xs: "5rem", md: "8rem"},
+            fontWeight: "normal",
+            fontStretch: "normal",
+            fontStyle: "normal",
+            lineHeight: "normal",
+            letterSpacing: "normal",
           }}
         >
           Ideas are easy
           <br />
           Implementation is hard
         </Typography>
-        <Typography variant="h4" paddingTop={2} sx={style.subtitle}>
+        <Typography paddingTop={2} sx={style.subtitle}>
           Don&#39;t worry about failure you only have to be right one
         </Typography>
         <br />
@@ -62,7 +70,7 @@ const Hero = () => {
           }}
         >
           <Typography
-            variant="h6"
+            // variant="h6"
             sx={{
               color: "#e2daf2",
               fontSize: {md: "29.5px"},

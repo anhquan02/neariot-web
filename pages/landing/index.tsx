@@ -7,16 +7,16 @@ import { Grid } from "@mui/material";
 
 const styles = {
   hero: {
-    tab: "bg-[url('/landing/hero-bg.png')] w-full",
+    tab: "bg-[url('/landing/hero-bg.png')] w-full bg-no-repeat bg-cover bg-center",
   },
   about: {
-    tab: "bg-[url('/landing/about-bg.png')] w-full",
+    tab: "bg-[url('/landing/about-bg.png')] w-full bg-no-repeat bg-cover bg-center",
   },
   vnm: {
-    tab: "bg-[url('/landing/vnm-bg.png')] w-full",
+    tab: "bg-[url('/landing/vnm-bg.png')] w-full bg-no-repeat bg-cover bg-center",
   },
   team: {
-    tab: "bg-[url('/landing/twc-bg.png')] w-full",
+    tab: "bg-[url('/landing/twc-bg.png')] w-full bg-no-repeat bg-cover bg-center",
   },
 };
 

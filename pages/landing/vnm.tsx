@@ -35,13 +35,23 @@ const style = {
       color: "#372660",
       fontSize: { xs: "1rem", md: "25.5px" },
       fontFamily: "RobotoSlab",
-      width: { xs: "20rem", md: "35rem" },
+      width: { xs: "20rem", md: "25rem" },
       paddingLeft: { xs: 1, md: 10 },
       paddingTop: { md: "100px" },
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: "normal",
+      letterSpacing: "normal",
     },
     imageText: {
       fontSize: { xs: "1rem", md: "29.5px" },
-      fontFamily: "RobotoSlab",
+      fontFamily: "Roboto",
+      fontWeight: "normal",
+      fontStretch: "normal",
+      fontStyle: "normal",
+      lineHeight: "normal",
+      letterSpacing: "normal",
     },
   },
 };
@@ -49,12 +59,16 @@ const style = {
 const VisonAndMission = () => {
   return (
     <Box className={style.vnm.vnmBox}>
-      <Grid container spacing={2} className={style.vnm.customGrid} sx={{
-        paddingTop: { xs: 5, md: 20 },
-        marginBottom: { xs: 0, md: 20 },
-      }}>
+      <Grid
+        container
+        spacing={2}
+        className={style.vnm.customGrid}
+        sx={{
+          paddingTop: { xs: 5, md: 20 },
+          marginBottom: { xs: 0, md: 20 },
+        }}
+      >
         <Typography
-          variant="h2"
           justifyContent="center"
           alignItems="center"
           paddingRight={10}
@@ -66,14 +80,10 @@ const VisonAndMission = () => {
       <Grid container spacing={2} direction={{ xs: "column", md: "row" }}>
         <Grid item xs={6} md={4}>
           <Grid container direction={"column"} spacing={{ md: 8 }}>
-            <Grid item>
+            <Grid item >
               <Typography
-                variant="h6"
-                className="w-3/4"
-                display="flex"
                 align="left"
                 alignItems="center"
-                // paddingLeft={20}
                 sx={style.vnm.subtitle}
               >
                 Starup can share infomation about their project to impress
@@ -82,12 +92,8 @@ const VisonAndMission = () => {
             </Grid>
             <Grid item>
               <Typography
-                variant="h6"
-                className="w-3/4"
-                display="flex"
                 align="left"
                 alignItems="center"
-                // paddingLeft={{xs: 1, md: 20}}
                 sx={style.vnm.subtitle}
               >
                 Pledge to the project and get the benefit by buying an Offer
@@ -112,7 +118,7 @@ const VisonAndMission = () => {
               <Grid container sx={{ marginTop: { xs: -31, md: -55 } }}>
                 <Grid item xs={4}>
                   <Typography
-                    variant="h4"
+                    // variant="h4"
                     className="text-[#e6e4ed]"
                     align="center"
                     alignItems="center"
@@ -124,13 +130,13 @@ const VisonAndMission = () => {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography
-                    variant="h4"
+                    // variant="h4"
                     className="text-[#6e3cbc]"
                     align="center"
                     alignItems="center"
                     sx={style.vnm.imageText}
-                    marginLeft={{ xs: 11, md: 20 }}
-                    marginTop={{ xs: -1, md: -2 }}
+                    marginLeft={{ xs: 9, md: 19 }}
+                    width={{ xs: "100%", md: "112px" }}
                   >
                     Easy to Analysis
                   </Typography>
@@ -139,11 +145,11 @@ const VisonAndMission = () => {
               <Grid container sx={{ marginTop: { xs: 11, md: 21 } }}>
                 <Grid item xs={4}>
                   <Typography
-                    variant="h4"
+                    // variant="h4"
                     className="text-[#6e3cbc]"
                     align="center"
                     alignItems="center"
-                    marginTop={1}
+                    marginTop={{ xs: 3, md: 4 }}
                     sx={style.vnm.imageText}
                     marginLeft={{ xs: 1, md: 4 }}
                   >
@@ -152,12 +158,11 @@ const VisonAndMission = () => {
                 </Grid>
                 <Grid item xs={4}>
                   <Typography
-                    variant="h4"
+                    // variant="h4"
                     className="text-[#e6e4ed]"
                     align="center"
                     alignItems="center"
                     sx={style.vnm.imageText}
-                    marginTop={{ xs: -1, md: -3 }}
                     marginLeft={{ xs: 11, md: 21 }}
                   >
                     Build Measure Learn
@@ -176,9 +181,6 @@ const VisonAndMission = () => {
           >
             <Grid item>
               <Typography
-                variant="h6"
-                className="w-3/4"
-                display="flex"
                 align="left"
                 alignItems="center"
                 sx={style.vnm.subtitle}
@@ -189,12 +191,8 @@ const VisonAndMission = () => {
             </Grid>
             <Grid item>
               <Typography
-                variant="h6"
-                className="w-3/4"
-                display="flex"
                 align="left"
                 alignItems="center"
-                // paddingLeft={20}
                 sx={style.vnm.subtitle}
               >
                 Approach with the lean startup methodology with Test and Voting
