@@ -17,3 +17,15 @@ export interface ProjectData {
   fee?:any;
   apiKey?:any;
 };
+
+export interface ProjectCardProps{
+  id:string;
+  owner:string;
+  name:string;
+  img?:string;
+  type:string;
+  descriptions:string;
+  pledgers?: any;
+  backers?:any;
+  avg_rate?: any;
+}
