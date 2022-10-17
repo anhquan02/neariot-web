@@ -21,9 +21,9 @@ const Home = () => {
         <Filter />
         <ProjectContainer />
       </div>
-      <div className="md:w-4/12 bg-lightpurple h-full d:mx-4 w-full items-center rounded pb-4">
-        <div className="bg-purple rounded items-center w-full text-center">
-          <label className="text-white align-middle font-semibold items-center text-lg">
+      <div className="md:w-4/12 bg-lightpurple h-full md:mx-4 w-full items-center rounded pb-4 md:block hidden">
+        <div className="bg-purple rounded items-center w-full text-center h-16 flex">
+          <label className="text-white align-middle font-semibold items-center text-xl mx-auto">
             Recommend
           </label>
         </div>

@@ -107,13 +107,13 @@ const listProject = [
 const ProjectContainer = memo(() => {
   return (
     <>
-      <div className="container my-12">
-        <div className="grid gap-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
+      <div className="container my-6 md:mx-auto">
+        <div className="grid gap-10 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
           {listProject.map((item, index) => {
             return <ProjectCard key={index} {...item} />;
           })}
         </div>
-        <div className="flex justify-end my-12">
+        <div className="flex justify-end my-8">
           <Stack
             spacing={2}
           >
