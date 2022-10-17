@@ -52,8 +52,8 @@ const RecomendContainer = memo(()=>{
 
     return (
         <>
-        <div className="container my-12 bg-transparent px-20">
-             <div className="grid gap-4 grid-rows-4">
+        <div className="container lg:my-11 my-9  bg-transparent px-12">
+             <div className="grid gap-10 grid-rows-4">
                 {listProject.map((item,index)=>{
                     return (
                         <ProjectCard key={index} {...item}/>

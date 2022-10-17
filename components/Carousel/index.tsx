@@ -44,7 +44,7 @@ const Carousel = () => {
           <div className="duration-700 ease-in-out ">
             <img
               className={
-                "h-56 rounded-lg sm:h-64 w-full object-cover block " +
+                "h-56 rounded-lg sm:h-[413px] w-full object-cover block " +
                 (display ? "static" : "hidden")
               }
               src={imgSrc}
@@ -73,7 +73,7 @@ const Carousel = () => {
     <>
       <div className="relative w-full">
         <div className="overflow-hidden relative ">
-          <div className="h-56 rounded-lg sm:h-64 w-full">
+          <div className="h-56 rounded-lg sm:h-[413px] w-full">
             <>{renderCarouse()}</>
           </div>
           <button
@@ -126,7 +126,7 @@ const Carousel = () => {
             type="button"
             className="flex absolute bottom-8 left-12 z-30 justify-center items-center px-4 cursor-pointer group focus:outline-none bg-lightpurple text-darkpurple rounded-lg text-lg font-semibold"
           >
-            Invest Now
+            Start a project
           </button>
         </div>
       </div>
