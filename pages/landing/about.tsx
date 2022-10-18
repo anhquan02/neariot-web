@@ -8,16 +8,15 @@ const style = {
     gridContainer: "",
   },
   about: {
-    aboutBox: "mr-auto w-full",
+    aboutBox: "w-full",
     largeImage: "object-fill h-50 w-50",
     title: "text-[#6e3cbc] text-[74.5px] font-[Arial] font-black",
-    subtitle: "align-left w-2/3",
   },
   subtitle: {
     color: "#1b1a2d",
     fontSize: { xs: "1rem", md: "25.5px" },
     fontFamily: "RobotoSlab",
-    width: { xs: "20rem", md: "50rem" },
+    width: { xs: "20rem", md: 3 / 4 },
     fontWeight: "normal",
     fontStretch: "normal",
     fontStyle: "normal",
@@ -30,14 +29,25 @@ const About = () => {
   return (
     <Box
       className={style.about.aboutBox}
-      sx={{ paddingBottom: { xs: 40 }, marginTop: { xs: "3rem", md: "92px" }, marginLeft: { xs: "2rem", md: "92px" } }}
+      sx={{
+        paddingBottom: { xs: 40 },
+        marginTop: { xs: "3rem", md: "92px" },
+      }}
     >
       <Grid
         container
         spacing={{ xs: 5, md: 12 }}
         className={style.general.gridContainer}
+        sx={{
+          width: { xs: "100%", md: "100%" },
+          paddingLeft: {xs: 5, md: 22}
+        }}
       >
-        <Grid item xs={6} md={5}>
+        <Grid
+          item
+          xs={6}
+          md={5}
+        >
           <Image
             height={"550px"}
             width={"578px"}
@@ -60,6 +70,7 @@ const About = () => {
               fontStyle: "normal",
               lineHeight: "normal",
               letterSpacing: "normal",
+              width: { xs: "20rem", md: "30rem" },
             }}
           >
             ABOUT WEB
@@ -76,7 +87,7 @@ const About = () => {
           </Typography>
           <br />
           <Typography
-            variant="h6"
+            // variant="h6"
             sx={style.subtitle}
             // className={style.subtitle}
           >

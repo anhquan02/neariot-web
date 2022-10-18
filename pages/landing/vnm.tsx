@@ -14,10 +14,10 @@ const style = {
     gridContainer: "",
   },
   vnm: {
-    vnmBox: "mr-auto ml-10 mb-20 w-full",
+    vnmBox: "mr-auto mb-20 w-full",
     textBox: "bg-[url('/landing/vm-img.png')]",
     customGrid:
-      "w-1/2 mr-20 justify-center display-grid grid-cols-2 grid-rows-2 gap-10",
+      "w-1/2 justify-center display-grid grid-cols-2 grid-rows-2 gap-10",
     largeImage: "object-fill h-[534px] w-[534px]",
     title: {
       color: "#6e3cbc",
@@ -71,16 +71,22 @@ const VisonAndMission = () => {
         <Typography
           justifyContent="center"
           alignItems="center"
-          paddingRight={10}
           sx={style.vnm.title}
         >
           VISION AND MISSION
         </Typography>
       </Grid>
-      <Grid container spacing={2} direction={{ xs: "column", md: "row" }}>
+      <Grid
+        container
+        spacing={2}
+        direction={{ xs: "column", md: "row" }}
+        sx={{
+          paddingLeft: { xs: 3 },
+        }}
+      >
         <Grid item xs={6} md={4}>
           <Grid container direction={"column"} spacing={{ md: 8 }}>
-            <Grid item >
+            <Grid item>
               <Typography
                 align="left"
                 alignItems="center"
@@ -115,7 +121,10 @@ const VisonAndMission = () => {
           >
             <CardMedia component="img" image="/landing/vm-img.png" />
             <CardContent>
-              <Grid container sx={{ marginTop: { xs: -31, md: -55 } }}>
+              <Grid
+                container
+                sx={{ marginTop: { xs: -31, md: -55 }, justifyItems: "center" }}
+              >
                 <Grid item xs={4}>
                   <Typography
                     // variant="h4"
@@ -142,7 +151,10 @@ const VisonAndMission = () => {
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid container sx={{ marginTop: { xs: 11, md: 21 } }}>
+              <Grid
+                container
+                sx={{ marginTop: { xs: 11, md: 21 }, justifyItems: "center" }}
+              >
                 <Grid item xs={4}>
                   <Typography
                     // variant="h4"

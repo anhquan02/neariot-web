@@ -13,7 +13,6 @@ const style = {
     color: "#1b1a2d",
     fontSize: {xs: "1rem", md: "25.5px"},
     fontFamily: "RobotoSlab",
-    paddingLeft: {xs: 0, md: 1},
     width: {xs: "auto", md: "656px"},
     fontWeight: "normal",
     fontStretch: "normal",
