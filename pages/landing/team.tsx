@@ -12,7 +12,7 @@ import {
 const style = {
   team: {
     avatarBox: "bg-[url('/landing/team-img-box.png')]",
-    teamBox: "w-full",
+    teamBox: "w-2/3",
     memberName: {
       color: "#1b1a2d",
       fontSize: "17.5px",
@@ -130,15 +130,16 @@ const Team = () => {
       >
         <Grid
           container
+          spacing={{ xs: 38, md: 15 }}
           direction={{ xs: "column", md: "row" }}
-          spacing={{ xs: 38, md: 50 }}
+          justifyContent={{ xs: "center", md: "space-between" }}
         >
           {memberList.map((member) => generateMemberBox(member))}
         </Grid>
         <Grid
           container
           sx={{
-            paddingTop: { xs: 45, md: 45 },
+            paddingTop: { xs: 45, md: 25 },
           }}
         >
           <Grid item>
