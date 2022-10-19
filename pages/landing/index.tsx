@@ -16,7 +16,7 @@ const styles = {
     tab: "bg-[url('/landing/vnm-bg.png')] w-full bg-no-repeat bg-cover bg-center",
   },
   team: {
-    tab: "bg-[url('/landing/twc-bg.png')] w-full bg-no-repeat bg-cover bg-center",
+    tab: "bg-[url('/landing/group-8.png')] w-full bg-no-repeat bg-cover bg-center",
   },
 };
 
@@ -54,7 +54,7 @@ const Landing = () => {
         item
         className={styles.team.tab}
         sx={{
-          height: { xs: "full", md: "700px" },
+          height: { xs: "full", md: "1238px" },
           paddingBottom: { xs: 20, md: 0 },
         }}
       >
