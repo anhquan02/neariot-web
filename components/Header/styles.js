@@ -6,10 +6,10 @@ const styles = {
       childStart:
         "flex justify-start md:w-auto md:h-14 items-center align-middle",
       childCenter: {
-        wrapper: "flex justify-center md:w-auto md:flex-nowrap mr-6",
+        wrapper: "flex justify-center md:w-auto md:flex-nowrap mr-[87px]",
         content:
           "md:flex justify-start md:w-auto items-center md:visible hidden",
-        link: "px-2 py-auto text-lg whitespace-nowrap text-primary font-[400] text-[29.5px] mr-10 font-[Arial]",
+        link: "px-4 py-auto text-lg whitespace-nowrap text-primary font-[400] text-[29.5px] mr-11 font-[Arial]",
       },
       img: "max-h-12 h-8 w-full visible object-fill my-auto",
       menuIcon: "flex md:hidden visible my-auto ml-2 cursor-pointer",

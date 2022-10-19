@@ -15,8 +15,8 @@ const Footer = memo((props: any) => {
         <Typography
           variant="h6"
           className="text-[#6e3cbc]"
-          sx={{ fontWeight: "700", fontSize: "25.5px", fontFamily: "Arial" }}
-          marginBottom={2}
+          sx={{ fontWeight: "700", fontSize: "1.2vw", fontFamily: "Arial" }}
+          marginBottom={0}
         >
           {title}
         </Typography>
@@ -32,7 +32,7 @@ const Footer = memo((props: any) => {
                 <Grid item xs={9}>
                   <Typography
                     sx={{
-                      fontSize: "25.5px",
+                      fontSize: "1.2vw",
                       fontFamily: "RobotoSlab",
                       textDecoration: "none",
                       fontWeight: "500",
@@ -55,7 +55,7 @@ const Footer = memo((props: any) => {
   return (
     <>
       <footer
-        className={"bg-[url('/landing/footer-bg.png')] w-full h-[542px] "}
+        className={"bg-purple-lighter w-full h-[406px] absolute bottom-0 mt-20"}
       >
         <Grid
           container
@@ -66,7 +66,7 @@ const Footer = memo((props: any) => {
             height: { xs: "auto", md: "100%" },
           }}
         >
-          <Grid item xs marginTop={{ xs: 5, md: 25 }}>
+          <Grid item xs marginTop={{ xs: 5, md: 15 }}>
             <Box
               sx={{
                 marginLeft: { xs: 10, md: 15 },
@@ -75,7 +75,7 @@ const Footer = memo((props: any) => {
               {generateContainer("DEVPOST", devpostContainer)}
             </Box>
           </Grid>
-          <Grid item xs marginTop={{ xs: 5, md: 25 }}>
+          <Grid item xs marginTop={{ xs: 5, md: 15 }}>
             <Box
               sx={{
                 marginLeft: { xs: 10, md: 5 },
@@ -84,7 +84,7 @@ const Footer = memo((props: any) => {
               {generateContainer("PORTFOLIO", portfolioContainer)}
             </Box>
           </Grid>
-          <Grid item xs marginTop={{ xs: 0, md: 25 }}>
+          <Grid item xs marginTop={{ xs: 0, md: 15 }}>
             <Box
               sx={{
                 marginLeft: { xs: 10, md: 0 },
@@ -93,7 +93,7 @@ const Footer = memo((props: any) => {
               {generateContainer("HACKATHON", hackathonContainer)}
             </Box>
           </Grid>
-          <Grid item xs={4} marginTop={{ xs: 0, md: 25 }}>
+          <Grid item xs={4} marginTop={{ xs: 0, md: 15 }}>
             <Box
               sx={{
                 marginLeft: { xs: 10, md: 20 },
@@ -103,13 +103,13 @@ const Footer = memo((props: any) => {
             </Box>
           </Grid>
         </Grid>
-        <span className="text-xl text-gray-500 sm:text-center dark:text-gray-400 ml-20 pt-20">
+        {/* <span className="text-xl text-gray-500 sm:text-center dark:text-gray-400 ml-20 pt-20">
           © 2022{" "}
           <a href="#" className="hover:underline">
             Neariot
           </a>
           . All Rights Reserved.
-        </span>
+        </span> */}
       </footer>
     </>
   );

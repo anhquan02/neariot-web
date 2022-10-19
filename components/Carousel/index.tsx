@@ -124,7 +124,7 @@ const Carousel = () => {
           </button>
           <button
             type="button"
-            className="flex absolute bottom-8 left-12 z-30 justify-center items-center px-4 cursor-pointer group focus:outline-none bg-lightpurple text-darkpurple rounded-lg text-lg font-semibold"
+            className="flex absolute bottom-16 left-20 z-30 justify-center items-center px-4 cursor-pointer group focus:outline-none bg-purple-lighter text-darkpurple rounded-2xl text-2xl font-bold w-[271px] p-2 shadow-inner"
           >
             Start a project
           </button>

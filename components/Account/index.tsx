@@ -79,7 +79,7 @@ const Account = memo((props: any) => {
       // </div>
       <CustomButton
         label="Connect the wallet"
-        className_box="border-0 rounded-full bg-darkpurple text-white py-2 px-4"
+        className_box="border-0 rounded-full bg-darkpurple text-white py-2 px-4 w-[292px]"
         className_button="whitespace-nowrap font-normal"
         onClickButton={onRequestConnectWallet}
       />
