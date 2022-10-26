@@ -18,7 +18,7 @@ const listImage = [
   },
 ];
 
-const Carousel = () => {
+const Carousel = ({ btnText, btnOnclick }: any) => {
   const [index, setIndex] = useState(0);
 
   const handleNext = useCallback(() => {
@@ -122,12 +122,15 @@ const Carousel = () => {
               <span className="hidden">Next</span>
             </span>
           </button>
-          <button
-            type="button"
-            className="flex absolute bottom-16 left-20 z-30 justify-center items-center px-4 cursor-pointer group focus:outline-none bg-purple-lighter text-darkpurple rounded-2xl text-2xl font-bold w-[271px] p-2 shadow-inner"
-          >
-            Start a project
-          </button>
+          {btnText && (
+            <button
+              type="button"
+              className="flex absolute bottom-16 left-20 z-30 justify-center items-center px-4 cursor-pointer group focus:outline-none bg-purple-lighter text-darkpurple rounded-2xl text-2xl font-bold w-[271px] p-2 shadow-inner"
+              onClick={btnOnclick}
+            >
+              {btnText}
+            </button>
+          )}
         </div>
       </div>
     </>
