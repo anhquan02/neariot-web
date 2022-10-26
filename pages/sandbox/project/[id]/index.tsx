@@ -15,7 +15,7 @@ const DetailProcjet = memo(() => {
     id: "",
     owner: "",
     name: "",
-    type: "",
+    // type: "",
     descriptions: "",
     repository: "",
     created_at: "",
@@ -61,15 +61,15 @@ const DetailProcjet = memo(() => {
 
     (async () => {
       const project = await getProject(id);
-      console.log('project = ', project);
+      console.log("project = ", project);
       const _data = await getDataWeb3(project.metadata);
-      console.log('_data = ', _data);
-      
+      console.log("_data = ", _data);
+
       setData({
         id: project.id,
         owner: _data.owner,
         name: _data.name,
-        type: _data.type,
+        // type: _data.type,
         descriptions: _data.descriptions,
         repository: _data.repository,
         created_at: project.created_at,
@@ -118,8 +118,10 @@ const DetailProcjet = memo(() => {
 
   const renderButton = useCallback(() => {
     const owner = data.owner;
+    const { walletConnection } = wallet;
+    const userId = walletConnection.getAccountId();
     const noSetting = data.noSetting;
-    if (owner) {
+    if (owner == userId) {
       return (
         <>
           <button
@@ -233,12 +235,12 @@ const DetailProcjet = memo(() => {
                 {data?.repository}
               </span>
             </div>
-            <div className="flex flex-row w-full py-2 m-2">
+            {/* <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 w-3/12">Type: </div>
               <span className="flex mx-2 w-9/12 px-2 overflow-x-auto">
                 {data.type == "0" ? "Public" : "Private"}
               </span>
-            </div>
+            </div> */}
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 w-3/12">Create At: </div>
               <span className="flex mx-2 w-9/12 px-2 overflow-x-auto">
