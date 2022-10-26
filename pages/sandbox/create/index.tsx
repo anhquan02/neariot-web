@@ -80,18 +80,18 @@ const CreateScreen = memo((props: any) => {
           msg: "Description could not be empty",
         });
       }
-      if (type === "" || type === null || typeof type === "undefined") {
-        return onShowResult({
-          type: "error",
-          msg: "Type could not be empty",
-        });
-      }
+      // if (type === "" || type === null || typeof type === "undefined") {
+      //   return onShowResult({
+      //     type: "error",
+      //     msg: "Type could not be empty",
+      //   });
+      // }
 
       const data = {
         owner: userId,
         name,
         descriptions,
-        type,
+        // type,
         repository,
         fee,
         noSetting: true,
@@ -178,17 +178,17 @@ const CreateScreen = memo((props: any) => {
         snackMsg={snackMsg}
         onClose={onCloseSnack}
       />
-      <div className="pt-52 py-8 flex lg:px-16 flex-nowrap md:flex-row flex-col md:w-full md:px-12 px-8">
+      <div className="pt-52 py-8 flex lg:px-16 flex-wrap md:flex-row flex-col md:w-full md:px-12 px-8">
         <div className="mb-8 md:mx-4 w-full">
-          <div className="pb-4">
-            <label className="text-lg text-slate-800 ">
+          <div className="pb-4 text-center">
+            <label className="text-4xl text-primary font-extrabold">
               Create new Project
             </label>
           </div>
         </div>
-        <hr className="w-full md:mx-4  md:max-w-[40%] border-slate-400 mb-8" />
+        {/* <hr className="w-full md:mx-4  md:max-w-[40%] border-slate-400 mb-8" /> */}
         <div className="w-full lg:px-48 md:px-32 sm:px-16">
-          <form className="" onSubmit={handleCreateProject} method="post">
+          <form className="mx-2" onSubmit={handleCreateProject} method="post">
             <InputForm
               label="Name"
               onchange={(value: any) => {
@@ -203,14 +203,14 @@ const CreateScreen = memo((props: any) => {
               }}
               required
             />
-            <SelectForm
+            {/* <SelectForm
               label="Type"
               options={options}
               required
               onchange={(value: any) => {
                 setType(value);
               }}
-            />
+            /> */}
             <InputForm
               label="Repository"
               onchange={(value: any) => {
@@ -218,18 +218,18 @@ const CreateScreen = memo((props: any) => {
               }}
             />
             <InputForm
-              label="Subcribe Fee"
+              label="Target Fee"
               onchange={(value: any) => {
                 setFee(value);
               }}
             />
-            <div className="flex flex-nowrap flex-row mb-2">
-              <div className="lg:w-2/12 ml-auto lg:mr-2 md:w-4/12 h-4 md:mx-2 my-auto "></div>
-              <div className="overflow-x-auto md:w-8/12 lg:w-10/12 flex">
+            <div className="flex flex-nowrap flex-row mb-2 text-primary font-semibold">
+              {/* <div className="lg:w-2/12 ml-auto lg:mr-2 md:w-4/12 h-4 md:mx-2 my-auto "></div> */}
+              <div className="overflow-x-auto w-full flex">
                 <input
                   required
                   type="checkbox"
-                  className=" align-middle my-auto lg:w-4 md:w-8 mx-2 "
+                  className=" align-middle my-auto lg:w-4 md:w-8 mr-4 "
                   id="check1"
                   onInvalid={(e) =>
                     (e.target as HTMLInputElement).setCustomValidity(
@@ -245,13 +245,13 @@ const CreateScreen = memo((props: any) => {
                 </label>
               </div>
             </div>
-            <div className="flex flex-nowrap flex-row mb-2">
-              <div className="lg:w-2/12 ml-auto lg:mr-2 md:w-4/12 h-4 md:mx-2 my-auto "></div>
-              <div className="overflow-x-auto md:w-8/12 lg:w-10/12 flex">
+            <div className="flex flex-nowrap flex-row mb-2 text-primary font-semibold">
+              {/* <div className="lg:w-2/12 ml-auto lg:mr-2 md:w-4/12 h-4 md:mx-2 my-auto "></div> */}
+              <div className="overflow-x-auto w-full flex">
                 <input
                   required
                   type="checkbox"
-                  className=" align-middle my-auto lg:w-4 md:w-8 mx-2 "
+                  className=" align-middle my-auto lg:w-4 md:w-8 mr-4 "
                   id="check2"
                   onInvalid={(e) =>
                     (e.target as HTMLInputElement).setCustomValidity(
@@ -269,14 +269,14 @@ const CreateScreen = memo((props: any) => {
             </div>
             <div className="flex flex-row mb-2">
               <CustomButton
-                className_box="px-2 py-2 lg:w-6/12 md:w-4/12 w-full mx-auto my-4"
+                className_box="px-2 py-2 md:w-4/12 w-full mx-auto my-4"
                 className_button="py-2"
                 // onClickButton={handleCreateProject}
               />
             </div>
           </form>
         </div>
-        <Explore />
+        {/* <Explore /> */}
       </div>
     </>
   );

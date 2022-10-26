@@ -21,7 +21,7 @@ const TextAreaForm = memo(({ label, onchange, required }: Props) => {
   return (
     <>
        <div className={styles.wrapper}>
-        <div className={styles.label}>
+        <div className={styles.labelArea}>
           <label htmlFor={"inp" + label}>{label} </label>
           {required ? <span className={styles.required}>*</span> : null}
         </div>

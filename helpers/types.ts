@@ -2,7 +2,7 @@ export interface ProjectData {
   id?: string;
   owner: string;
   name: string;
-  type: string;
+  // type: string;
   descriptions: string;
   repository: string;
   created_at: any;
