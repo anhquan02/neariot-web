@@ -26,13 +26,13 @@ export default class Web3Connector {
                 "Content-Type": "application/json",
             },
         });
-        const data = await res.json();
+        const data = (await res.json()).result;
         let output = {
             projectId: data.id,
             filename: data.filename,
             lastUpdate: data.updatedAt,
+            metadata: JSON.parse(Buffer.from(data.metadata, 'base64').toString('ascii')),
         };
-        output.metadata = JSON.parse(Buffer.from(data.metadata, 'base64').toString('ascii'));
         return output;
     };
 
@@ -51,8 +51,8 @@ export default class Web3Connector {
             },
             body: JSON.stringify({
                 id: projectId,
-                filename: filename,
-                content: Buffer.from(JSON.stringify(content)).toString('base64'),
+                fileName: filename,
+                metadata: Buffer.from(JSON.stringify(content)).toString('base64'),
             }),
         });
         return (await res.json()).result;
