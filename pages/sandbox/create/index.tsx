@@ -102,10 +102,9 @@ const CreateScreen = memo((props: any) => {
 
       setOpenLoading(true);
       const { web3Connector } = web3storage;
-      const { contract } = wallet;
+      const { contract, currentUser } = wallet;
       const filename = userId + "_" + Date.now();
-      const cid = await web3Connector.setData(filename, data);
-
+      const cid = await web3Connector.setData(currentUser.accountId, filename, data);      
       await contract
         ?.create_project?.(
           {

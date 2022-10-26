@@ -61,7 +61,10 @@ const DetailProcjet = memo(() => {
 
     (async () => {
       const project = await getProject(id);
+      console.log('project = ', project);
       const _data = await getDataWeb3(project.metadata);
+      console.log('_data = ', _data);
+      
       setData({
         id: project.id,
         owner: _data.owner,
@@ -87,7 +90,7 @@ const DetailProcjet = memo(() => {
     return await web3Connector
       .getData(cid)
       .then((res: any) => {
-        return JSON.parse(res.content);
+        return res.metadata;
       })
       .catch((err: any) => {
         onShowResult({
