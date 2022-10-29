@@ -15,7 +15,7 @@ const DetailProcjet = memo(() => {
     id: "",
     owner: "",
     name: "",
-    type: "",
+    // type: "",
     descriptions: "",
     repository: "",
     created_at: "",
@@ -61,12 +61,15 @@ const DetailProcjet = memo(() => {
 
     (async () => {
       const project = await getProject(id);
+      console.log("project = ", project);
       const _data = await getDataWeb3(project.metadata);
+      console.log("_data = ", _data);
+
       setData({
         id: project.id,
         owner: _data.owner,
         name: _data.name,
-        type: _data.type,
+        // type: _data.type,
         descriptions: _data.descriptions,
         repository: _data.repository,
         created_at: project.created_at,
@@ -87,7 +90,7 @@ const DetailProcjet = memo(() => {
     return await web3Connector
       .getData(cid)
       .then((res: any) => {
-        return JSON.parse(res.content);
+        return res.metadata;
       })
       .catch((err: any) => {
         onShowResult({
@@ -115,8 +118,10 @@ const DetailProcjet = memo(() => {
 
   const renderButton = useCallback(() => {
     const owner = data.owner;
+    const { walletConnection } = wallet;
+    const userId = walletConnection.getAccountId();
     const noSetting = data.noSetting;
-    if (owner) {
+    if (owner == userId) {
       return (
         <>
           <button
@@ -208,7 +213,7 @@ const DetailProcjet = memo(() => {
         snackMsg={snackMsg}
         onClose={onCloseSnack}
       />
-      <div className="w-full mb-12"></div>
+      <div className="w-full mb-12 pt-36"></div>
       <div className="w-full lg:px-16 sm:px-8">
         <div className="flex md:flex-row flex-col p-4 justify-between">
           <div className="md:w-6/12 lg:min-h-[300px] md:min-h-[310px] items-center align-middle my-auto pb-2 w-full rounded bg-white mr-4 shadow-indigo-600 shadow-sm  h-full flex-grow">
@@ -230,12 +235,12 @@ const DetailProcjet = memo(() => {
                 {data?.repository}
               </span>
             </div>
-            <div className="flex flex-row w-full py-2 m-2">
+            {/* <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 w-3/12">Type: </div>
               <span className="flex mx-2 w-9/12 px-2 overflow-x-auto">
                 {data.type == "0" ? "Public" : "Private"}
               </span>
-            </div>
+            </div> */}
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 w-3/12">Create At: </div>
               <span className="flex mx-2 w-9/12 px-2 overflow-x-auto">

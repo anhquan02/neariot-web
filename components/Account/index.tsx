@@ -79,8 +79,8 @@ const Account = memo((props: any) => {
       // </div>
       <CustomButton
         label="Connect the wallet"
-        className_box="border-0 rounded-xl bg-indigo-600 text-white py-3 px-4"
-        className_button=""
+        className_box="border-0 rounded-full bg-darkpurple text-white py-2 px-4 w-[292px]"
+        className_button="whitespace-nowrap font-normal"
         onClickButton={onRequestConnectWallet}
       />
     );
@@ -98,10 +98,10 @@ const Account = memo((props: any) => {
 
     return (
       //   <div className="border-0 rounded-xl bg-gradient-to-r from-teal-300 to-cyan-600 text-white py-2 px-2">
-      <div className=" border-0 rounded-xl bg-indigo-600 text-white py-3 md:px-4">
+      <div className=" border-0 rounded-full bg-darkpurple text-white py-2 md:px-2">
         <button
           onClick={onOpenAccountPopover}
-          className="flex md:justify-between mx-2 md:text-2xl sm:text-sm"
+          className="flex md:justify-between mx-2 md:text-2xl sm:text-sm whitespace-nowrap"
         >
           <AccountCircleIcon className="mx-1 my-auto" />
           <div className="mx-1 my-auto">{accountId}</div>

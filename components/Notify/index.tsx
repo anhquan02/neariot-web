@@ -1,7 +1,6 @@
 import React from 'react';
 import Snackbar from '@mui/material/Snackbar';
 import Loading from '../Loading';
-import styles from './Notify.module.scss';
 import Alert from '../Alert';
 
 const Notify = (props:any) => {

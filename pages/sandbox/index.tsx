@@ -83,7 +83,7 @@ const Sandbox = memo((props: any) => {
 
     return (
       <>
-        <div className="md:w-auto w-full grid md:grid-cols-3 sm:grid-cols-2 gap-8 grid-rows-1 mx-10 md:mx-auto">
+        <div className="pt-52 md:w-auto w-full grid md:grid-cols-3 sm:grid-cols-2 gap-8 grid-rows-1 mx-10 md:mx-auto">
           {data?.map((item, index) => {
             return (
               <Card
