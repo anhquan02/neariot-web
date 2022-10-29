@@ -15,7 +15,7 @@ const SettingScreen = memo(() => {
     id: "",
     owner: "",
     name: "",
-    type: "",
+    // type: "",
     descriptions: "",
     repository: "",
     created_at: "",
@@ -52,7 +52,7 @@ const SettingScreen = memo(() => {
         id: project.id,
         owner: _data.owner,
         name: _data.name,
-        type: _data.type,
+        // type: _data.type,
         descriptions: _data.descriptions,
         repository: _data.repository,
         created_at: project.created_at,
@@ -145,16 +145,16 @@ const SettingScreen = memo(() => {
           msg: "Description could not be empty",
         });
       }
-      if (
-        data.type === "" ||
-        data.type === null ||
-        typeof data.type === "undefined"
-      ) {
-        return onShowResult({
-          type: "error",
-          msg: "Type could not be empty",
-        });
-      }
+      // if (
+      //   data.type === "" ||
+      //   data.type === null ||
+      //   typeof data.type === "undefined"
+      // ) {
+      //   return onShowResult({
+      //     type: "error",
+      //     msg: "Type could not be empty",
+      //   });
+      // }
 
       setOpenLoading(true);
       const { web3Connector } = web3storage;
@@ -369,7 +369,7 @@ const SettingScreen = memo(() => {
                 <label>Type </label>
                 <span className="text-red-700">*</span>
               </div>
-              <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
+              {/* <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
                 <select
                   className={
                     "placeholder-slate-400 text-slate-600 border-0 px-3 py-3 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full overflow-x-hidden shadow-indigo-500/50"
@@ -387,7 +387,7 @@ const SettingScreen = memo(() => {
                     Private
                   </option>
                 </select>
-              </div>
+              </div> */}
             </div>
             <div className="flex md:flex-row flex-col">
               <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
