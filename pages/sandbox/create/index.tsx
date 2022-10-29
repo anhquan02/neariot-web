@@ -98,7 +98,6 @@ const CreateScreen = memo((props: any) => {
         project_target: 0,
         project_rate: 0,
       };
-      console.log(data);
 
       setOpenLoading(true);
       const { web3Connector } = web3storage;

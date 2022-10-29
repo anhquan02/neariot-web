@@ -59,7 +59,7 @@ const Header = memo((props: any) => {
             </div>
             <ul className="flex-col list-none">
               <li className="mt-2">
-                <Link href={"/"}>
+                <Link href={"/home"}>
                   <a
                     href="#"
                     className="px-4 py-auto text-xl text-primary items-center "
@@ -103,7 +103,7 @@ const Header = memo((props: any) => {
         </div>
         <div className={styles.content.manual.childCenter.wrapper}>
           <div className={styles.content.manual.childCenter.content}>
-            <Link href={"/"}>
+            <Link href={"/home"}>
               <a href="#" className={styles.content.manual.childCenter.link}>
                 Home
               </a>
