@@ -20,6 +20,7 @@ const DetailProcjet = memo(() => {
     repository: "",
     created_at: "",
     noSetting: true,
+    section: [],
     pledgers: 0,
     project_target: 0,
     avg_rate: 0,
@@ -61,10 +62,7 @@ const DetailProcjet = memo(() => {
 
     (async () => {
       const project = await getProject(id);
-      console.log("project = ", project);
       const _data = await getDataWeb3(project.metadata);
-      console.log("_data = ", _data);
-
       setData({
         id: project.id,
         owner: _data.owner,
@@ -194,6 +192,30 @@ const DetailProcjet = memo(() => {
     );
   };
 
+  const renderSection = () => {
+    const section = data.section || [];
+    if (section.length > 0) {
+      return (
+        <>
+          {section.map((item: any, index: any) => {
+            return (
+              <div className="flex flex-col p-4 pb-8" key={index}>
+                <Section
+                  id={item.id}
+                  title={item.title}
+                  description={item.descriptions}
+                  image_base64={item.image}
+                  embedded_url={item.embeddedURL}
+                  type={item.type}
+                />
+              </div>
+            );
+          })}
+        </>
+      );
+    }
+  };
+
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -316,22 +338,7 @@ const DetailProcjet = memo(() => {
           <hr className="w-full md:mx-4  md:max-w-[40%] border-slate-400 mb-8" />
           {renderProjectData()}
         </div>
-        <div className="flex flex-col p-4 pb-8">
-          <Section
-            title="ABC"
-            description="ABC"
-            image_base64="abc"
-            type="image"
-          />
-        </div>
-        <div className="flex flex-col p-4 pb-8">
-          <Section
-            title="ABC"
-            description="ABC"
-            image_base64="abc"
-            type="video"
-          />
-        </div>
+        {renderSection()}
         <div className="flex justify-center p-4 pb-8">
           <button
             className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0 h-12  items-center px-4"

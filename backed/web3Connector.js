@@ -29,9 +29,9 @@ export default class Web3Connector {
         const data = (await res.json()).result;
         let output = {
             projectId: data.id,
-            filename: data.filename,
+            filename: data.name,
             lastUpdate: data.updatedAt,
-            metadata: JSON.parse(Buffer.from(data.metadata, 'base64').toString('ascii')),
+            metadata: JSON.parse(Buffer.from(data.metadata, 'base64').toString('utf-8')),
         };
         return output;
     };

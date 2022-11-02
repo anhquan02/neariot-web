@@ -60,22 +60,22 @@ const Home = () => {
         });
       });
 
-    if (project.id) {
+    if (project?.id) {
       router.push(`/sandbox/project/${project.id}`);
       return;
     }
-    await contract
-      .join({}, 50000000000000)
-      .then((res: any) => {
-        router.push("/sandbox/create");
-        setOpenLoading(false);
-      })
-      .catch((error: any) => {
-        onShowResult({
-          type: "error",
-          msg: "System error, please try again later",
-        });
-      });
+    router.push("/sandbox/create");
+    setOpenLoading(false);
+    // await contract
+    //   .join({}, 50000000000000)
+    //   .then((res: any) => {
+    //   })
+    //   .catch((error: any) => {
+    //     onShowResult({
+    //       type: "error",
+    //       msg: "System error, please try again later",
+    //     });
+    //   });
   }, []);
 
   return (
