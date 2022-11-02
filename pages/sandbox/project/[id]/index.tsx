@@ -8,6 +8,7 @@ import { Popover, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { ProjectData } from "../../../../helpers/types";
 import Notify from "../../../../components/Notify";
+import Confirm from "../../../../components/Confirm";
 
 const DetailProcjet = memo(() => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -30,9 +31,12 @@ const DetailProcjet = memo(() => {
   const [openSnack, setOpenSnack] = useState(false);
   const [alertType, setAlertType] = useState("success");
   const [snackMsg, setSnackMsg] = useState("");
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [sectionId, setSectionId] = useState("");
   const wallet = useSelector((state: any) => state.wallet);
   const web3storage = useSelector((statex: any) => statex.w3storage);
   const router = useRouter();
+  const { id } = router.query;
 
   const onCloseSnack = () => {
     setOpenSnack(false);
@@ -51,7 +55,6 @@ const DetailProcjet = memo(() => {
   };
 
   useEffect(() => {
-    const { id } = router.query;
     setOpenLoading(true);
     const { walletConnection } = wallet;
     const userId = walletConnection.getAccountId();
@@ -192,6 +195,51 @@ const DetailProcjet = memo(() => {
     );
   };
 
+  const onDeleteSection = async () => {
+    setOpenLoading(true);
+    const { walletConnection, contract } = wallet;
+    const userId = walletConnection.getAccountId();
+    const section = data.section || [];
+    const index = section.findIndex((item: any) => item.id == sectionId);
+    section.splice(index, 1);
+    data.section = section;
+    const metadata = {
+      ...data,
+      section: section,
+      // section: [],
+    };
+    const filename = userId + "_" + Date.now();
+    const cid = await web3storage.web3Connector.setData(
+      userId,
+      filename,
+      metadata
+    );
+    await contract
+      .update_project(
+        {
+          id: id,
+          metadata: cid,
+        },
+        50000000000000
+      )
+      .then((res: any) => {
+        setData(metadata);
+        onShowResult({
+          type: "success",
+          msg: "Delete section successfully",
+        });
+        // router.push(`/sandbox/project/${id}`);
+      })
+      .catch((error: any) => {
+        onShowResult({
+          type: "error",
+          msg: String(error),
+        });
+      });
+  };
+
+  const onEditSection = (_id: any) => {};
+
   const renderSection = () => {
     const section = data.section || [];
     if (section.length > 0) {
@@ -207,6 +255,11 @@ const DetailProcjet = memo(() => {
                   image_base64={item.image}
                   embedded_url={item.embeddedURL}
                   type={item.type}
+                  onDelete={() => {
+                    setOpenConfirm(true);
+                    setSectionId(item.id);
+                  }}
+                  onEdit={onEditSection}
                 />
               </div>
             );
@@ -234,6 +287,15 @@ const DetailProcjet = memo(() => {
         alertType={alertType}
         snackMsg={snackMsg}
         onClose={onCloseSnack}
+      />
+      <Confirm
+        onShow={openConfirm}
+        onClose={() => {
+          setOpenConfirm(false);
+        }}
+        onConfirm={(data: any) => {
+          onDeleteSection();
+        }}
       />
       <div className="w-full mb-12 pt-36"></div>
       <div className="w-full lg:px-16 sm:px-8">

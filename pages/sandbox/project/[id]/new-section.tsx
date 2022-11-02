@@ -56,7 +56,6 @@ const NewSectionScreen = memo(() => {
         apiKey: _data.apiKey || "",
         fee: _data.fee || "",
       });
-      console.log(_data.section);
       setOpenLoading(false);
     })();
   }, []);
@@ -128,25 +127,25 @@ const NewSectionScreen = memo(() => {
       const _data = await getDataWeb3(project.metadata);
       const section = _data.section || [];
       let media_cid = "";
-      if (type === "image") {
-        media_cid = await web3storage.web3Connector.setFile(
-          userId,
-          imageState
-        );
-        console.log(media_cid);
-      }
+      // if (type === "image") {
+      //   media_cid = await web3storage.web3Connector.setFile(
+      //     userId,
+      //     imageState
+      //   );
+      //   console.log(media_cid);
+      // }New Section
       section.push({
-        id: section.length + 1,
+        id: Date.now() + "",
         title: title,
         descriptions: descriptions,
         embeddedURL: embeddedURL || "",
-        image: imageState || "",
+        image: media_cid || "",
         type: type,
       });
       const metadata = {
         ..._data,
-        // section: section,
-        section: [],
+        section: section,
+        // section: [],
       };
       const cid = await web3storage.web3Connector.setData(
         userId,

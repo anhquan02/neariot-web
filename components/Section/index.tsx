@@ -3,21 +3,35 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 type Props = {
-  id?: string;
+  id: string;
   title: string;
   description: string;
   type: string;
   image_base64: string;
   embedded_url?: string;
+  onDelete?: (id: string) => void;
+  onEdit?: (id: string) => void;
 };
 
 const Section = memo(
-  ({ title, description, type, image_base64, embedded_url }: Props) => {
+  ({
+    id,
+    title,
+    description,
+    type,
+    image_base64,
+    embedded_url,
+    onDelete,
+    onEdit,
+  }: Props) => {
     const renderMedia = () => {
       if (type === "image") {
         return (
           <img
-            src={image_base64}
+            src={
+              image_base64 ||
+              "https://img.freepik.com/premium-photo/astronaut-outer-open-space-planet-earth-stars-provide-background-erforming-space-planet-earth-sunrise-sunset-our-home-iss-elements-this-image-furnished-by-nasa_150455-16829.jpg?w=1380"
+            }
             className="w-full md:h-96 h-80 object-cover rounded-lg"
           />
         );
@@ -27,8 +41,6 @@ const Section = memo(
             width="640"
             height="360"
             src={embedded_url}
-            title="Ngủ sớm đi em - DucMinh ( Prod. by GC )"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen={true}
             className="object-cover rounded-lg"
           ></iframe>
@@ -44,9 +56,15 @@ const Section = memo(
       );
     };
 
-    const handleEdit = () => {};
+    const handleEdit = (e:any) => {
+      onEdit?.(id);
+    };
 
-    const handelDelete = () => {};
+    const handelDelete = (e:any) => {
+      e.preventDefault();
+      onDelete?.(id);
+
+    };
 
     return (
       <>
@@ -57,13 +75,13 @@ const Section = memo(
           <div className="flex flex-row">
             <div
               className="hover:cursor-pointer ml-2 hover:text-indigo-800"
-              onClick={() => handleEdit()}
+              onClick={(e:any) => handleEdit(e)}
             >
               <EditOutlinedIcon className="" fontSize="large" />
             </div>
             <div
               className="hover:cursor-pointer ml-2 hover:text-indigo-800"
-              onClick={() => handelDelete()}
+              onClick={(e:any) => handelDelete(e)}
             >
               <DeleteOutlineIcon className="" fontSize="large" />
             </div>
