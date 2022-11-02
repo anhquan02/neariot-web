@@ -8,18 +8,19 @@ import Filter from "../../components/Filter";
 import ProjectContainer from "../../components/Container/ProjectContainer";
 import RecomendContainer from "../../components/Container/RecomendContainer";
 import NewsContainer from "../../components/Container/NewsContainer";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Notify from "../../components/Notify";
 
 const Home = () => {
   const router = useRouter();
   const wallet = useSelector((state: any) => state.wallet);
+  const web3storage = useSelector((statex: any) => statex.w3storage);
   const [openLoading, setOpenLoading] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [alertType, setAlertType] = useState("success");
   const [snackMsg, setSnackMsg] = useState("");
-  const web3storage = useSelector((statex: any) => statex.w3storage);
+  const [listRecommend, setListRecommend] = useState<any[]>([]);
 
   const onRequestConnectWallet = () => {
     const { nearConfig, walletConnection } = wallet;
@@ -60,23 +61,57 @@ const Home = () => {
         });
       });
 
-    if (project.id) {
+    if (project?.id) {
       router.push(`/sandbox/project/${project.id}`);
       return;
     }
+    router.push("/sandbox/create");
+  }, []);
+
+  useEffect(() => {
+    onLoadRecommend();
+  }, []);
+
+  const onLoadRecommend = async () => {
+    const { contract } = wallet;
+    const { web3Connector } = web3storage;
     await contract
-      .join({}, 50000000000000)
-      .then((res: any) => {
-        router.push("/sandbox/create");
-        setOpenLoading(false);
+      ?.get_rcm_projects()
+      .then((res: any[]) => {
+        let list: any[] = [];
+        res.forEach(async (item: any) => {
+          // Get metadata from web3storage
+          const cid = item.metadata;
+          const metadata = await web3Connector?.getData(cid);
+          let descriptions = 'There is no description for this project';
+          let name = 'There is no name for this project';
+          let img = "https://img.freepik.com/premium-photo/astronaut-outer-open-space-planet-earth-stars-provide-background-erforming-space-planet-earth-sunrise-sunset-our-home-iss-elements-this-image-furnished-by-nasa_150455-16829.jpg?w=1380";
+          // if (metadata) {
+          //   descriptions = metadata.description;
+          // }
+          list.push({
+            id: res.indexOf(item) + 1,
+            owner: item.owner,
+            name: name,
+            img: img,
+            type: "0",
+            descriptions: descriptions,
+            pledgers: item.total_pledge,
+            backers: item.pledgers.length,
+            avg_rate: item.avg_rate,
+          });
+        });
+        if (list.length) {
+          setListRecommend(list);
+        }
       })
       .catch((error: any) => {
         onShowResult({
           type: "error",
-          msg: "System error, please try again later",
+          msg: String(error),
         });
       });
-  }, []);
+  };
 
   return (
     // <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8 ">

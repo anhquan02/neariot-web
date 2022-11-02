@@ -27,11 +27,14 @@ export default class Web3Connector {
             },
         });
         const data = (await res.json()).result;
+        if (typeof data === "string") {
+            return null;
+        }
         let output = {
             projectId: data.id,
             filename: data.filename,
             lastUpdate: data.updatedAt,
-            metadata: JSON.parse(Buffer.from(data.metadata, 'base64').toString('ascii')),
+            metadata: JSON.parse(Buffer.from(data.metadata, 'base64').toString('utf-8')),
         };
         return output;
     };
