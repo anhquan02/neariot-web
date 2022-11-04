@@ -37,7 +37,7 @@ const Footer = memo((props: any) => {
                       textDecoration: "none",
                       fontWeight: "500",
                     }}
-                    component={Link}
+                    component={"div"}
                   >
                     <Link href={item.url} underline="none" color="#1b1a2d">
                       {item.title}
@@ -124,17 +124,17 @@ const devpostContainer: TextContainer[] = [
   {
     title: "Careers",
     image: "",
-    url: "",
+    url: "#",
   },
   {
     title: "Contact",
     image: "",
-    url: "",
+    url: "#",
   },
   {
     title: "Help",
     image: "",
-    url: "",
+    url: "#",
   },
 ];
 
@@ -142,17 +142,17 @@ const portfolioContainer: TextContainer[] = [
   {
     title: "Your projects",
     image: "",
-    url: "",
+    url: "#",
   },
   {
     title: "Your hackathons",
     image: "",
-    url: "",
+    url: "#",
   },
   {
     title: "Settings",
     image: "",
-    url: "",
+    url: "#",
   },
 ];
 
@@ -160,22 +160,22 @@ const hackathonContainer: TextContainer[] = [
   {
     title: "Browse hackathons",
     image: "",
-    url: "",
+    url: "#",
   },
   {
     title: "Explore projects",
     image: "",
-    url: "",
+    url: "#",
   },
   {
     title: "Host a hackathon",
     image: "",
-    url: "",
+    url: "#",
   },
   {
     title: "Hackathon guides",
     image: "",
-    url: "",
+    url: "#",
   },
 ];
 
@@ -183,22 +183,22 @@ const connectContainer: TextContainer[] = [
   {
     title: "Discord",
     image: "/landing/discord-logo.png",
-    url: "",
+    url: "#",
   },
   {
     title: "Youtube",
     image: "/landing/youtube-logo.png",
-    url: "",
+    url: "#",
   },
   {
     title: "Telegram",
     image: "/landing/telegram-logo.png",
-    url: "",
+    url: "#",
   },
   {
     title: "Twitter",
     image: "/landing/twitter-logo.png",
-    url: "",
+    url: "#",
   },
 ];
 
