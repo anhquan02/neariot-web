@@ -240,12 +240,15 @@ const DetailProcjet = memo(() => {
 
   const onEditSection = (_id: any) => {};
 
+
+
   const renderSection = () => {
     const section = data.section || [];
     if (section.length > 0) {
       return (
         <>
           {section.map((item: any, index: any) => {
+            //get image
             return (
               <div className="flex flex-col p-4 pb-8" key={index}>
                 <Section
