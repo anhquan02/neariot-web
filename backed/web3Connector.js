@@ -32,7 +32,7 @@ export default class Web3Connector {
         }
         let output = {
             projectId: data.id,
-            filename: data.filename,
+            filename: data.name,
             lastUpdate: data.updatedAt,
             metadata: JSON.parse(Buffer.from(data.metadata, 'base64').toString('utf-8')),
         };
@@ -68,7 +68,7 @@ export default class Web3Connector {
         // ----------------
         // Neariot Storage
         const formData = new FormData();
-        formData.append('upload_file', file);
+        formData.append('upload_file', file.current);
         const res = await fetch(`${process.env.NEXT_PUBLIC_NEARIOT_STORAGE_URL}/api/v1/storage/media/${projectId}`, {
             method: "POST",
             headers: {
