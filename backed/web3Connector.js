@@ -89,9 +89,12 @@ export default class Web3Connector {
         // return file;
         // ----------------
         // Neariot Storage
+        if (!cid) return null;
         const res = await fetch(`${process.env.NEXT_PUBLIC_NEARIOT_STORAGE_URL}/api/v1/storage/media/${cid}`, {
             method: "GET",
         });
+        if (res.status === 404) return null;
+        if (!res) return null;
         return (await res.files())[0];
     };
 

@@ -12,6 +12,9 @@ import { useCallback, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Notify from "../../components/Notify";
 
+const DEFAULT_IMAGE =
+  "https://img.freepik.com/premium-photo/astronaut-outer-open-space-planet-earth-stars-provide-background-erforming-space-planet-earth-sunrise-sunset-our-home-iss-elements-this-image-furnished-by-nasa_150455-16829.jpg?w=1380";
+
 const Home = () => {
   const router = useRouter();
   const wallet = useSelector((state: any) => state.wallet);
@@ -21,6 +24,9 @@ const Home = () => {
   const [alertType, setAlertType] = useState("success");
   const [snackMsg, setSnackMsg] = useState("");
   const [listRecommend, setListRecommend] = useState<any[]>([]);
+  const [listNews, setListNews] = useState<any[]>([]);
+  const [listProjects, setListProject] = useState<any[]>([]);
+  const [listRecommendBox, setListRecommendBox] = useState<any[]>([]);
 
   const onRequestConnectWallet = () => {
     const { nearConfig, walletConnection } = wallet;
@@ -37,6 +43,77 @@ const Home = () => {
     setAlertType(type);
     setSnackMsg(msg);
   };
+
+  useEffect(() => {
+    setOpenLoading(true);
+    onLoadRecommend();
+  }, []);
+
+  const onLoadRecommend = async () => {
+    const { contract } = wallet;
+    const { web3Connector } = web3storage;
+    await contract
+      ?.get_rcm_projects()
+      .then(async (res: any[]) => {
+        res.forEach(async (item: any) => {
+          const cid = item.metadata;
+          await web3Connector?.getData(cid).then((metadata: any) => {
+            let descriptions = null;
+            let name = null;
+            let img = null;
+            if (metadata) {
+              descriptions = metadata.metadata.description;
+              name = metadata.metadata.name;
+              img = metadata.metadata.image;
+            }
+            const output = {
+              id: item.id,
+              owner: item.owner,
+              name: name || "There is no name for this project",
+              img: img || DEFAULT_IMAGE,
+              type: "0",
+              descriptions:
+                descriptions || "There is no description for this project",
+              pledgers: item.total_pledge,
+              backers: item.pledgers.length,
+              avg_rate: item.avg_rate,
+            };
+            if (!listRecommend.includes(output)) {
+              setListRecommend((listRecommend) => [...listRecommend, output]);
+            }
+          });
+        });
+        setOpenLoading(false);
+      })
+      .catch((error: any) => {
+        onShowResult({
+          type: "error",
+          msg: String(error),
+        });
+      });
+  };
+
+  useEffect(() => {
+    console.log(listRecommend);
+    let tmpNews: any[] = [];
+    let tmpProject = listRecommend;
+    let tmpRecommendBox: any[] = [];
+    listRecommend.forEach((item) => {
+      if (listRecommend.indexOf(item) < 4 && !tmpRecommendBox.includes(item)) {
+        tmpRecommendBox.push(item);
+      }
+      if (listRecommend.indexOf(item) < 6 && !tmpNews.includes(item)) {
+        tmpNews.push(item);
+      }
+    });
+    setListProject(tmpProject);
+    if (tmpNews.length > 0) {
+      setListNews(tmpNews);
+    }
+    if (tmpRecommendBox.length > 0) {
+      setListRecommendBox(tmpRecommendBox);
+    }
+  }, [listRecommend]);
 
   const handleCreateProject = useCallback(async (e: any) => {
     e.preventDefault();
@@ -68,51 +145,6 @@ const Home = () => {
     router.push("/sandbox/create");
   }, []);
 
-  useEffect(() => {
-    onLoadRecommend();
-  }, []);
-
-  const onLoadRecommend = async () => {
-    const { contract } = wallet;
-    const { web3Connector } = web3storage;
-    await contract
-      ?.get_rcm_projects()
-      .then((res: any[]) => {
-        let list: any[] = [];
-        res.forEach(async (item: any) => {
-          // Get metadata from web3storage
-          const cid = item.metadata;
-          const metadata = await web3Connector?.getData(cid);
-          let descriptions = 'There is no description for this project';
-          let name = 'There is no name for this project';
-          let img = "https://img.freepik.com/premium-photo/astronaut-outer-open-space-planet-earth-stars-provide-background-erforming-space-planet-earth-sunrise-sunset-our-home-iss-elements-this-image-furnished-by-nasa_150455-16829.jpg?w=1380";
-          // if (metadata) {
-          //   descriptions = metadata.description;
-          // }
-          list.push({
-            id: res.indexOf(item) + 1,
-            owner: item.owner,
-            name: name,
-            img: img,
-            type: "0",
-            descriptions: descriptions,
-            pledgers: item.total_pledge,
-            backers: item.pledgers.length,
-            avg_rate: item.avg_rate,
-          });
-        });
-        if (list.length) {
-          setListRecommend(list);
-        }
-      })
-      .catch((error: any) => {
-        onShowResult({
-          type: "error",
-          msg: String(error),
-        });
-      });
-  };
-
   return (
     // <div className="lg:py-16 md:py-12 py-8 items-center flex flex-wrap md:flex-row flex-col h-full md:w-full mx-auto lg:px-16 md:px-12 px-8 ">
     <>
@@ -131,7 +163,7 @@ const Home = () => {
           />
           <SearchField />
           <Filter />
-          <ProjectContainer />
+          <ProjectContainer listProjects={listProjects}/>
         </div>
         <div className="md:w-4/12 bg-lightpurple h-full md:mx-4 w-full items-center rounded pb-4 md:block hidden">
           <div className="bg-purple rounded items-center w-full text-center h-16 flex">
@@ -139,12 +171,12 @@ const Home = () => {
               Recommend
             </label>
           </div>
-          <RecomendContainer />
+          <RecomendContainer listRecommend={listRecommendBox} />
         </div>
       </div>
       <div className="w-full flex pb-20 lg:px-16 md:px-12 px-8">
         <div className="md:mx-4 w-full">
-          <NewsContainer />
+          <NewsContainer listProjects={listNews}/>
         </div>
       </div>
     </>
