@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import CustomButton from "../../../../components/CustomButton";
 import Notify from "../../../../components/Notify";
@@ -13,7 +13,6 @@ const NewSectionScreen = memo(() => {
   const [title, setTitle] = useState<any>();
   const [descriptions, setDescriptions] = useState<any>();
   const [embeddedURL, setEmbeddedURL] = useState<any>();
-  const [imageState, setImageState] = useState<any>();
   const [type, setType] = useState<any>();
   const wallet = useSelector((state: any) => state.wallet);
   const web3storage = useSelector((statex: any) => statex.w3storage);
@@ -21,6 +20,7 @@ const NewSectionScreen = memo(() => {
   const { id } = router.query;
   const [data, setData] = useState<ProjectData>();
   const [filename, setFilename] = useState<string>("");
+  const fileInput = useRef();
 
   useEffect(() => {
     setType("image");
@@ -106,11 +106,7 @@ const NewSectionScreen = memo(() => {
 
   const handleChangeFileValue = (e: any) => {
     const [file] = e.target.files;
-    let reader: FileReader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e: any) => {
-      setImageState(e.target.result);
-    };
+    fileInput.current = e.target.files[0];
   };
 
   const handelCreateNewSection = (e: any) => {
@@ -127,13 +123,14 @@ const NewSectionScreen = memo(() => {
       const _data = await getDataWeb3(project.metadata);
       const section = _data.section || [];
       let media_cid = "";
-      // if (type === "image") {
-      //   media_cid = await web3storage.web3Connector.setFile(
-      //     userId,
-      //     imageState
-      //   );
-      //   console.log(media_cid);
-      // }New Section
+      if (type === "image") {
+        media_cid = await web3storage.web3Connector.setFile(
+          userId,
+          fileInput
+          // imageState,
+        );
+        console.log(media_cid);
+      }
       section.push({
         id: Date.now() + "",
         title: title,

@@ -1,6 +1,44 @@
 import { Pagination, PaginationItem, Stack } from "@mui/material";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import ProjectCard from "../Card/ProjectCard";
+
+const ProjectContainer = memo(() => {
+  return (
+    <>
+      <div className="container my-6 md:mx-auto">
+        <div className="grid gap-10 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
+          {listProject.map((item, index) => {
+            return <ProjectCard key={index} {...item} />;
+          })}
+        </div>
+        <div className="flex justify-end my-8">
+          <Stack
+            spacing={2}
+          >
+            <Pagination
+              count={10}
+              sx={{
+                ".MuiPaginationItem-text": {
+                  color: "#4f46e5",
+                  ":hover": {
+                    backgroundColor: "#703eb8",
+                    color: "#fff",
+                  },
+                },
+                ".Mui-selected": {
+                  color: "#703eb8",
+                  backgroundColor: "#c0acde",
+                },
+              }}
+            />
+          </Stack>
+        </div>
+      </div>
+    </>
+  );
+});
+
 
 const listProject = [
   {
@@ -103,42 +141,6 @@ const listProject = [
     avg_rate: 3,
   },
 ];
-
-const ProjectContainer = memo(() => {
-  return (
-    <>
-      <div className="container my-6 md:mx-auto">
-        <div className="grid gap-10 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
-          {listProject.map((item, index) => {
-            return <ProjectCard key={index} {...item} />;
-          })}
-        </div>
-        <div className="flex justify-end my-8">
-          <Stack
-            spacing={2}
-          >
-            <Pagination
-              count={10}
-              sx={{
-                ".MuiPaginationItem-text": {
-                  color: "#4f46e5",
-                  ":hover": {
-                    backgroundColor: "#703eb8",
-                    color: "#fff",
-                  },
-                },
-                ".Mui-selected": {
-                  color: "#703eb8",
-                  backgroundColor: "#c0acde",
-                },
-              }}
-            />
-          </Stack>
-        </div>
-      </div>
-    </>
-  );
-});
 
 ProjectContainer.displayName = "ProjectContainer";
 
