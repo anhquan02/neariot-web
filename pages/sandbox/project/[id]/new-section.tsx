@@ -13,7 +13,6 @@ const NewSectionScreen = memo(() => {
   const [title, setTitle] = useState<any>();
   const [descriptions, setDescriptions] = useState<any>();
   const [embeddedURL, setEmbeddedURL] = useState<any>();
-  const [imageState, setImageState] = useState<any>();
   const [type, setType] = useState<any>();
   const wallet = useSelector((state: any) => state.wallet);
   const web3storage = useSelector((statex: any) => statex.w3storage);
@@ -57,7 +56,6 @@ const NewSectionScreen = memo(() => {
         apiKey: _data.apiKey || "",
         fee: _data.fee || "",
       });
-      console.log(_data.section);
       setOpenLoading(false);
     })();
   }, []);
@@ -108,14 +106,7 @@ const NewSectionScreen = memo(() => {
 
   const handleChangeFileValue = (e: any) => {
     const [file] = e.target.files;
-    console.log(e.target.files);
     fileInput.current = e.target.files[0];
-    // fileInput
-    let reader: FileReader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = (e: any) => {
-      setImageState(e.target.result);
-    };
   };
 
   const handelCreateNewSection = (e: any) => {
@@ -136,21 +127,22 @@ const NewSectionScreen = memo(() => {
         media_cid = await web3storage.web3Connector.setFile(
           userId,
           fileInput
+          // imageState,
         );
         console.log(media_cid);
       }
       section.push({
-        id: section.length + 1,
+        id: Date.now() + "",
         title: title,
         descriptions: descriptions,
         embeddedURL: embeddedURL || "",
-        image: imageState || "",
+        image: media_cid || "",
         type: type,
       });
       const metadata = {
         ..._data,
-        // section: section,
-        section: [],
+        section: section,
+        // section: [],
       };
       const cid = await web3storage.web3Connector.setData(
         userId,

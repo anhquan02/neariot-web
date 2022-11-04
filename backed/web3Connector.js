@@ -27,6 +27,7 @@ export default class Web3Connector {
             },
         });
         const data = (await res.json()).result;
+        if (!data) return data;
         if (typeof data === "string") {
             return null;
         }
@@ -71,10 +72,11 @@ export default class Web3Connector {
         formData.append('upload_file', file.current);
         const res = await fetch(`${process.env.NEXT_PUBLIC_NEARIOT_STORAGE_URL}/api/v1/storage/media/${projectId}`, {
             method: "POST",
-            headers: {
-                "Content-Type": "multipart/form-data",
-            }, 
+            // headers: {
+            //     "Content-Type": "multipart/form-data",
+            // }, 
             body: formData,
+            redirect: 'follow'
         });
         return (await res.json()).result;
     };
