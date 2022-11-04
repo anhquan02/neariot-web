@@ -3,12 +3,17 @@ import { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ProjectCard from "../Card/ProjectCard";
 
-const ProjectContainer = memo(() => {
+interface Props {
+  listProjects: any[];
+}
+
+const ProjectContainer = memo((props: Props) => {
+  const { listProjects } = props;
   return (
     <>
       <div className="container my-6 md:mx-auto">
         <div className="grid gap-10 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
-          {listProject.map((item, index) => {
+          {listProjects.map((item, index) => {
             return <ProjectCard key={index} {...item} />;
           })}
         </div>

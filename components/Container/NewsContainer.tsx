@@ -68,7 +68,13 @@ const listProject = [
     avg_rate: 3,
   },
 ];
-const NewsContainer = memo(() => {
+
+interface Props {
+  listProjects: any[];
+}
+
+const NewsContainer = memo((props: Props) => {
+  const { listProjects } = props;
   return (
     <>
       <div className="mb-6 md:block hidden">
@@ -77,7 +83,7 @@ const NewsContainer = memo(() => {
         </label>
       </div>
       <div className="container w-full md:grid gap-12 lg:grid-cols-6 md:grid-cols-3 hidden ">
-        {listProject.map((item, index) => {
+        {listProjects.map((item, index) => {
           return <NewProjectCard key={index} {...item} />;
         })}
       </div>
