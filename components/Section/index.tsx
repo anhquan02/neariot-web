@@ -1,13 +1,14 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { useSelector } from "react-redux";
 
 type Props = {
   id: string;
   title: string;
   description: string;
   type: string;
-  image_base64: string;
+  image_base64: any;
   embedded_url?: string;
   onDelete?: (id: string) => void;
   onEdit?: (id: string) => void;
@@ -24,12 +25,32 @@ const Section = memo(
     onDelete,
     onEdit,
   }: Props) => {
+    const web3storage = useSelector((statex: any) => statex.w3storage);
+    const [image, setImage] = useState<any>("");
+
+    const getImage = async (cid: any) => {
+      if (cid) {
+        const file = await web3storage.web3Connector.getImage(cid);
+        return file;
+      }
+      return "https://img.freepik.com/premium-photo/astronaut-outer-open-space-planet-earth-stars-provide-background-erforming-space-planet-earth-sunrise-sunset-our-home-iss-elements-this-image-furnished-by-nasa_150455-16829.jpg?w=1380";
+    };
+    useEffect(() => {
+      if (!image_base64) return;
+      (async () => {
+        if (image_base64) {
+          const _image = await getImage(image_base64);
+          setImage(_image);
+        }
+      })();
+    });
+
     const renderMedia = () => {
       if (type === "image") {
         return (
           <img
             src={
-              image_base64 ||
+              image ||
               "https://img.freepik.com/premium-photo/astronaut-outer-open-space-planet-earth-stars-provide-background-erforming-space-planet-earth-sunrise-sunset-our-home-iss-elements-this-image-furnished-by-nasa_150455-16829.jpg?w=1380"
             }
             className="w-full md:h-96 h-80 object-cover rounded-lg"
@@ -56,14 +77,13 @@ const Section = memo(
       );
     };
 
-    const handleEdit = (e:any) => {
+    const handleEdit = (e: any) => {
       onEdit?.(id);
     };
 
-    const handelDelete = (e:any) => {
+    const handelDelete = (e: any) => {
       e.preventDefault();
       onDelete?.(id);
-
     };
 
     return (
@@ -75,13 +95,13 @@ const Section = memo(
           <div className="flex flex-row">
             <div
               className="hover:cursor-pointer ml-2 hover:text-indigo-800"
-              onClick={(e:any) => handleEdit(e)}
+              onClick={(e: any) => handleEdit(e)}
             >
               <EditOutlinedIcon className="" fontSize="large" />
             </div>
             <div
               className="hover:cursor-pointer ml-2 hover:text-indigo-800"
-              onClick={(e:any) => handelDelete(e)}
+              onClick={(e: any) => handelDelete(e)}
             >
               <DeleteOutlineIcon className="" fontSize="large" />
             </div>
