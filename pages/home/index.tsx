@@ -45,6 +45,12 @@ const Home = () => {
   };
 
   useEffect(() => {
+    const { walletConnection, contract } = wallet;
+    const userId = walletConnection.getAccountId();
+    if (userId === "") {
+      onRequestConnectWallet();
+      return;
+    }
     setOpenLoading(true);
     onLoadRecommend();
   }, []);
@@ -94,7 +100,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log(listRecommend);
     let tmpNews: any[] = [];
     let tmpProject = listRecommend;
     let tmpRecommendBox: any[] = [];
