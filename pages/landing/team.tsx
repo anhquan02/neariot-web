@@ -47,7 +47,7 @@ const style = {
     fontSize: { xs: "1rem", md: "25.5px" },
     fontFamily: "RobotoSlab",
     fontWeight: "bold",
-    width: { xs: "20rem", md: "50rem" },
+    width: { xs: "20rem", md: "45rem" },
     fontStretch: "normal",
     fontStyle: "normal",
     lineHeight: "normal",
@@ -87,7 +87,9 @@ const Team = () => {
           className="object-fit: contain"
         >
           <CardMedia component="img" image="/landing/team-img-box.png" />
-          <CardContent>
+          <CardContent sx={{
+            marginTop: "-5rem",
+          }}>
             <Typography
               // variant="h6"
               className="text-[#1b1a2d]"
@@ -126,9 +128,10 @@ const Team = () => {
         direction={"column"}
         marginLeft={{
           xs: "4rem",
-          md: 0,
+          md: "5rem",
         }}
-        paddingTop={{ xs: 5, md: 20 }}
+        justifyContent="center"
+        paddingTop={{ xs: 5, md: 10 }}
         spacing={{
           xs: 5,
           md: 12,
@@ -148,30 +151,21 @@ const Team = () => {
           <Grid
             container
             sx={{
-              paddingTop: { xs: 45, md: 25 },
+              paddingTop: { xs: 45, md: 30 },
             }}
             alignItems="center"
             justifyContent="center"
+            marginLeft={{ xs: "4rem", md: "10rem" }}
           >
             <Grid item>
               <Typography
-                // variant="h2"
                 sx={style.title}
-                // marginLeft={{
-                //   xs: 0,
-                //   md: "25rem",
-                // }}
               >
                 Team Work Company
               </Typography>
               <Typography
-                // variant="h6"
                 align="center"
                 sx={style.subtitle}
-                // marginLeft={{
-                //   xs: -5,
-                //   md: "23rem",
-                // }}
                 marginTop={{
                   xs: 0,
                   md: 3,
