@@ -37,6 +37,11 @@ const NewSectionScreen = memo(() => {
     (async () => {
       const project = await getProject(id);
       const _data = await getDataWeb3(project.metadata);
+      // check user is owner of project
+      if (userId !== project.owner) {
+        router.push(`/project/${id}`);
+        return;
+      }
       setData({
         id: project.id,
         owner: _data.owner,

@@ -12,7 +12,7 @@ import {
 const style = {
   team: {
     avatarBox: "bg-[url('/landing/team-img-box.png')]",
-    teamBox: "w-2/3",
+    teamBox: "w-full",
     memberName: {
       color: "#1b1a2d",
       fontSize: "17.5px",
@@ -72,6 +72,7 @@ const Team = () => {
           height: "auto",
           width: "auto",
         }}
+        md
       >
         <Card
           sx={{
@@ -128,11 +129,12 @@ const Team = () => {
           xs: "4rem",
           md: 0,
         }}
-        paddingTop={{ xs: 5, md: 20 }}
-        spacing={{
-          xs: 5,
-          md: 12,
-        }}
+        paddingTop={{ xs: 5, md: 10 }}
+        // spacing={{
+        //   xs: 5,
+        //   md: 12,
+        // }}
+        className="px-12"
       >
         <Grid item>
           <Grid
@@ -148,7 +150,7 @@ const Team = () => {
           <Grid
             container
             sx={{
-              paddingTop: { xs: 45, md: 25 },
+              paddingTop: { xs: 65, md: 50 },
             }}
             alignItems="center"
             justifyContent="center"

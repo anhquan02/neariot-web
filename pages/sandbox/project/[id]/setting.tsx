@@ -46,6 +46,11 @@ const SettingScreen = memo(() => {
     }
     (async () => {
       const project = await getProject(id);
+      // check user is owner of project
+      if (project.owner !== userId) {
+        router.push(`/project/${id}`);
+        return;
+      }
       const _data = await getDataWeb3(project.metadata);
       setData({
         id: project.id,
