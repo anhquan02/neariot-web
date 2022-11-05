@@ -3,6 +3,8 @@ import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import PersonIcon from "@mui/icons-material/Person";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import { ProjectCardProps } from "../../helpers/types";
+import { useRouter } from "next/router";
+
 const ProjectCard = memo(
   ({
     id,
@@ -15,6 +17,7 @@ const ProjectCard = memo(
   }: ProjectCardProps) => {
     const fiveStar = 5;
     const [rate, setRate] = useState(3);
+    const router = useRouter();
 
     const renderRate = useCallback(() => {
       const cols = [];
@@ -38,7 +41,12 @@ const ProjectCard = memo(
 
     return (
       <>
-        <div className="w-full lg:h-[426px] md:h-[436px] flex flex-col rounded-lg overflow-hidden border border-purple bg-white">
+        <div
+          className="w-full lg:h-[426px] md:h-[436px] flex flex-col rounded-lg overflow-hidden border border-purple bg-white"
+          onClick={() => {
+            router.push(`/sandbox/project/${id}`);
+          }}
+        >
           <div className="w-full flex justify-center bg-gray-300 border-2 border-purple h-32">
             <img src={img} alt="" className="object-cover w-auto h-auto" />
           </div>

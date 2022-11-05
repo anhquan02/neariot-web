@@ -8,6 +8,7 @@ import { Popover, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { ProjectData } from "../../../../helpers/types";
 import Notify from "../../../../components/Notify";
+import Confirm from "../../../../components/Confirm";
 
 const DetailProcjet = memo(() => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -20,6 +21,7 @@ const DetailProcjet = memo(() => {
     repository: "",
     created_at: "",
     noSetting: true,
+    section: [],
     pledgers: 0,
     project_target: 0,
     avg_rate: 0,
@@ -29,9 +31,12 @@ const DetailProcjet = memo(() => {
   const [openSnack, setOpenSnack] = useState(false);
   const [alertType, setAlertType] = useState("success");
   const [snackMsg, setSnackMsg] = useState("");
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [sectionId, setSectionId] = useState("");
   const wallet = useSelector((state: any) => state.wallet);
   const web3storage = useSelector((statex: any) => statex.w3storage);
   const router = useRouter();
+  const { id } = router.query;
 
   const onCloseSnack = () => {
     setOpenSnack(false);
@@ -50,7 +55,6 @@ const DetailProcjet = memo(() => {
   };
 
   useEffect(() => {
-    const { id } = router.query;
     setOpenLoading(true);
     const { walletConnection } = wallet;
     const userId = walletConnection.getAccountId();
@@ -61,10 +65,7 @@ const DetailProcjet = memo(() => {
 
     (async () => {
       const project = await getProject(id);
-      console.log("project = ", project);
       const _data = await getDataWeb3(project.metadata);
-      console.log("_data = ", _data);
-
       setData({
         id: project.id,
         owner: _data.owner,
@@ -194,6 +195,83 @@ const DetailProcjet = memo(() => {
     );
   };
 
+  const onDeleteSection = async () => {
+    setOpenLoading(true);
+    const { walletConnection, contract } = wallet;
+    const userId = walletConnection.getAccountId();
+    const section = data.section || [];
+    const index = section.findIndex((item: any) => item.id == sectionId);
+    section.splice(index, 1);
+    data.section = section;
+    const metadata = {
+      ...data,
+      section: section,
+      // section: [],
+    };
+    const filename = userId + "_" + Date.now();
+    const cid = await web3storage.web3Connector.setData(
+      userId,
+      filename,
+      metadata
+    );
+    await contract
+      .update_project(
+        {
+          id: id,
+          metadata: cid,
+        },
+        50000000000000
+      )
+      .then((res: any) => {
+        setData(metadata);
+        onShowResult({
+          type: "success",
+          msg: "Delete section successfully",
+        });
+        // router.push(`/sandbox/project/${id}`);
+      })
+      .catch((error: any) => {
+        onShowResult({
+          type: "error",
+          msg: String(error),
+        });
+      });
+  };
+
+  const onEditSection = (_id: any) => {};
+
+
+
+  const renderSection = () => {
+    const section = data.section || [];
+    if (section.length > 0) {
+      return (
+        <>
+          {section.map((item: any, index: any) => {
+            //get image
+            return (
+              <div className="flex flex-col p-4 pb-8" key={index}>
+                <Section
+                  id={item.id}
+                  title={item.title}
+                  description={item.descriptions}
+                  image_base64={item.image}
+                  embedded_url={item.embeddedURL}
+                  type={item.type}
+                  onDelete={() => {
+                    setOpenConfirm(true);
+                    setSectionId(item.id);
+                  }}
+                  onEdit={onEditSection}
+                />
+              </div>
+            );
+          })}
+        </>
+      );
+    }
+  };
+
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -212,6 +290,15 @@ const DetailProcjet = memo(() => {
         alertType={alertType}
         snackMsg={snackMsg}
         onClose={onCloseSnack}
+      />
+      <Confirm
+        onShow={openConfirm}
+        onClose={() => {
+          setOpenConfirm(false);
+        }}
+        onConfirm={(data: any) => {
+          onDeleteSection();
+        }}
       />
       <div className="w-full mb-12 pt-36"></div>
       <div className="w-full lg:px-16 sm:px-8">
@@ -316,22 +403,7 @@ const DetailProcjet = memo(() => {
           <hr className="w-full md:mx-4  md:max-w-[40%] border-slate-400 mb-8" />
           {renderProjectData()}
         </div>
-        <div className="flex flex-col p-4 pb-8">
-          <Section
-            title="ABC"
-            description="ABC"
-            image_base64="abc"
-            type="image"
-          />
-        </div>
-        <div className="flex flex-col p-4 pb-8">
-          <Section
-            title="ABC"
-            description="ABC"
-            image_base64="abc"
-            type="video"
-          />
-        </div>
+        {renderSection()}
         <div className="flex justify-center p-4 pb-8">
           <button
             className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0 h-12  items-center px-4"

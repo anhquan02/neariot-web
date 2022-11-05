@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import CustomButton from "../../../../components/CustomButton";
 import Notify from "../../../../components/Notify";
@@ -15,7 +15,6 @@ const SettingScreen = memo(() => {
     id: "",
     owner: "",
     name: "",
-    // type: "",
     descriptions: "",
     repository: "",
     created_at: "",
@@ -47,6 +46,11 @@ const SettingScreen = memo(() => {
     }
     (async () => {
       const project = await getProject(id);
+      // check user is owner of project
+      if (project.owner !== userId) {
+        router.push(`/project/${id}`);
+        return;
+      }
       const _data = await getDataWeb3(project.metadata);
       setData({
         id: project.id,
@@ -58,7 +62,7 @@ const SettingScreen = memo(() => {
         created_at: project.created_at,
         noSetting: _data.noSetting,
         data: _data.data,
-        section: _data.section,
+        section: _data.section || [],
         pledgers: project.total_pledge + "",
         project_target: _data.project_target + "",
         avg_rate: project.avg_rate + "",
@@ -77,8 +81,10 @@ const SettingScreen = memo(() => {
     return await web3Connector
       .getData(cid)
       .then((res: any) => {
-        setFilename(res.name);
-        return JSON.parse(res.content);
+        // setFilename(res.name);
+        // return JSON.parse(res.content);
+        setFilename(res.filename);
+        return res.metadata;
       })
       .catch((err: any) => {
         onShowResult({
@@ -158,7 +164,7 @@ const SettingScreen = memo(() => {
 
       setOpenLoading(true);
       const { web3Connector } = web3storage;
-      const cid = await web3Connector.setData(filename, data);
+      const cid = await web3Connector.setData(userId, filename, data);
       updateProject(cid);
     },
     [data, filename]
@@ -193,9 +199,9 @@ const SettingScreen = memo(() => {
     setData({ ...data, chart: currentChart });
   }, [currentChart]);
 
-  const renderPage = useCallback(() => {
+  const renderPage = () => {
     if (
-      !updateDataPage &&
+      updateDataPage &&
       (data.chart == "line-chart" || data.chart == "column-chart")
     ) {
       return (
@@ -223,7 +229,7 @@ const SettingScreen = memo(() => {
                       "placeholder-slate-400 text-slate-600 border-0 px-3 py-3 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full overflow-x-hidden  shadow-indigo-500/50"
                     }
                     placeholder="Type something here"
-                    value={data.name}
+                    value={""}
                     onChange={(e) => {
                       setData({ ...data, name: e.target.value });
                     }}
@@ -261,7 +267,7 @@ const SettingScreen = memo(() => {
           </div>
         </>
       );
-    } else if (!updateDataPage && data.chart == "table") {
+    } else if (updateDataPage && data.chart == "table") {
       return (
         <>
           <div className="mb-8 md:mx-4 w-full flex justify-between">
@@ -287,7 +293,7 @@ const SettingScreen = memo(() => {
                       "placeholder-slate-400 text-slate-600 border-0 px-3 py-3 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full overflow-x-hidden  shadow-indigo-500/50"
                     }
                     placeholder="Type something here"
-                    value={data.name}
+                    value={""}
                     onChange={(e) => {
                       setData({ ...data, name: e.target.value });
                     }}
@@ -364,12 +370,12 @@ const SettingScreen = memo(() => {
                 />
               </div>
             </div>
-            <div className="flex md:flex-row flex-col">
+            {/* <div className="flex md:flex-row flex-col">
               <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
                 <label>Type </label>
                 <span className="text-red-700">*</span>
               </div>
-              {/* <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
+              <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
                 <select
                   className={
                     "placeholder-slate-400 text-slate-600 border-0 px-3 py-3 bg-white rounded-xl text-sm shadow outline-none focus:outline-none focus:ring w-full overflow-x-hidden shadow-indigo-500/50"
@@ -387,8 +393,8 @@ const SettingScreen = memo(() => {
                     Private
                   </option>
                 </select>
-              </div> */}
-            </div>
+              </div>
+            </div> */}
             <div className="flex md:flex-row flex-col">
               <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
                 <label htmlFor="inpRepository">Repository </label>
@@ -539,7 +545,7 @@ const SettingScreen = memo(() => {
         </div>
       </>
     );
-  }, [updateDataPage]);
+  };
 
   return (
     <>

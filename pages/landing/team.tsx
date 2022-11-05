@@ -12,7 +12,7 @@ import {
 const style = {
   team: {
     avatarBox: "bg-[url('/landing/team-img-box.png')]",
-    teamBox: "w-2/3",
+    teamBox: "w-full",
     memberName: {
       color: "#1b1a2d",
       fontSize: "17.5px",
@@ -67,14 +67,19 @@ const Team = () => {
       <Grid
         item
         sx={{
-          height: { xs: "auto", md: "290px" },
-          width: { xs: "auto", md: "250px" },
+          // height: { xs: "auto", md: "290px" },
+          // width: { xs: "auto", md: "250px" },
+          height: "auto",
+          width: "auto",
         }}
+        md
       >
         <Card
           sx={{
             // height: { xs: "auto", md: "290px" },
-            width: { xs: "auto", md: "250px" },
+            // width: { xs: "auto", md: "250px" },
+            height: "auto",
+            width: "auto",
             backgroundColor: "transparent",
             boxShadow: "none",
             borderRadius: "none",
@@ -83,17 +88,13 @@ const Team = () => {
           className="object-fit: contain"
         >
           <CardMedia component="img" image="/landing/team-img-box.png" />
-          <CardContent
-            sx={{
-              marginTop: { xs: -36, md: -38 },
-            }}
-          >
+          <CardContent>
             <Typography
               // variant="h6"
               className="text-[#1b1a2d]"
               align="center"
               alignItems="center"
-              paddingTop={28}
+              // paddingTop={28}
               sx={style.team.memberName}
             >
               {member.name}
@@ -114,61 +115,74 @@ const Team = () => {
   };
 
   return (
-    <Box className={style.team.teamBox}>
+    <Box
+      className={style.team.teamBox}
+      sx={{
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Grid
         container
         direction={"column"}
         marginLeft={{
           xs: "4rem",
-          md: 25,
+          md: 0,
         }}
-        paddingTop={{ xs: 5, md: 20 }}
-        spacing={{
-          xs: 5,
-          md: 12,
-        }}
+        paddingTop={{ xs: 5, md: 10 }}
+        // spacing={{
+        //   xs: 5,
+        //   md: 12,
+        // }}
+        className="px-12"
       >
-        <Grid
-          container
-          spacing={{ xs: 38, md: 15 }}
-          direction={{ xs: "column", md: "row" }}
-          justifyContent={{ xs: "center", md: "space-between" }}
-        >
-          {memberList.map((member) => generateMemberBox(member))}
+        <Grid item>
+          <Grid
+            container
+            spacing={{ xs: 38, md: 15 }}
+            direction={{ xs: "column", md: "row" }}
+            justifyContent={{ xs: "center", md: "space-between" }}
+          >
+            {memberList.map((member) => generateMemberBox(member))}
+          </Grid>
         </Grid>
-        <Grid
-          container
-          sx={{
-            paddingTop: { xs: 45, md: 25 },
-          }}
-        >
-          <Grid item>
-            <Typography
-              // variant="h2"
-              sx={style.title}
-              marginLeft={{
-                xs: 0,
-                md: 45,
-              }}
-            >
-              Team Work Company
-            </Typography>
-            <Typography
-              // variant="h6"
-              align="center"
-              sx={style.subtitle}
-              marginLeft={{
-                xs: -5,
-                md: 40,
-              }}
-              marginTop={{
-                xs: 0,
-                md: 3,
-              }}
-            >
-              Teamwork has the incredible power to increase productivity, job
-              satisfaction, and even each person&#39;s individual performance.
-            </Typography>
+        <Grid item>
+          <Grid
+            container
+            sx={{
+              paddingTop: { xs: 65, md: 50 },
+            }}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Grid item>
+              <Typography
+                // variant="h2"
+                sx={style.title}
+                // marginLeft={{
+                //   xs: 0,
+                //   md: "25rem",
+                // }}
+              >
+                Team Work Company
+              </Typography>
+              <Typography
+                // variant="h6"
+                align="center"
+                sx={style.subtitle}
+                // marginLeft={{
+                //   xs: -5,
+                //   md: "23rem",
+                // }}
+                marginTop={{
+                  xs: 0,
+                  md: 3,
+                }}
+              >
+                Teamwork has the incredible power to increase productivity, job
+                satisfaction, and even each person&#39;s individual performance.
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -195,6 +209,11 @@ const memberList: MemberInfo[] = [
   {
     name: "Minh Hoang",
     position: "Designer",
+    image: "/landing/team-img-box.png",
+  },
+  {
+    name: "Lien Pham",
+    position: "Product Marketing",
     image: "/landing/team-img-box.png",
   },
 ];
