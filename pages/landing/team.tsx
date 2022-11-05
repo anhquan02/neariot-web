@@ -67,16 +67,12 @@ const Team = () => {
       <Grid
         item
         sx={{
-          // height: { xs: "auto", md: "290px" },
-          // width: { xs: "auto", md: "250px" },
           height: "auto",
           width: "auto",
         }}
       >
         <Card
           sx={{
-            // height: { xs: "auto", md: "290px" },
-            // width: { xs: "auto", md: "250px" },
             height: "auto",
             width: "auto",
             backgroundColor: "transparent",
@@ -91,17 +87,14 @@ const Team = () => {
             marginTop: "-5rem",
           }}>
             <Typography
-              // variant="h6"
               className="text-[#1b1a2d]"
               align="center"
               alignItems="center"
-              // paddingTop={28}
               sx={style.team.memberName}
             >
               {member.name}
             </Typography>
             <Typography
-              // variant="body1"
               className="text-[#1b1a2d]"
               align="center"
               alignItems="center"
@@ -151,7 +144,7 @@ const Team = () => {
           <Grid
             container
             sx={{
-              paddingTop: { xs: 45, md: 30 },
+              paddingTop: { xs: 45, md: 35 },
             }}
             alignItems="center"
             justifyContent="center"
