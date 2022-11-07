@@ -42,7 +42,7 @@ const ProjectCard = memo(
     return (
       <>
         <div
-          className="w-full lg:h-[426px] md:h-[436px] flex flex-col rounded-lg overflow-hidden border border-purple bg-white"
+          className="w-full lg:h-[426px] md:h-[436px] flex flex-col rounded-lg overflow-hidden border border-purple bg-white hover:cursor-pointer"
           onClick={() => {
             router.push(`/sandbox/project/${id}`);
           }}
