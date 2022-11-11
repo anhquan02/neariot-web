@@ -94,7 +94,7 @@ const CreateScreen = memo((props: any) => {
         // type,
         repository,
         fee,
-        noSetting: true,
+        noSetting: false,
         project_target: 0,
         project_rate: 0,
       };
