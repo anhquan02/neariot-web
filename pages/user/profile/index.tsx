@@ -402,51 +402,51 @@ const ProfileScreen = () => {
             </div>
           </>
         );
-      case RATE_WARNING:
-        return (
-          <>
-            <div className="w-full grid grid-cols-5 py-16 px-32 gap-4">
-              {renderRate()}
-            </div>
-          </>
-        );
-      case REWARD_WARNING:
-        return (
-          <>
-            <div className="text-left">
-              <img
-                src="/happy.png"
-                alt="icon"
-                className="mx-auto my-2 p-4 h-32"
-              />
-              <div className="flex flex-rows">
-                <input
-                  required
-                  type="checkbox"
-                  className=" align-middle my-auto lg:w-4 md:w-8 mr-4 w-1/12"
-                  id="checkReward"
-                  onInvalid={(e) =>
-                    (e.target as HTMLInputElement).setCustomValidity(
-                      "Please check this box to continue"
-                    )
-                  }
-                  onInput={(e) =>
-                    (e.target as HTMLInputElement).setCustomValidity("")
-                  }
-                />
-                <div className="w-full">
-                  <label className="" htmlFor="checkReward">
-                    {`Did you receive the reward from the project's founder team? By clicking the submit button, you confirmed that you have received the reward.`}
-                  </label>
-                  <br />
-                  <span className="underline italic font-bold">
-                    This action can not be undo.
-                  </span>
-                </div>
-              </div>
-            </div>
-          </>
-        );
+      // case RATE_WARNING:
+      //   return (
+      //     <>
+      //       <div className="w-full grid grid-cols-5 py-16 px-32 gap-4">
+      //         {renderRate()}
+      //       </div>
+      //     </>
+      //   );
+      // case REWARD_WARNING:
+      //   return (
+      //     <>
+      //       <div className="text-left">
+      //         <img
+      //           src="/happy.png"
+      //           alt="icon"
+      //           className="mx-auto my-2 p-4 h-32"
+      //         />
+      //         <div className="flex flex-rows">
+      //           <input
+      //             required
+      //             type="checkbox"
+      //             className=" align-middle my-auto lg:w-4 md:w-8 mr-4 w-1/12"
+      //             id="checkReward"
+      //             onInvalid={(e) =>
+      //               (e.target as HTMLInputElement).setCustomValidity(
+      //                 "Please check this box to continue"
+      //               )
+      //             }
+      //             onInput={(e) =>
+      //               (e.target as HTMLInputElement).setCustomValidity("")
+      //             }
+      //           />
+      //           <div className="w-full">
+      //             <label className="" htmlFor="checkReward">
+      //               {`Did you receive the reward from the project's founder team? By clicking the submit button, you confirmed that you have received the reward.`}
+      //             </label>
+      //             <br />
+      //             <span className="underline italic font-bold">
+      //               This action can not be undo.
+      //             </span>
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </>
+      //   );
       case DISBURSE_WARNING:
         return (
           <>
@@ -496,13 +496,15 @@ const ProfileScreen = () => {
       case REMOVE_WARNING:
         break;
       case CANCEL_WARNING:
+        console.log("cancel", projectId);        
         break;
       case RATE_WARNING:
         break;
       case REWARD_WARNING:
         break;
       case DISBURSE_WARNING:
-        break;
+        console.log("disburse", projectId);
+        break;  
       default:
         return;
     }
