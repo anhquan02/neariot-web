@@ -4,7 +4,7 @@ import { formatDate } from "../../helpers/Utils";
 const style = {
   wrapper: "w-full border border-black rounded-lg md:p-4 p-2 md:mb-4 mb-2 text-primary",
   title: "text-center text-lg font-semibold text-primary",
-  btn: "bg-purple text-white rounded-lg w-64 px-4 py-2 disabled:bg-purple-light disabled:text-black mb-2",
+  btn: "bg-purple text-white rounded-lg lg:w-64 md:w-44 px-4 py-2 disabled:bg-purple-light disabled:text-black mb-2",
 };
 
 type Props = {
@@ -64,7 +64,7 @@ const ProfileProject = memo(
         <div className={style.wrapper}>
           <div className={style.title}>{title}</div>
           <div className="flex flex-row w-full">
-            <div className="w-3/4 truncate">
+            <div className="w-3/4 truncate md:mr-4 mr-2">
               <div className="">
                 <span>Owner: {owner}</span>
               </div>
@@ -124,7 +124,7 @@ const ProfileProject = memo(
                 </button>
               ) : (
                 <button
-                  className="items-end bg-purple text-white rounded-lg w-64 px-4 py-2 "
+                  className={style.btn}
                   onClick={() => {
                     handleCancelPledgeProject();
                   }}

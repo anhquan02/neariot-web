@@ -12,6 +12,7 @@ import Notify from "../../../../../components/Notify";
 import Confirm from "../../../../../components/Confirm";
 import CustomButton from "../../../../../components/CustomButton";
 import AddIcon from "@mui/icons-material/Add";
+import OfferCard from "../../../../../components/Card/OfferCard";
 const RaiseFundScreen = memo(() => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [data, setData] = useState<ProjectData>({
@@ -76,7 +77,7 @@ const RaiseFundScreen = memo(() => {
         return;
       }
       const _data = await getDataWeb3(project.metadata);
-      if(_data?.milestone){
+      if (_data?.milestone) {
         setMilestoneDate(dayjs(_data?.milestone));
       }
       setData({
@@ -292,13 +293,10 @@ const RaiseFundScreen = memo(() => {
             </LocalizationProvider>
           </div>
         </div>
+        <div className="flex mx-4 md:my-8 my-4">
+          <OfferCard />
+        </div>
         <div className="flex justify-center p-4 pb-8">
-          {/* <button
-            className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0 h-12  items-center px-4"
-            onClick={() => handleNewOffer()}
-          >
-            Add new Offer
-          </button> */}
           <CustomButton
             _icon={AddIcon}
             className_icon=""
