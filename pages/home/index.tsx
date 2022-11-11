@@ -37,6 +37,17 @@ const Home = () => {
     setOpenSnack(false);
   };
 
+  useEffect(() => {
+    let tmpList = listProjects;
+    tmpList.forEach((element: any) => {
+      console.log(element.id);
+      if (tmpList.filter((x) => x.id === element.id).length > 1) {
+        tmpList.splice(tmpList.indexOf(element), 1);
+      }
+    });
+    setListProject(tmpList);
+  }, [listProjects]);
+
   const onShowResult = ({ type, msg }: any) => {
     setOpenSnack(true);
     setOpenLoading(false);

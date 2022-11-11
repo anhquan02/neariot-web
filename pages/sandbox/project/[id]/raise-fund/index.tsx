@@ -257,8 +257,8 @@ const RaiseFundScreen = memo(() => {
             <br />
             <span>
               Note that you need to create suggestions that are compatible with
-              your project's capabilities and that you need to commit to
-              completing them. Also, Don't miss the Milestone Review date. You
+              your project&#39;s capabilities and that you need to commit to
+              completing them. Also, Don&#39;t miss the Milestone Review date. You
               can only get 19% of the investment amount before this time, the
               rest will be transferred after this point when your investors
               agree that the results you have committed before are suitable.
@@ -271,7 +271,7 @@ const RaiseFundScreen = memo(() => {
               this commitment period, backers can participate in the public
               evaluation of your project, so paying rewards on time is also a
               way to ensure the credibility of the project. Milestone should be
-              later than the Reward Deadline, it'll be saved for your project.
+              later than the Reward Deadline, it&#39;ll be saved for your project.
             </span>
             <hr className="my-4 md:min-w-full border-slate-400 mb-8" />
           </div>

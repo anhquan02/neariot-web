@@ -1,8 +1,9 @@
-import { useRouter } from "next/router";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ProfileProject from "../../../components/Card/ProfileProject";
 import Notify from "../../../components/Notify";
+import { utils } from "near-api-js";
+import { useRouter } from "next/router";
 import Warning from "../../../components/Warning";
 import { ProjectData } from "../../../helpers/types";
 
@@ -20,6 +21,8 @@ const ProfileScreen = () => {
   const [openSnack, setOpenSnack] = useState(false);
   const [alertType, setAlertType] = useState("success");
   const [snackMsg, setSnackMsg] = useState("");
+  const [listPledgeProjects, setListPledgeProjects] = useState<any[]>([]);
+  const [listSaveProjects, setListSaveProjects] = useState<any[]>([]);
   const [projectId, setProjectId] = useState("");
   const [openWarning, setOpenWarning] = useState(false);
   const [actionState, setActionState] = useState(0);
@@ -68,10 +71,20 @@ const ProfileScreen = () => {
     setOpenWarning(true);
   };
 
-  const handleRemove = (id: string) => {
-    setProjectId(id);
-    setActionState(REMOVE_WARNING);
-    setOpenWarning(true);
+  const handleRemove = async (id: string) => {
+    const { walletConnection, contract } = wallet;
+    setOpenLoading(true);
+    await contract
+      .remove_from_watchlist({
+        id: id,
+      })
+      .then((res: any) => {
+        setOpenLoading(false);
+        router.reload();
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
   };
 
   const handleOpenRate = (id: string) => {
@@ -95,13 +108,178 @@ const ProfileScreen = () => {
     setOpenWarning(true);
   };
 
+
+  useEffect(() => {
+    const { walletConnection, contract } = wallet;
+    const userId = walletConnection.getAccountId();
+    if (userId === "") {
+      onRequestConnectWallet();
+      return;
+    }
+    setOpenLoading(true);
+    onLoadPledgedProject();
+    onLoadSavedProject();
+  }, []);
+
+  const onLoadSavedProject = async () => {
+    const { walletConnection, contract } = wallet;
+    const userId = walletConnection.getAccountId();
+    const { web3Connector } = web3storage;
+    if (userId === "") {
+      onRequestConnectWallet();
+      return;
+    }
+    setOpenLoading(true);
+    await contract
+      .get_projects_watched()
+      .then((res: any) => {
+        res.map(async (item: any) => {
+          const cid = item.metadata;
+          let projectTitle = "There is no Title";
+          let projectDescription = "There is no Description";
+          await web3Connector?.getData(cid).then((res: any) => {
+            if (res) {
+              projectTitle = res.name;
+              projectDescription = res.metadata.descriptions;
+            }
+          });
+          // Get Milestone
+          let milestone = "There is no Milestone was set";
+          await contract
+            .get_milestone({
+              id: item.id,
+            })
+            .then((res: any) => {
+              if (res !== "") {
+                milestone = new Date(parseFloat(res)).toLocaleDateString();
+              }
+            });
+          const project = {
+            id: item.id,
+            title: projectTitle,
+            owner: item.owner,
+            description: projectDescription,
+            pledge: parseFloat(
+              `${utils.format.formatNearAmount(
+                item.total_pledge_locked.toLocaleString("fullwide", {
+                  useGrouping: false,
+                })
+              )}`
+            ),
+            total_pledge: parseFloat(
+              `${utils.format.formatNearAmount(
+                item.total_pledge.toLocaleString("fullwide", {
+                  useGrouping: false,
+                })
+              )}`
+            ),
+            milestone: milestone,
+          };
+          setListSaveProjects((listSaveProjects) => [
+            ...listSaveProjects,
+            project,
+          ]);
+          setOpenLoading(false);
+        });
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    let tmpList = listSaveProjects;
+    tmpList.forEach((element: any) => {
+      if (tmpList.filter((x) => x.id === element.id).length > 1) {
+        tmpList.splice(tmpList.indexOf(element), 1);
+      }
+    });
+    setListSaveProjects(tmpList);
+  }, [listSaveProjects]);
+
+  const onLoadPledgedProject = async () => {
+    const { walletConnection, contract } = wallet;
+    const userId = walletConnection.getAccountId();
+    const { web3Connector } = web3storage;
+    if (userId === "") {
+      onRequestConnectWallet();
+      return;
+    }
+    setOpenLoading(true);
+    await contract
+      .get_projects_funded()
+      .then((res: any) => {
+        res.map(async (item: any) => {
+          const cid = item.metadata;
+          let projectTitle = "There is no Title";
+          let projectDescription = "There is no Description";
+          await web3Connector?.getData(cid).then((res: any) => {
+            if (res) {
+              projectTitle = res.name;
+              projectDescription = res.metadata.descriptions;
+            }
+          });
+          // Get Milestone
+          let milestone = "There is no Milestone was set";
+          await contract
+            .get_milestone({
+              id: item.id,
+            })
+            .then((res: any) => {
+              if (res !== "") {
+                milestone = new Date(parseFloat(res)).toLocaleDateString();
+              }
+            });
+          const project = {
+            id: item.id,
+            title: projectTitle,
+            owner: item.owner,
+            description: projectDescription,
+            pledge: parseFloat(
+              `${utils.format.formatNearAmount(
+                item.total_pledge_locked.toLocaleString("fullwide", {
+                  useGrouping: false,
+                })
+              )}`
+            ),
+            total_pledge: parseFloat(
+              `${utils.format.formatNearAmount(
+                item.total_pledge.toLocaleString("fullwide", {
+                  useGrouping: false,
+                })
+              )}`
+            ),
+            milestone: milestone,
+          };
+          setListPledgeProjects((listPledgeProjects) => [
+            ...listPledgeProjects,
+            project,
+          ]);
+          setOpenLoading(false);
+        });
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    let tmpList = listPledgeProjects;
+    tmpList.forEach((element: any) => {
+      if (tmpList.filter((x) => x.id === element.id).length > 1) {
+        tmpList.splice(tmpList.indexOf(element), 1);
+      }
+    });
+    setListPledgeProjects(tmpList);
+  }, [listPledgeProjects]);
+
   //render content depend on tab
   const renderContent = () => {
     switch (tab) {
       case 0:
         return (
           <>
-            {listSavedProject.map((item, index) => {
+            {listSaveProjects.map((item, index) => {
               return (
                 <Fragment key={index}>
                   <ProfileProject
@@ -123,7 +301,7 @@ const ProfileScreen = () => {
       case 1:
         return (
           <>
-            {listOwnProject.map((item, index) => {
+            {listPledgeProjects.map((item, index) => {
               return (
                 <Fragment key={index}>
                   <ProfileProject
@@ -224,51 +402,51 @@ const ProfileScreen = () => {
             </div>
           </>
         );
-      case RATE_WARNING:
-        return (
-          <>
-            <div className="w-full grid grid-cols-5 py-16 px-32 gap-4">
-              {renderRate()}
-            </div>
-          </>
-        );
-      case REWARD_WARNING:
-        return (
-          <>
-            <div className="text-left">
-              <img
-                src="/happy.png"
-                alt="icon"
-                className="mx-auto my-2 p-4 h-32"
-              />
-              <div className="flex flex-rows">
-                <input
-                  required
-                  type="checkbox"
-                  className=" align-middle my-auto lg:w-4 md:w-8 mr-4 w-1/12"
-                  id="checkReward"
-                  onInvalid={(e) =>
-                    (e.target as HTMLInputElement).setCustomValidity(
-                      "Please check this box to continue"
-                    )
-                  }
-                  onInput={(e) =>
-                    (e.target as HTMLInputElement).setCustomValidity("")
-                  }
-                />
-                <div className="w-full">
-                  <label className="" htmlFor="checkReward">
-                    {`Did you receive the reward from the project's founder team? By clicking the submit button, you confirmed that you have received the reward.`}
-                  </label>
-                  <br />
-                  <span className="underline italic font-bold">
-                    This action can not be undo.
-                  </span>
-                </div>
-              </div>
-            </div>
-          </>
-        );
+      // case RATE_WARNING:
+      //   return (
+      //     <>
+      //       <div className="w-full grid grid-cols-5 py-16 px-32 gap-4">
+      //         {renderRate()}
+      //       </div>
+      //     </>
+      //   );
+      // case REWARD_WARNING:
+      //   return (
+      //     <>
+      //       <div className="text-left">
+      //         <img
+      //           src="/happy.png"
+      //           alt="icon"
+      //           className="mx-auto my-2 p-4 h-32"
+      //         />
+      //         <div className="flex flex-rows">
+      //           <input
+      //             required
+      //             type="checkbox"
+      //             className=" align-middle my-auto lg:w-4 md:w-8 mr-4 w-1/12"
+      //             id="checkReward"
+      //             onInvalid={(e) =>
+      //               (e.target as HTMLInputElement).setCustomValidity(
+      //                 "Please check this box to continue"
+      //               )
+      //             }
+      //             onInput={(e) =>
+      //               (e.target as HTMLInputElement).setCustomValidity("")
+      //             }
+      //           />
+      //           <div className="w-full">
+      //             <label className="" htmlFor="checkReward">
+      //               {`Did you receive the reward from the project's founder team? By clicking the submit button, you confirmed that you have received the reward.`}
+      //             </label>
+      //             <br />
+      //             <span className="underline italic font-bold">
+      //               This action can not be undo.
+      //             </span>
+      //           </div>
+      //         </div>
+      //       </div>
+      //     </>
+      //   );
       case DISBURSE_WARNING:
         return (
           <>
@@ -318,13 +496,15 @@ const ProfileScreen = () => {
       case REMOVE_WARNING:
         break;
       case CANCEL_WARNING:
+        console.log("cancel", projectId);        
         break;
       case RATE_WARNING:
         break;
       case REWARD_WARNING:
         break;
       case DISBURSE_WARNING:
-        break;
+        console.log("disburse", projectId);
+        break;  
       default:
         return;
     }
@@ -332,6 +512,7 @@ const ProfileScreen = () => {
 
   return (
     <>
+
       <Warning
         onShow={openWarning}
         onClose={() => {
