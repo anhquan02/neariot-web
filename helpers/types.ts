@@ -16,6 +16,7 @@ export interface ProjectData {
   section?: any[];
   fee?:any;
   apiKey?:any;
+  milestones?:any;
 };
 
 export interface ProjectCardProps{
