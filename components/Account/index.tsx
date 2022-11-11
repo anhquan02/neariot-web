@@ -20,16 +20,10 @@ const Account = memo((props: any) => {
   });
   const aMenu = [
     {
-      id: "my-box",
-      label: "My Box",
-      icon: DeveloperBoardIcon,
-      router: "/box",
-    },
-    {
-      id: "my-storage",
-      label: "My Storage",
+      id: "profile",
+      label: "Profile",
       icon: StorageIcon,
-      router: "/storage",
+      router: "/user/profile",
     },
   ];
 

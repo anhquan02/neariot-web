@@ -14,7 +14,7 @@ type Props = {
   description: string;
   pledge: number;
   total_pledge: number;
-  milestone: any;
+  milestone: string;
   saved?: boolean;
   handleRemove?: (id: string) => void;
   handleRate?: (id: string) => void;
@@ -105,7 +105,7 @@ const ProfileProject = memo(
           </div>
           <div className="flex flex-row items-center">
             <div className="w-full">
-              <span>{`Total pledge: ${pledge} NEAR(${
+              <span>{`Total received: ${pledge} NEAR (per Total Commited: ${
                 ((pledge * 100) / total_pledge).toFixed(0)
               }%)`}</span>
             </div>
