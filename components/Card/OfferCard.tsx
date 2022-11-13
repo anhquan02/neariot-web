@@ -1,4 +1,5 @@
-import { memo, useState } from "react";
+import { Fragment, memo, useState } from "react";
+import { formatDate } from "../../helpers/Utils";
 
 const style = {
   arrow: {
@@ -10,89 +11,130 @@ const style = {
   },
 };
 
-const OfferCard = memo(() => {
-  const [collapsed, setCollapsed] = useState(false);
+type Props = {
+  reward: boolean;
+  minPledge: number;
+  description: string;
+  rewardDetail?: string;
+  rewardDeadline?: number;
+  informationForm?: any[];
+};
+// const NEAR_DECIMAL = 1_000_000_000_000_000_000_000_000;
+const NEAR_DECIMAL = 1;
+const sampleInform = [
+  { email: "quan.leanh.02@gmail.com" },
+  { "acccount near": "ciuz.testnet" },
+];
+const OfferCard = memo(
+  ({
+    reward,
+    minPledge,
+    description,
+    rewardDetail,
+    rewardDeadline,
+    informationForm = [],
+  }: Props) => {
+    const [collapsed, setCollapsed] = useState(false);
 
-  const renderContent = () => {
-    const reward = true;
-    if (collapsed && !reward) {
-      return (
-        <div className="w-full p-4">
-          <div className="w-full flex flex-col text-center">
-            <label className="font-semibold text-lg ">
-              Some description here! ........
-            </label>
-            <div className="text-left md:mt-4 my-2">
-              <label className="">Min. Plegde Amount: 5 NEAR</label>
+    const renderContent = () => {
+      if (collapsed && !reward) {
+        return (
+          <div className="w-full p-4">
+            <div className="w-full flex flex-col text-center">
+              <label className="font-semibold text-lg ">{description}</label>
+              <div className="text-left md:mt-4 my-2">
+                <label className="">
+                  Min. Plegde Amount: {minPledge / NEAR_DECIMAL} NEAR
+                </label>
+              </div>
             </div>
           </div>
-        </div>
-      );
-    }
-    if (collapsed && reward) {
-      return (
-        <>
-          <div className="w-full p-4">
-            <div className="w-full flex flex-col ">
-              <div className="my-2 w-full">
-                <label className="w-1/2">Description: </label>
-                <span className="w-full">
-                  You will spent xx Near and receive something after a time
-                </span>
-              </div>
-              <div className="flex flex-col w-full">
-                <div className="flex flex-row w-full">
-                  <label className="w-1/3">Offer (Minimun amount): </label>
-                  <span className="w-full ">5 Near</span>
+        );
+      }
+      if (collapsed && reward) {
+        return (
+          <>
+            <div className="w-full p-4">
+              <div className="w-full flex flex-col ">
+                <div className="my-2 w-full">
+                  <div className="flex flex-row w-full">
+                    <label className="w-1/3">Description: </label>
+                    <span className="w-full">{description}</span>
+                  </div>
                 </div>
-                <div className="flex flex-row w-full">
-                  <label className="w-1/3">Reward: </label>
-                  <span className="w-full">a NFT from our team</span>
+                <div className="flex flex-col w-full">
+                  <div className="flex flex-row w-full">
+                    <label className="w-1/3">Offer (Minimun amount): </label>
+                    <span className="w-full ">
+                      {minPledge / NEAR_DECIMAL} Near
+                    </span>
+                  </div>
+                  <div className="flex flex-row w-full">
+                    <label className="w-1/3">Reward: </label>
+                    <span className="w-full">{rewardDetail}</span>
+                  </div>
+                  <div className="flex flex-row w-full">
+                    <label className="w-1/3">Reward Deadline: </label>
+                    <span className="w-full">{formatDate(rewardDeadline)}</span>
+                  </div>
                 </div>
-                <div className="flex flex-row w-full">
-                  <label className="w-1/3">Reward Deadline: </label>
-                  <span className="w-full">11/11/2022</span>
+                <div className="my-2 w-full">
+                  <div className="flex flex-row w-full ">
+                    <label className="w-1/3">Reward Information Form: </label>
+                    <div className="w-full whitespace-pre-wrap ">
+                      {informationForm?.map((inform, index) => {
+                        for (const [key, _value] of Object.entries(inform)) {
+                          if (key == "id") continue;
+                          return (
+                            <Fragment key={index}>
+                              <div className="flex flex-row w-full">
+                                <span className="w-1/5">{key}</span>
+                                <span className="w-4/5">{`${_value}`}</span>
+                              </div>
+                            </Fragment>
+                          );
+                        }
+                      })}
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="my-2 w-full">
-                <div className="flex flex-row w-full ">
-                  <label className="w-1/3">Reward Information Form: </label>
-                  <div className="w-full whitespace-pre-wrap">
-                      Please fill your information follow this example:
-                      Your Near Wallet: backer.near 
-                      Your Name: Bob 
-                      Your email: bob_backer@gmail.com
+                <div className="text-left md:mt-4 my-2">
+                  <div className="flex flex-row w-full">
+                    <label className="w-1/3">Min. Plegde Amount:</label>
+                    <span className="w-full ">
+                      {minPledge / NEAR_DECIMAL} NEAR
+                    </span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </>
-      );
-    }
-  };
+          </>
+        );
+      }
+    };
 
-  return (
-    <>
-      <div className="w-full border border-purple rounded-lg">
-        <div className="flex flex-rows w-full p-4 text-center items-center">
-          <div
-            className={
-              !collapsed ? style.arrow.right : style.arrow.down + " flex"
-            }
-            onClick={() => {
-              setCollapsed(!collapsed);
-            }}
-          ></div>
-          <span className="text-center w-full md:mr-4">
-            Pledge without reward
-          </span>
+    return (
+      <>
+        <div className="w-full border border-purple rounded-lg  my-2">
+          <div className="flex flex-rows w-full p-4 text-center items-center">
+            <div
+              className={
+                !collapsed ? style.arrow.right : style.arrow.down + " flex"
+              }
+              onClick={() => {
+                setCollapsed(!collapsed);
+              }}
+            ></div>
+            <span className="text-center w-full md:mr-4">
+              {!reward ? "Pledge without reward" : "Pledge with reward"}
+            </span>
+          </div>
+          {renderContent()}
         </div>
-        {renderContent()}
-      </div>
-    </>
-  );
-});
+      </>
+    );
+  }
+);
 
 OfferCard.displayName = "OfferCard";
 

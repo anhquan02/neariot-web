@@ -136,7 +136,12 @@ const DetailProcjet = memo(() => {
           <button className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center">
             Share
           </button>
-          <button className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center">
+          <button
+            className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center"
+            onClick={() => {
+              router.push(`/sandbox/project/${id}/raise-fund`);
+            }}
+          >
             Raise Fund
           </button>
           <button className="col-span-1 bg-indigo-600 shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center">
@@ -239,8 +244,6 @@ const DetailProcjet = memo(() => {
   };
 
   const onEditSection = (_id: any) => {};
-
-
 
   const renderSection = () => {
     const section = data.section || [];

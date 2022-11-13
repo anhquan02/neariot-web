@@ -13,6 +13,7 @@ export interface ProjectData {
   project_rate?: any;
   data?: any;
   chart?:string;
+  offers?: any[];
   section?: any[];
   fee?:any;
   apiKey?:any;

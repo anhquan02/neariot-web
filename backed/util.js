@@ -47,6 +47,7 @@ export async function initContract() {
         "get_user_projects_created",
         "get_project",
         "get_rcm_projects",
+        "add_project_offer",
       ],
       sender: walletConnection.getAccountId(),
     }
