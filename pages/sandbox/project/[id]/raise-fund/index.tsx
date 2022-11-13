@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { Fragment, memo, useCallback, useEffect, useState } from "react";
-import { formatDate } from "../../../../../helpers/Utils";
 import dayjs, { Dayjs } from "dayjs";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -15,7 +14,6 @@ import AddIcon from "@mui/icons-material/Add";
 import OfferCard from "../../../../../components/Card/OfferCard";
 import NewOffer from "../../../../../components/Card/NewOffer";
 const RaiseFundScreen = memo(() => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [data, setData] = useState<ProjectData>({
     id: "",
     owner: "",
@@ -129,10 +127,6 @@ const RaiseFundScreen = memo(() => {
           msg: String(error),
         });
       });
-  };
-
-  const handleNewOffer = () => {
-    console.log("new offer");
   };
 
   const handleFundingSummary = () => {
@@ -253,7 +247,7 @@ const RaiseFundScreen = memo(() => {
           type: "success",
           msg: "Add new offer successfully",
         });
-        setOffers(res);
+        setData({ ...data, offers: res });
       })
       .catch((error: any) => {
         onShowResult({
@@ -298,8 +292,6 @@ const RaiseFundScreen = memo(() => {
       );
     });
   }, [offers]);
-
-  const open = Boolean(anchorEl);
 
   return (
     <>
@@ -372,7 +364,8 @@ const RaiseFundScreen = memo(() => {
               this commitment period, backers can participate in the public
               evaluation of your project, so paying rewards on time is also a
               way to ensure the credibility of the project. Milestone should be
-              later than the Reward Deadline, it&apos;ll be saved for your project.
+              later than the Reward Deadline, it&apos;ll be saved for your
+              project.
             </span>
             <hr className="my-4 md:min-w-full border-slate-400 mb-8" />
           </div>

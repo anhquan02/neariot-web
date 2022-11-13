@@ -295,10 +295,21 @@ export default function NewOffer({ onShow, onClose, onConfirm }: Props) {
             </div>
           </DialogContent>
           <DialogActions>
-            <Button type="submit" autoFocus>
+            <CustomButton
+              className_box=" py-2 w-1/5 mx-4 my-4"
+              className_button="py-2"
+            />
+            <CustomButton
+              className_box=" py-2 w-1/5 mx-4 my-4"
+              className_button="py-2"
+              _type="button"
+              label="Cancel"
+              onClickButton={handleClose}
+            />
+            {/* <Button type="submit" autoFocus>
               {"Submit"}
             </Button>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>Cancel</Button> */}
           </DialogActions>
         </form>
       </Dialog>
