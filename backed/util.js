@@ -52,6 +52,8 @@ export async function initContract() {
         "get_milestone",
         "set_milestone",
         "remove_from_watchlist",
+        "approve_project",
+        "reject_project",
       ],
       sender: walletConnection.getAccountId(),
     }
