@@ -364,8 +364,7 @@ const RaiseFundScreen = memo(() => {
               this commitment period, backers can participate in the public
               evaluation of your project, so paying rewards on time is also a
               way to ensure the credibility of the project. Milestone should be
-              later than the Reward Deadline, it&apos;ll be saved for your
-              project.
+              later than the Reward Deadline, it'll be saved for your project.
             </span>
             <hr className="my-4 md:min-w-full border-slate-400 mb-8" />
           </div>
