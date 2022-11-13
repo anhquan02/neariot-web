@@ -47,6 +47,7 @@ export async function initContract() {
         "get_user_projects_created",
         "get_project",
         "get_rcm_projects",
+        "add_project_offer",
         "get_projects_watched",
         "get_projects_funded",
         "get_milestone",
@@ -54,6 +55,8 @@ export async function initContract() {
         "remove_from_watchlist",
         "approve_project",
         "reject_project",
+        "add_to_watchlist",
+        "buy_offer"
       ],
       sender: walletConnection.getAccountId(),
     }

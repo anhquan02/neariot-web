@@ -1,10 +1,12 @@
+import { useRouter } from "next/router";
 import { memo } from "react";
 import { formatDate } from "../../helpers/Utils";
 
 const style = {
-  wrapper: "w-full border border-black rounded-lg md:p-4 p-2 md:mb-4 mb-2 text-primary",
+  wrapper:
+    "w-full border border-black rounded-lg md:p-4 p-2 md:mb-4 mb-2 text-primary cursor-pointer",
   title: "text-center text-lg font-semibold text-primary",
-  btn: "bg-purple text-white rounded-lg lg:w-64 md:w-44 px-4 py-2 disabled:bg-purple-light disabled:text-black mb-2",
+  btn: "bg-purple text-white rounded-lg lg:w-64 md:w-44 px-4 py-2 disabled:bg-purple-light disabled:text-black mb-2 hover:bg-purple-dark",
 };
 
 type Props = {
@@ -39,29 +41,41 @@ const ProfileProject = memo(
     handleRemove,
     handleReward,
   }: Props) => {
-    const handleRemoveProject = () => {
+    const router = useRouter();
+
+    const handleRemoveProject = (e: any) => {
+      e.stopPropagation();
       handleRemove && handleRemove(id);
     };
 
-    const handleRateProject = () => {
+    const handleRateProject = (e: any) => {
+      e.stopPropagation();
       handleRate && handleRate(id);
     };
 
-    const handleRewardProject = () => {
+    const handleRewardProject = (e: any) => {
+      e.stopPropagation();
       handleReward && handleReward(id);
     };
 
-    const handleDisburseProject = () => {
+    const handleDisburseProject = (e: any) => {
+      e.stopPropagation();
       handleDisburse && handleDisburse(id);
     };
 
-    const handleCancelPledgeProject = () => {
+    const handleCancelPledgeProject = (e: any) => {
+      e.stopPropagation();
       handleCancelPledge && handleCancelPledge(id);
     };
 
     return (
       <>
-        <div className={style.wrapper}>
+        <div
+          className={style.wrapper}
+          onClick={() => {
+            router.push(`/sandbox/project/${id}`);
+          }}
+        >
           <div className={style.title}>{title}</div>
           <div className="flex flex-row w-full">
             <div className="w-3/4 truncate md:mr-4 mr-2">
@@ -93,8 +107,8 @@ const ProfileProject = memo(
                   </button> */}
                   <button
                     className={style.btn}
-                    onClick={() => {
-                      handleDisburseProject();
+                    onClick={(e) => {
+                      handleDisburseProject(e);
                     }}
                   >
                     Disburse
@@ -105,9 +119,10 @@ const ProfileProject = memo(
           </div>
           <div className="flex flex-row items-center">
             <div className="w-full">
-              <span>{`Total received: ${pledge} NEAR (per Total Commited: ${
-                ((pledge * 100) / total_pledge).toFixed(0)
-              }%)`}</span>
+              <span>{`Total received: ${pledge} NEAR (per Total Commited: ${(
+                (pledge * 100) /
+                total_pledge
+              ).toFixed(0)}%)`}</span>
             </div>
             <div className="w-full text-center">
               <span>{`Milestone Review: ${formatDate(milestone)}`}</span>
@@ -116,8 +131,8 @@ const ProfileProject = memo(
               {saved ? (
                 <button
                   className={style.btn}
-                  onClick={() => {
-                    handleRemoveProject();
+                  onClick={(e) => {
+                    handleRemoveProject(e);
                   }}
                 >
                   Remove Project
@@ -125,8 +140,8 @@ const ProfileProject = memo(
               ) : (
                 <button
                   className={style.btn}
-                  onClick={() => {
-                    handleCancelPledgeProject();
+                  onClick={(e) => {
+                    handleCancelPledgeProject(e);
                   }}
                 >
                   Cancel Pledge

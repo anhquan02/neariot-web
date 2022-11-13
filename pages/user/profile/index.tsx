@@ -446,6 +446,9 @@ const ProfileScreen = () => {
                   </span>
                 </div>
               </div>
+              <div className="w-full grid grid-cols-5 py-8 px-32 gap-4">
+                {renderRate()}
+              </div>
             </div>
           </>
         );
@@ -528,6 +531,9 @@ const ProfileScreen = () => {
                   </span>
                 </div>
               </div>
+              <div className="w-full grid grid-cols-5 py-8 px-32 gap-4">
+                {renderRate()}
+              </div>
             </div>
           </>
         );
@@ -547,13 +553,14 @@ const ProfileScreen = () => {
         await contract
           .reject_project({
             id: projectId,
-            rate: 1,
+            rate: rate,
             metadata: "",
           })
           .then((res: any) => {
             console.log(res);
             setOpenLoading(false);
             setTimeout(() => {
+              setRate(0);
               router.reload();
             }, 2000);
           });
@@ -568,13 +575,14 @@ const ProfileScreen = () => {
         await contract
           .approve_project({
             id: projectId,
-            rate: 5,
+            rate: rate,
             metadata: "",
           })
           .then((res: any) => {
             console.log(res);
             setOpenLoading(false);
             setTimeout(() => {
+              setRate(0);
               router.reload();
             }, 2000);
           });
@@ -593,7 +601,6 @@ const ProfileScreen = () => {
           setOpenWarning(false);
         }}
         onConfirm={() => {
-          setRate(0);
           handleAction();
         }}
         title={warningTitle}

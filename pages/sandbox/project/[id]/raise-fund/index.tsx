@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
-import { memo, useCallback, useEffect, useState } from "react";
-import { formatDate } from "../../../../../helpers/Utils";
+import { Fragment, memo, useCallback, useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -13,8 +12,8 @@ import Confirm from "../../../../../components/Confirm";
 import CustomButton from "../../../../../components/CustomButton";
 import AddIcon from "@mui/icons-material/Add";
 import OfferCard from "../../../../../components/Card/OfferCard";
+import NewOffer from "../../../../../components/Card/NewOffer";
 const RaiseFundScreen = memo(() => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [data, setData] = useState<ProjectData>({
     id: "",
     owner: "",
@@ -24,6 +23,7 @@ const RaiseFundScreen = memo(() => {
     repository: "",
     created_at: "",
     noSetting: true,
+    offers: [],
     section: [],
     pledgers: 0,
     project_target: 0,
@@ -38,7 +38,8 @@ const RaiseFundScreen = memo(() => {
   const [alertType, setAlertType] = useState("success");
   const [snackMsg, setSnackMsg] = useState("");
   const [openConfirm, setOpenConfirm] = useState(false);
-  const [sectionId, setSectionId] = useState("");
+  const [openNewOffer, setOpenNewOffer] = useState(false);
+  const [offers, setOffers] = useState<any[]>([]);
   const wallet = useSelector((state: any) => state.wallet);
   const web3storage = useSelector((statex: any) => statex.w3storage);
   const router = useRouter();
@@ -85,6 +86,7 @@ const RaiseFundScreen = memo(() => {
         owner: _data.owner,
         name: _data.name,
         // type: _data.type,
+        offers: project.offers || [],
         descriptions: _data.descriptions,
         repository: _data.repository,
         created_at: project.created_at,
@@ -127,10 +129,6 @@ const RaiseFundScreen = memo(() => {
       });
   };
 
-  const handleNewOffer = () => {
-    console.log("new offer");
-  };
-
   const handleFundingSummary = () => {
     console.log("funding summary");
   };
@@ -150,41 +148,106 @@ const RaiseFundScreen = memo(() => {
 
   const handleChangeMilestoneDate = (date: Dayjs | null) => {
     setMilestoneDate(date);
-    handleUpdateMilestone();
+    handleUpdateMilestone(date);
   };
-  const handleUpdateMilestone = useCallback(async () => {
-    setOpenLoading(true);
+  const handleUpdateMilestone = useCallback(
+    async (date: any) => {
+      setOpenLoading(true);
+      const { walletConnection, contract } = wallet;
+      const userId = walletConnection.getAccountId();
+      const milestone = new Date(dayjs(date).format("YYYY-MM-DD")).getTime();
+      const metadata = {
+        ...data,
+        milestone: milestone,
+        // section: [],
+      };
+      const filename = userId + "_" + Date.now();
+      const cid = await web3storage.web3Connector.setData(
+        userId,
+        filename,
+        metadata
+      );
+      await contract
+        .set_milestone(
+          {
+            id: id,
+            milestones: new Date(date).getTime().toString(),
+          },
+          50000000000000
+        )
+        .then((res: any) => {
+          setData(metadata);
+          onShowResult({
+            type: "success",
+            msg: "Update milestone date successfully",
+          });
+          // router.push(`/sandbox/project/${id}`);
+        })
+        .catch((error: any) => {
+          onShowResult({
+            type: "error",
+            msg: String(error),
+          });
+        });
+    },
+    [milestoneDate]
+  );
+
+  const onKeyDown = (e: any) => {
+    e.preventDefault();
+  };
+
+  const handleConfirmNewOffew = async (data: any) => {
+    if (!data.minPledge || data.minPledge == 0) {
+      onShowResult({
+        type: "error",
+        msg: "Please fill Min. Pledge Amount",
+      });
+      return;
+    }
+    if (!data.description) {
+      onShowResult({
+        type: "error",
+        msg: "Please fill Description",
+      });
+      return;
+    }
+    if (!data.rewardDetail && data.reward) {
+      onShowResult({
+        type: "error",
+        msg: "Please fill Reward Details",
+      });
+      return;
+    }
+    if (!data.rewardDeadline && data.reward) {
+      onShowResult({
+        type: "error",
+        msg: "Please fill Reward Deadline",
+      });
+      return;
+    }
     const { walletConnection, contract } = wallet;
-    const userId = walletConnection.getAccountId();
-    const milestone = new Date(
-      dayjs(milestoneDate).format("YYYY-MM-DD")
-    ).getTime();
-    const metadata = {
-      ...data,
-      milestone: milestone,
-      // section: [],
-    };
-    const filename = userId + "_" + Date.now();
+    setOpenLoading(true);
+    const filename = id + "_" + Date.now();
     const cid = await web3storage.web3Connector.setData(
-      userId,
+      Date.now(),
       filename,
-      metadata
+      data
     );
+    console.log(cid);
     await contract
-      .update_project(
-        {
-          id: id,
-          metadata: cid,
-        },
-        50000000000000
-      )
+      .add_project_offer({
+        id: id,
+        price: Number(data.minPledge),
+        expires_at: data.reward ? data.rewardDeadline : 0,
+        metadata: cid,
+      })
       .then((res: any) => {
-        setData(metadata);
         onShowResult({
           type: "success",
-          msg: "Update milestone date successfully",
+          msg: "Add new offer successfully",
         });
-        // router.push(`/sandbox/project/${id}`);
+        setData({ ...data, offers: res });
       })
       .catch((error: any) => {
         onShowResult({
@@ -192,23 +255,43 @@ const RaiseFundScreen = memo(() => {
           msg: String(error),
         });
       });
-  }, [milestoneDate]);
-
-  const onEditSection = (_id: any) => {};
-
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+    setOpenNewOffer(false);
   };
 
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
+  useEffect(() => {
+    (async () => {
+      const _offers: any[] = [];
+      if (!data.offers) {
+        return;
+      }
+      for (const offer of data.offers || []) {
+        const _data = await getDataWeb3(offer.metadata);
+        if (_data) {
+          _data.id = offer.id;
+          _offers.push(_data);
+        }
+      }
+      setOffers(_offers);
+    })();
+  }, [data]);
 
-  const onKeyDown = (e: any) => {
-    e.preventDefault();
-  };
-
-  const open = Boolean(anchorEl);
+  const renderOffers = useCallback(() => {
+    return offers.map((offer: any, index: any) => {
+      return (
+        <Fragment key={index}>
+          <OfferCard
+            id={offer.id}
+            description={offer.description}
+            minPledge={offer.minPledge}
+            reward={offer.reward}
+            rewardDetail={offer.rewardDetail}
+            rewardDeadline={offer.rewardDeadline}
+            informationForm={offer.informationForm}
+          />
+        </Fragment>
+      );
+    });
+  }, [offers]);
 
   return (
     <>
@@ -226,6 +309,16 @@ const RaiseFundScreen = memo(() => {
         }}
         onConfirm={(data: any) => {}}
       />
+      <NewOffer
+        onShow={openNewOffer}
+        onClose={() => {
+          setOpenNewOffer(false);
+        }}
+        onConfirm={(data: any) => {
+          handleConfirmNewOffew(data);
+        }}
+      />
+
       <div className="w-full mb-12 pt-36"></div>
       <div className="w-full lg:px-16 sm:px-8">
         <div className="flex md:flex-row flex-col p-4 justify-between">
@@ -257,10 +350,10 @@ const RaiseFundScreen = memo(() => {
             <br />
             <span>
               Note that you need to create suggestions that are compatible with
-              your project&#39;s capabilities and that you need to commit to
-              completing them. Also, Don&#39;t miss the Milestone Review date. You
-              can only get 19% of the investment amount before this time, the
-              rest will be transferred after this point when your investors
+              your project&apos;s capabilities and that you need to commit to
+              completing them. Also, Don&apos;t miss the Milestone Review date.
+              You can only get 19% of the investment amount before this time,
+              the rest will be transferred after this point when your investors
               agree that the results you have committed before are suitable.
               with what they expect from the project. For investors who are not
               satisfied with this result, the remaining 80% will be refunded to
@@ -271,7 +364,8 @@ const RaiseFundScreen = memo(() => {
               this commitment period, backers can participate in the public
               evaluation of your project, so paying rewards on time is also a
               way to ensure the credibility of the project. Milestone should be
-              later than the Reward Deadline, it&#39;ll be saved for your project.
+              later than the Reward Deadline, it&apos;ll be saved for your
+              project.
             </span>
             <hr className="my-4 md:min-w-full border-slate-400 mb-8" />
           </div>
@@ -293,9 +387,7 @@ const RaiseFundScreen = memo(() => {
             </LocalizationProvider>
           </div>
         </div>
-        <div className="flex mx-4 md:my-8 my-4">
-          <OfferCard />
-        </div>
+        <div className="flex flex-col mx-4 md:my-8 my-4">{renderOffers()}</div>
         <div className="flex justify-center p-4 pb-8">
           <CustomButton
             _icon={AddIcon}
@@ -304,7 +396,7 @@ const RaiseFundScreen = memo(() => {
             className_box=" py-2 w-auto mx-auto my-4"
             className_button="py-2 px-4"
             label="Add new Offer"
-            onClickButton={() => handleNewOffer()}
+            onClickButton={() => setOpenNewOffer(true)}
           />
         </div>
       </div>
@@ -312,6 +404,6 @@ const RaiseFundScreen = memo(() => {
   );
 });
 
-RaiseFundScreen.displayName = "detail_project";
+RaiseFundScreen.displayName = "RaiseFundScreen";
 
 export default RaiseFundScreen;
