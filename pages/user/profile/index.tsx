@@ -23,6 +23,7 @@ const ProfileScreen = () => {
   const [snackMsg, setSnackMsg] = useState("");
   const [listPledgeProjects, setListPledgeProjects] = useState<any[]>([]);
   const [listSaveProjects, setListSaveProjects] = useState<any[]>([]);
+  const [listCompletedProjects, setListCompletedProjects] = useState<any[]>([]);
   const [projectId, setProjectId] = useState("");
   const [openWarning, setOpenWarning] = useState(false);
   const [actionState, setActionState] = useState(0);
@@ -50,8 +51,6 @@ const ProfileScreen = () => {
     })();
     // setOpenLoading(true);
   }, []);
-
-  
 
   const onCloseSnack = () => {
     setOpenSnack(false);
@@ -107,7 +106,6 @@ const ProfileScreen = () => {
     setActionState(DISBURSE_WARNING);
     setOpenWarning(true);
   };
-
 
   useEffect(() => {
     const { walletConnection, contract } = wallet;
@@ -187,16 +185,6 @@ const ProfileScreen = () => {
       });
   };
 
-  useEffect(() => {
-    let tmpList = listSaveProjects;
-    tmpList.forEach((element: any) => {
-      if (tmpList.filter((x) => x.id === element.id).length > 1) {
-        tmpList.splice(tmpList.indexOf(element), 1);
-      }
-    });
-    setListSaveProjects(tmpList);
-  }, [listSaveProjects]);
-
   const onLoadPledgedProject = async () => {
     const { walletConnection, contract } = wallet;
     const userId = walletConnection.getAccountId();
@@ -209,7 +197,14 @@ const ProfileScreen = () => {
     await contract
       .get_projects_funded()
       .then((res: any) => {
+        console.log("get_projects_funded => ", res);
         res.map(async (item: any) => {
+          let isCompleted = false;
+          item.bought_offers.map((offer: any) => {
+            if (offer.buyer === userId && offer.rate > 0) {
+              isCompleted = true;
+            }
+          });
           const cid = item.metadata;
           let projectTitle = "There is no Title";
           let projectDescription = "There is no Description";
@@ -251,10 +246,17 @@ const ProfileScreen = () => {
             ),
             milestone: milestone,
           };
-          setListPledgeProjects((listPledgeProjects) => [
-            ...listPledgeProjects,
-            project,
-          ]);
+          if (isCompleted) {
+            setListCompletedProjects((listCompletedProjects) => [
+              ...listCompletedProjects,
+              project,
+            ]);
+          } else {
+            setListPledgeProjects((listPledgeProjects) => [
+              ...listPledgeProjects,
+              project,
+            ]);
+          }
           setOpenLoading(false);
         });
       })
@@ -262,6 +264,16 @@ const ProfileScreen = () => {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    let tmpList = listSaveProjects;
+    tmpList.forEach((element: any) => {
+      if (tmpList.filter((x) => x.id === element.id).length > 1) {
+        tmpList.splice(tmpList.indexOf(element), 1);
+      }
+    });
+    setListSaveProjects(tmpList);
+  }, [listSaveProjects]);
 
   useEffect(() => {
     let tmpList = listPledgeProjects;
@@ -272,6 +284,16 @@ const ProfileScreen = () => {
     });
     setListPledgeProjects(tmpList);
   }, [listPledgeProjects]);
+
+  useEffect(() => {
+    let tmpList = listCompletedProjects;
+    tmpList.forEach((element: any) => {
+      if (tmpList.filter((x) => x.id === element.id).length > 1) {
+        tmpList.splice(tmpList.indexOf(element), 1);
+      }
+    });
+    setListPledgeProjects(tmpList);
+  }, [listCompletedProjects]);
 
   //render content depend on tab
   const renderContent = () => {
@@ -302,6 +324,31 @@ const ProfileScreen = () => {
         return (
           <>
             {listPledgeProjects.map((item, index) => {
+              return (
+                <Fragment key={index}>
+                  <ProfileProject
+                    id={item.id}
+                    title={item.title}
+                    owner={item.owner}
+                    description={item.description}
+                    pledge={item.pledge}
+                    total_pledge={item.total_pledge}
+                    milestone={item.milestone}
+                    saved={false}
+                    handleCancelPledge={(id: any) => handleOpenCancelPledge(id)}
+                    handleDisburse={(id: any) => handleOpenDisburse(id)}
+                    handleRate={(id: any) => handleOpenRate(id)}
+                    handleReward={(id: any) => handleOpenReward(id)}
+                  />
+                </Fragment>
+              );
+            })}
+          </>
+        );
+      case 2:
+        return (
+          <>
+            {listCompletedProjects.map((item, index) => {
               return (
                 <Fragment key={index}>
                   <ProfileProject
@@ -489,14 +536,27 @@ const ProfileScreen = () => {
     }
   };
 
-  const handleAction = () => {
+  const handleAction = async () => {
     const { walletConnection, contract } = wallet;
     const { web3Connector } = web3storage;
     switch (actionState) {
       case REMOVE_WARNING:
         break;
       case CANCEL_WARNING:
-        console.log("cancel", projectId);        
+        setOpenLoading(true);
+        await contract
+          .reject_project({
+            id: projectId,
+            rate: 1,
+            metadata: "",
+          })
+          .then((res: any) => {
+            console.log(res);
+            setOpenLoading(false);
+            setTimeout(() => {
+              router.reload();
+            }, 2000);
+          });
         break;
       case RATE_WARNING:
         break;
@@ -504,7 +564,21 @@ const ProfileScreen = () => {
         break;
       case DISBURSE_WARNING:
         console.log("disburse", projectId);
-        break;  
+        setOpenLoading(true);
+        await contract
+          .approve_project({
+            id: projectId,
+            rate: 5,
+            metadata: "",
+          })
+          .then((res: any) => {
+            console.log(res);
+            setOpenLoading(false);
+            setTimeout(() => {
+              router.reload();
+            }, 2000);
+          });
+        break;
       default:
         return;
     }
@@ -512,7 +586,6 @@ const ProfileScreen = () => {
 
   return (
     <>
-
       <Warning
         onShow={openWarning}
         onClose={() => {
@@ -562,6 +635,20 @@ const ProfileScreen = () => {
               onClick={() => setTab(1)}
             >
               Backed Projects
+            </a>
+          </li>
+          <li className="mr-2">
+            <a
+              href="#"
+              className={
+                "inline-block p-4 rounded-t-lg " +
+                (tab == 2
+                  ? "border-b border-primary text-purple"
+                  : "text-slate-600")
+              }
+              onClick={() => setTab(2)}
+            >
+              Completed Projects
             </a>
           </li>
         </ul>
