@@ -25,6 +25,7 @@ const RaiseFundScreen = memo(() => {
     repository: "",
     created_at: "",
     noSetting: true,
+    offers: [],
     section: [],
     pledgers: 0,
     project_target: 0,
@@ -153,49 +154,50 @@ const RaiseFundScreen = memo(() => {
 
   const handleChangeMilestoneDate = (date: Dayjs | null) => {
     setMilestoneDate(date);
-    handleUpdateMilestone();
+    handleUpdateMilestone(date);
   };
-  const handleUpdateMilestone = useCallback(async () => {
-    setOpenLoading(true);
-    const { walletConnection, contract } = wallet;
-    const userId = walletConnection.getAccountId();
-    const milestone = new Date(
-      dayjs(milestoneDate).format("YYYY-MM-DD")
-    ).getTime();
-    const metadata = {
-      ...data,
-      milestone: milestone,
-      // section: [],
-    };
-    const filename = userId + "_" + Date.now();
-    const cid = await web3storage.web3Connector.setData(
-      userId,
-      filename,
-      metadata
-    );
-    await contract
-      .update_project(
-        {
-          id: id,
-          metadata: cid,
-        },
-        50000000000000
-      )
-      .then((res: any) => {
-        setData(metadata);
-        onShowResult({
-          type: "success",
-          msg: "Update milestone date successfully",
+  const handleUpdateMilestone = useCallback(
+    async (date: any) => {
+      setOpenLoading(true);
+      const { walletConnection, contract } = wallet;
+      const userId = walletConnection.getAccountId();
+      const milestone = new Date(dayjs(date).format("YYYY-MM-DD")).getTime();
+      const metadata = {
+        ...data,
+        milestone: milestone,
+        // section: [],
+      };
+      const filename = userId + "_" + Date.now();
+      const cid = await web3storage.web3Connector.setData(
+        userId,
+        filename,
+        metadata
+      );
+      await contract
+        .set_milestone(
+          {
+            id: id,
+            milestones: new Date(date).getTime().toString(),
+          },
+          50000000000000
+        )
+        .then((res: any) => {
+          setData(metadata);
+          onShowResult({
+            type: "success",
+            msg: "Update milestone date successfully",
+          });
+          // router.push(`/sandbox/project/${id}`);
+        })
+        .catch((error: any) => {
+          onShowResult({
+            type: "error",
+            msg: String(error),
+          });
         });
-        // router.push(`/sandbox/project/${id}`);
-      })
-      .catch((error: any) => {
-        onShowResult({
-          type: "error",
-          msg: String(error),
-        });
-      });
-  }, [milestoneDate]);
+    },
+    [milestoneDate]
+  );
 
   const onKeyDown = (e: any) => {
     e.preventDefault();
@@ -251,7 +253,7 @@ const RaiseFundScreen = memo(() => {
           type: "success",
           msg: "Add new offer successfully",
         });
-        router.reload();
+        setOffers(res);
       })
       .catch((error: any) => {
         onShowResult({
@@ -265,10 +267,15 @@ const RaiseFundScreen = memo(() => {
   useEffect(() => {
     (async () => {
       const _offers: any[] = [];
+      if (!data.offers) {
+        return;
+      }
       for (const offer of data.offers || []) {
         const _data = await getDataWeb3(offer.metadata);
-        _data.id = offer.id;
-        _offers.push(_data);
+        if (_data) {
+          _data.id = offer.id;
+          _offers.push(_data);
+        }
       }
       setOffers(_offers);
     })();
@@ -279,6 +286,7 @@ const RaiseFundScreen = memo(() => {
       return (
         <Fragment key={index}>
           <OfferCard
+            id={offer.id}
             description={offer.description}
             minPledge={offer.minPledge}
             reward={offer.reward}
@@ -364,7 +372,7 @@ const RaiseFundScreen = memo(() => {
               this commitment period, backers can participate in the public
               evaluation of your project, so paying rewards on time is also a
               way to ensure the credibility of the project. Milestone should be
-              later than the Reward Deadline, it'll be saved for your project.
+              later than the Reward Deadline, it&apos;ll be saved for your project.
             </span>
             <hr className="my-4 md:min-w-full border-slate-400 mb-8" />
           </div>

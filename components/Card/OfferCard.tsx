@@ -12,6 +12,7 @@ const style = {
 };
 
 type Props = {
+  id: string;
   reward: boolean;
   minPledge: number;
   description: string;
@@ -116,14 +117,16 @@ const OfferCard = memo(
     return (
       <>
         <div className="w-full border border-purple rounded-lg  my-2">
-          <div className="flex flex-rows w-full p-4 text-center items-center">
+          <div
+            className="flex flex-rows w-full p-4 text-center items-center"
+            onClick={() => {
+              setCollapsed(!collapsed);
+            }}
+          >
             <div
               className={
                 !collapsed ? style.arrow.right : style.arrow.down + " flex"
               }
-              onClick={() => {
-                setCollapsed(!collapsed);
-              }}
             ></div>
             <span className="text-center w-full md:mr-4">
               {!reward ? "Pledge without reward" : "Pledge with reward"}

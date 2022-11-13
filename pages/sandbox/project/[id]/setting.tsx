@@ -19,7 +19,7 @@ const SettingScreen = memo(() => {
     repository: "",
     created_at: "",
     data: [],
-    noSetting: true,
+    noSetting: false,
     section: [],
     pledgers: 0,
     project_target: 0,
@@ -48,13 +48,13 @@ const SettingScreen = memo(() => {
       const project = await getProject(id);
       // check user is owner of project
       if (project.owner !== userId) {
-        router.push(`/project/${id}`);
+        router.push(`/sandbox/project/${id}`);
         return;
       }
       const _data = await getDataWeb3(project.metadata);
       setData({
         id: project.id,
-        owner: _data.owner,
+        owner: userId,
         name: _data.name,
         // type: _data.type,
         descriptions: _data.descriptions,

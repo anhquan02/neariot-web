@@ -18,6 +18,7 @@ export interface ProjectData {
   fee?:any;
   apiKey?:any;
   milestones?:any;
+  watchers?:any;
 };
 
 export interface ProjectCardProps{
