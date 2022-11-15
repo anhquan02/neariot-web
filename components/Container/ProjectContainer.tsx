@@ -14,13 +14,12 @@ const ProjectContainer = memo((props: Props) => {
       <div className="container my-6 md:mx-auto">
         <div className="grid gap-10 lg:grid-cols-3 md:grid-cols-2 grid-cols-1">
           {listProjects.map((item, index) => {
+            if (index > 8) return;
             return <ProjectCard key={index} {...item} />;
           })}
         </div>
         <div className="flex justify-end my-8">
-          <Stack
-            spacing={2}
-          >
+          <Stack spacing={2}>
             <Pagination
               count={10}
               sx={{
@@ -43,7 +42,6 @@ const ProjectContainer = memo((props: Props) => {
     </>
   );
 });
-
 
 const listProject = [
   {

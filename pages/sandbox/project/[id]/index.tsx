@@ -8,6 +8,7 @@ import { Popover, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { ProjectData } from "../../../../helpers/types";
 import Notify from "../../../../components/Notify";
+import { utils } from "near-api-js";
 import Confirm from "../../../../components/Confirm";
 
 const DetailProcjet = memo(() => {
@@ -30,6 +31,7 @@ const DetailProcjet = memo(() => {
   const [openLoading, setOpenLoading] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [alertType, setAlertType] = useState("success");
+  const [subcribed, setSubcribed] = useState(false);
   const [snackMsg, setSnackMsg] = useState("");
   const [openConfirm, setOpenConfirm] = useState(false);
   const [sectionId, setSectionId] = useState("");
@@ -77,11 +79,19 @@ const DetailProcjet = memo(() => {
         noSetting: _data.noSetting,
         data: _data.data,
         section: _data.section,
-        pledgers: project.total_pledge + "",
+        fee: _data.fee,
+        pledgers: parseFloat(
+          `${utils.format.formatNearAmount(
+            project.total_pledge.toLocaleString("fullwide", {
+              useGrouping: false,
+            })
+          )}`
+        ),
         project_target: _data.project_target + "",
         avg_rate: project.avg_rate + "",
         project_rate: _data.project_rate + "",
       });
+      await checkSubcribed();
       setOpenLoading(false);
     })();
   }, []);
@@ -190,12 +200,13 @@ const DetailProcjet = memo(() => {
       return (
         <>
           <button
-            className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center"
+            className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center disabled:bg-purple-light disabled:text-black"
             onClick={() => handleSubcribe()}
+            disabled={subcribed}
           >
             Subcribe
           </button>
-          <button className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center">
+          <button className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center disabled:bg-purple-light disabled:text-black">
             Share
           </button>
         </>
@@ -205,28 +216,32 @@ const DetailProcjet = memo(() => {
       <>
         <button
           onClick={() => handleSubcribe()}
-          className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center"
+          className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center disabled:bg-purple-light disabled:text-black"
+          disabled={subcribed}
         >
-          Subcribe
+          {subcribed ? "Subscribed" : "Subscribe"}
         </button>
-        <button className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center">
+        <button className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center disabled:bg-purple-light disabled:text-black">
           Share
         </button>
         <button
           onClick={() => router.push(`/sandbox/project/${id}/backed`)}
-          className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center"
+          className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center disabled:bg-purple-light disabled:text-black"
         >
           Back This Project
         </button>
-        <button className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center">
+        <button
+          disabled
+          className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center disabled:bg-purple-light disabled:text-black"
+        >
           Test Campaign
         </button>
       </>
     );
-  }, [data]);
+  }, [data, subcribed]);
 
   const renderProjectData = () => {
-    const data = true;
+    const data = false;
     if (data) {
       return (
         <div className="w-full bg-white shadow-purple shadow-sm rounded">
@@ -286,6 +301,24 @@ const DetailProcjet = memo(() => {
           msg: String(error),
         });
       });
+  };
+
+  const checkSubcribed = async () => {
+    const { walletConnection, contract } = wallet;
+    const userId = walletConnection.getAccountId();
+    const { web3Connector } = web3storage;
+    if (userId === "") {
+      onRequestConnectWallet();
+      return;
+    }
+    await contract.get_projects_watched().then((res: any) => {
+      const _index = res.findIndex((item: any) => item.id == id);
+      if (_index >= 0) {
+        setSubcribed(true);
+      } else {
+        setSubcribed(false);
+      }
+    });
   };
 
   const onEditSection = (_id: any) => {};
@@ -391,13 +424,13 @@ const DetailProcjet = memo(() => {
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 md:w-4/12 w-2/12">Project Target: </div>
               <span className="flex mx-2 md:w-8/12 w-full px-2 overflow-x-auto">
-                {data.pledgers + "/" + data.project_target} NEAR
+                {(data.pledgers || 0) + "/" + data.fee} NEAR
               </span>
             </div>
             <div className="flex flex-row w-full py-2 m-2">
               <div className="flex mx-2 md:w-4/12 w-2/12">Project Rate: </div>
               <span className="flex mx-2 md:w-8/12 w-full px-2 overflow-x-auto">
-                {data.avg_rate + "/" + data.project_rate}
+                {data.avg_rate + "/5"}
               </span>
             </div>
           </div>
