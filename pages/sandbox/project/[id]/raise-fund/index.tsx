@@ -190,7 +190,7 @@ const RaiseFundScreen = memo(() => {
           });
         });
     },
-    [milestoneDate]
+    [data, milestoneDate]
   );
 
   const onKeyDown = (e: any) => {

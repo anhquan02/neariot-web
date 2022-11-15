@@ -114,7 +114,7 @@ const Account = memo((props: any) => {
                 return (
                   <Fragment key={index}>
                     <div
-                      className="font-semibold"
+                      className="font-semibold cursor-pointer"
                       onClick={() => onNavItemClick(item.router)}
                     >
                       <item.icon className="mx-2" />
@@ -124,7 +124,7 @@ const Account = memo((props: any) => {
                   </Fragment>
                 );
               })}
-              <div className="font-semibold mx-2" onClick={onRequestSignOut}>
+              <div className="font-semibold cursor-pointer mx-2" onClick={onRequestSignOut}>
                 <LogoutSharpIcon className="mr-2" />
                 Log out
               </div>
