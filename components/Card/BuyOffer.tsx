@@ -194,7 +194,7 @@ const BuyOffer = memo(
       <>
         <div className="w-full border border-purple rounded-lg  my-2">
           <div
-            className="flex flex-rows w-full p-4 text-center items-center"
+            className="flex flex-rows w-full p-4 text-center items-center cursor-pointer"
             onClick={() => {
               setCollapsed(!collapsed);
             }}
