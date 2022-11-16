@@ -217,7 +217,7 @@ const CreateScreen = memo((props: any) => {
               }}
             />
             <InputForm
-              label="Target Fee"
+              label="Target (NEAR)"
               onchange={(value: any) => {
                 setFee(value);
               }}

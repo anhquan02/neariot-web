@@ -151,6 +151,15 @@ const SettingScreen = memo(() => {
           msg: "Description could not be empty",
         });
       }
+      const project = await getProject(id);
+      const _data = await getDataWeb3(project.metadata);
+      const metadata = {
+        ..._data,
+        name: data.name,
+        descriptions: data.descriptions,
+        repository: data.repository,
+        fee: data.fee,
+      };
       // if (
       //   data.type === "" ||
       //   data.type === null ||
@@ -164,7 +173,7 @@ const SettingScreen = memo(() => {
 
       setOpenLoading(true);
       const { web3Connector } = web3storage;
-      const cid = await web3Connector.setData(userId, filename, data);
+      const cid = await web3Connector.setData(userId, filename, metadata);
       updateProject(cid);
     },
     [data, filename]
@@ -417,7 +426,7 @@ const SettingScreen = memo(() => {
             </div>
             <div className="flex md:flex-row flex-col mb-2">
               <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
-                <label htmlFor="inpFee">Subcribe Fee </label>
+                <label htmlFor="inpFee">Target (NEAR) </label>
               </div>
               <div className="md:w-8/12 lg:w-10/12 item-center align-middle  my-auto pb-2 w-full">
                 <input
@@ -435,7 +444,7 @@ const SettingScreen = memo(() => {
                 />
               </div>
             </div>
-            <div className="flex md:flex-row flex-col mb-2">
+            {/* <div className="flex md:flex-row flex-col mb-2">
               <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
                 <label htmlFor="">
                   Select how your data display( Default is table)
@@ -513,7 +522,7 @@ const SettingScreen = memo(() => {
                 />
                 <div className="flex justify-center">Pie Chart</div>
               </div>
-            </div>
+            </div> 
             <div className="flex md:flex-row flex-col mb-2">
               <div className="md:w-4/12 lg:w-2/12 item-center align-middle mr-5 whitespace-nowrap my-auto pb-2 w-full">
                 <label htmlFor="inpAPIKey">Your API Key </label>
@@ -533,7 +542,7 @@ const SettingScreen = memo(() => {
                   }}
                 />
               </div>
-            </div>
+            </div>*/}
             <div className="flex flex-row mb-2">
               <CustomButton
                 label="Save Changes"

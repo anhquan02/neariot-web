@@ -17,3 +17,6 @@ export const formatFullDate = (date:any) => {
     d = mm + '/' + dd + '/' + yyyy + " "+hours +":" +minutes.substr(-2) + ":" +seconds.substr(-2);
     return d;
 }
+export function getRandomInt(max:number) {
+  return Math.floor(Math.random() * max);
+}

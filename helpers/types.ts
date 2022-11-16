@@ -31,4 +31,5 @@ export interface ProjectCardProps{
   pledgers?: any;
   backers?:any;
   avg_rate?: any;
+  project_target?: any;
 }

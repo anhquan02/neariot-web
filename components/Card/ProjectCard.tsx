@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from "react";
-import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import PersonIcon from "@mui/icons-material/Person";
 import PanoramaFishEyeIcon from "@mui/icons-material/PanoramaFishEye";
 import { ProjectCardProps } from "../../helpers/types";
@@ -14,6 +14,7 @@ const ProjectCard = memo(
     owner,
     pledgers,
     backers,
+    project_target,
   }: ProjectCardProps) => {
     const fiveStar = 5;
     const [rate, setRate] = useState(3);
@@ -48,7 +49,11 @@ const ProjectCard = memo(
           }}
         >
           <div className="w-full flex justify-center bg-gray-300 border-2 border-purple h-32">
-            <img src={img} alt="" className="object-cover w-auto h-auto" />
+            <img
+              src={img}
+              alt=""
+              className="object-cover object-center w-auto h-auto"
+            />
           </div>
           <div className="w-full px-2 flex-col">
             <label className="font-semibold text-lg flex">{name}</label>
@@ -58,13 +63,13 @@ const ProjectCard = memo(
             <div className="w-full italic my-2">{owner}</div>
             <div className="w-full grid grid-cols-7">{renderRate()}</div>
             <div className="w-full my-2">
-              <CurrencyBitcoinIcon />
+              <MonetizationOnIcon />
               <span className="text-lg font-semibold h-auto text-center align-middle">
                 {pledgers + ""}
               </span>
               <span className="overflow-hidden text-center align-middle">
                 {" "}
-                pledged of $... goal
+                pledged of ${project_target}
               </span>
             </div>
             <div className="w-full my-2">

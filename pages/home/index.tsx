@@ -1,7 +1,4 @@
 import { useRouter } from "next/router";
-import StorageIcon from "@mui/icons-material/Storage";
-import { DeveloperBoard } from "@mui/icons-material";
-import CustomButton from "../../components/CustomButton";
 import Carousel from "../../components/Carousel";
 import SearchField from "../../components/Filter/SearchField";
 import Filter from "../../components/Filter";
@@ -11,6 +8,8 @@ import NewsContainer from "../../components/Container/NewsContainer";
 import { useCallback, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Notify from "../../components/Notify";
+import { getRandomInt } from "../../helpers/Utils";
+import { utils } from "near-api-js";
 
 const DEFAULT_IMAGE =
   "https://img.freepik.com/premium-photo/astronaut-outer-open-space-planet-earth-stars-provide-background-erforming-space-planet-earth-sunrise-sunset-our-home-iss-elements-this-image-furnished-by-nasa_150455-16829.jpg?w=1380";
@@ -19,6 +18,7 @@ const Home = () => {
   const router = useRouter();
   const wallet = useSelector((state: any) => state.wallet);
   const web3storage = useSelector((statex: any) => statex.w3storage);
+  const [lableButton, setLableButton] = useState("Start a project");
   const [openLoading, setOpenLoading] = useState(false);
   const [openSnack, setOpenSnack] = useState(false);
   const [alertType, setAlertType] = useState("success");
@@ -66,6 +66,14 @@ const Home = () => {
     onLoadRecommend();
   }, []);
 
+  const getSampleImage = () => {
+    let image = 0;
+    while (image === 0) {
+      image = getRandomInt(10);
+    }
+    return `/project/neariot_${image}.png`;
+  };
+
   const onLoadRecommend = async () => {
     const { contract } = wallet;
     const { web3Connector } = web3storage;
@@ -78,22 +86,31 @@ const Home = () => {
             let descriptions = null;
             let name = null;
             let img = null;
+            let project_target =null;
             if (metadata) {
-              descriptions = metadata.metadata.description;
+              descriptions = metadata.metadata.descriptions;
               name = metadata.metadata.name;
               img = metadata.metadata.image;
+              project_target = metadata.metadata.fee;
             }
             const output = {
               id: item.id,
               owner: item.owner,
               name: name || "There is no name for this project",
-              img: img || DEFAULT_IMAGE,
+              img: img || getSampleImage(),
               type: "0",
               descriptions:
                 descriptions || "There is no description for this project",
-              pledgers: item.total_pledge,
+              pledgers: parseFloat(
+                `${utils.format.formatNearAmount(
+                  item.total_pledge.toLocaleString("fullwide", {
+                    useGrouping: false,
+                  })
+                )}`
+              ),
               backers: item.pledgers.length,
               avg_rate: item.avg_rate,
+              project_target: project_target || "unexpect",
             };
             if (!listRecommend.includes(output)) {
               setListRecommend((listRecommend) => [...listRecommend, output]);
@@ -130,6 +147,31 @@ const Home = () => {
       setListRecommendBox(tmpRecommendBox);
     }
   }, [listRecommend]);
+
+  useEffect(() => {
+    (async () => {
+      const { walletConnection, contract } = wallet;
+      const userId = walletConnection.getAccountId();
+      if (userId === "") {
+        onRequestConnectWallet();
+        return;
+      }
+
+      setOpenLoading(true);
+      const project = await contract?.get_user_projects_created(
+        {
+          id: userId,
+        },
+        50000000000000
+      );
+
+      if (project.id) {
+        setLableButton("My project");
+      } else {
+        setLableButton("Start a project");
+      }
+    })();
+  }, []);
 
   const handleCreateProject = useCallback(async (e: any) => {
     e.preventDefault();
@@ -173,13 +215,10 @@ const Home = () => {
       />
       <div className="pt-52 py-8 flex lg:px-16 flex-nowrap md:flex-row flex-col md:w-full md:px-12 px-8">
         <div className="md:w-8/12 md:mx-4 w-full pb-4">
-          <Carousel
-            btnText="Start a Project"
-            btnOnclick={handleCreateProject}
-          />
+          <Carousel btnText={lableButton} btnOnclick={handleCreateProject} />
           <SearchField />
           <Filter />
-          <ProjectContainer listProjects={listProjects}/>
+          <ProjectContainer listProjects={listProjects} />
         </div>
         <div className="md:w-4/12 bg-lightpurple h-full md:mx-4 w-full items-center rounded pb-4 md:block hidden">
           <div className="bg-purple rounded items-center w-full text-center h-16 flex">
@@ -192,7 +231,7 @@ const Home = () => {
       </div>
       <div className="w-full flex pb-20 lg:px-16 md:px-12 px-8">
         <div className="md:mx-4 w-full">
-          <NewsContainer listProjects={listNews}/>
+          <NewsContainer listProjects={listNews} />
         </div>
       </div>
     </>
