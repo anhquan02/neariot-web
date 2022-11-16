@@ -193,7 +193,6 @@ const SummaryFunding = memo(() => {
 
   const renderOffers = useCallback(() => {
     return offers.map((offer: any, index: any) => {
-      console.log(offer);
       return (
         <Fragment key={index}>
           <OfferCard

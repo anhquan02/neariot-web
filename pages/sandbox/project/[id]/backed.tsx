@@ -283,7 +283,6 @@ const BackedProject = memo(() => {
           const _inform = [..._data.boughtInform, boughtInform];
           _data.boughtInform = _inform;
         }
-        console.log(_data)
         await web3storage.web3Connector.setData(projectId, filename, _data);
       }
     }

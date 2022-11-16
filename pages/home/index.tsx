@@ -40,7 +40,6 @@ const Home = () => {
   useEffect(() => {
     let tmpList = listProjects;
     tmpList.forEach((element: any) => {
-      console.log(element.id);
       if (tmpList.filter((x) => x.id === element.id).length > 1) {
         tmpList.splice(tmpList.indexOf(element), 1);
       }

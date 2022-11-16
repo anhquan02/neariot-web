@@ -131,7 +131,6 @@ const DetailProcjet = memo(() => {
   };
 
   const onShareClick = () => {
-    console.log("A")
     if (id) {
       const { walletConnection } = wallet;
       const accountId = walletConnection.getAccountId();
@@ -146,7 +145,6 @@ const DetailProcjet = memo(() => {
       } else {
         onRequestConnectWallet();
       }
-      console.log("B")
     }
   };
 

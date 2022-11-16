@@ -71,7 +71,6 @@ const CreateScreen = memo((props: any) => {
 
       setOpenLoading(true);
       const { contract } = wallet;
-      // console.log(contract)
       await contract
         ?.new_cluster?.(
           {

@@ -234,7 +234,6 @@ const RaiseFundScreen = memo(() => {
       filename,
       data
     );
-    console.log(cid);
     await contract
       .add_project_offer({
         id: id,
