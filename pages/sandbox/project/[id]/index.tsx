@@ -10,6 +10,7 @@ import { ProjectData } from "../../../../helpers/types";
 import Notify from "../../../../components/Notify";
 import { utils } from "near-api-js";
 import Confirm from "../../../../components/Confirm";
+import ModalShare from "../../../../components/Share";
 
 const DetailProcjet = memo(() => {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
@@ -38,6 +39,8 @@ const DetailProcjet = memo(() => {
   const wallet = useSelector((state: any) => state.wallet);
   const web3storage = useSelector((statex: any) => statex.w3storage);
   const router = useRouter();
+  const [link, setLink] = useState({ link: "", name: "" });
+  const [modalShare, setModalShare] = useState(false);
   const { id } = router.query;
 
   const onCloseSnack = () => {
@@ -127,6 +130,37 @@ const DetailProcjet = memo(() => {
     router.push(`/sandbox/project/${router.query.id}/new-section`);
   };
 
+  const onShareClick = () => {
+    console.log("A")
+    if (id) {
+      const { walletConnection } = wallet;
+      const accountId = walletConnection.getAccountId();
+      if (accountId !== "") {
+        const uri = new URL(window.location.href);
+        const { origin } = uri;
+        setLink({
+          link: `${origin}/sandbox/project/${id}`,
+          name: accountId,
+        });
+        setModalShare(true);
+      } else {
+        onRequestConnectWallet();
+      }
+      console.log("B")
+    }
+  };
+
+  const onCloseModalShare = () => {
+    setModalShare(false);
+  };
+
+  const onSuccess = () => {
+    onShowResult({
+      type: "success",
+      msg: "copied",
+    });
+  };
+
   const renderAddSectionButton = () => {
     const owner = data.owner;
     const { walletConnection } = wallet;
@@ -179,7 +213,10 @@ const DetailProcjet = memo(() => {
           >
             Setting
           </button>
-          <button className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center">
+          <button
+            className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center"
+            onClick={onShareClick}
+          >
             Share
           </button>
           <button
@@ -221,7 +258,10 @@ const DetailProcjet = memo(() => {
         >
           {subcribed ? "Subscribed" : "Subscribe"}
         </button>
-        <button className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center disabled:bg-purple-light disabled:text-black">
+        <button
+          className="col-span-1 bg-purple shadow-lg shadow-indigo-500/50 hover:bg-indigo-800/90 hover:shadow-indigo-500/40 text-white rounded-lg border-0  w-full h-12  items-center disabled:bg-purple-light disabled:text-black"
+          onClick={onShareClick}
+        >
           Share
         </button>
         <button
@@ -381,6 +421,14 @@ const DetailProcjet = memo(() => {
           onDeleteSection();
         }}
       />
+      {modalShare && (
+        <ModalShare
+          link={link}
+          onCloseModal={onCloseModalShare}
+          onSuccess={onSuccess}
+        />
+      )}
+
       <div className="w-full mb-12 pt-36"></div>
       <div className="w-full lg:px-16 sm:px-8">
         <div className="flex md:flex-row flex-col p-4 justify-between">

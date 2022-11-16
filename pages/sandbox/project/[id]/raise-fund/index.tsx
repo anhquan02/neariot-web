@@ -130,7 +130,7 @@ const RaiseFundScreen = memo(() => {
   };
 
   const handleFundingSummary = () => {
-    console.log("funding summary");
+    router.push(`/sandbox/project/${id}/funding-summary`);
   };
 
   const renderButton = useCallback(() => {

@@ -19,6 +19,7 @@ type Props = {
   rewardDetail?: string;
   rewardDeadline?: number;
   informationForm?: any[];
+  detail?: any[];
 };
 // const NEAR_DECIMAL = 1_000_000_000_000_000_000_000_000;
 const NEAR_DECIMAL = 1;
@@ -34,6 +35,7 @@ const OfferCard = memo(
     rewardDetail,
     rewardDeadline,
     informationForm = [],
+    detail,
   }: Props) => {
     const [collapsed, setCollapsed] = useState(false);
 
@@ -113,12 +115,60 @@ const OfferCard = memo(
         );
       }
     };
-
+    const renderDetail = () => {
+      if (collapsed && detail) {
+        return (
+          <>
+            <div className="w-full p-4">
+              <hr className="w-full  border-purple my-8" />
+              {detail?.map((info: any, index) => {
+                const success = info.status?.toLowerCase() == "completed";
+                return (
+                  <div
+                    className={
+                      "w-full border  p-4 rounded-lg mb-2 " +
+                      (success ? "border-green-600" : "border-red-600")
+                    }
+                    key={index}
+                  >
+                    <div className="flex md:flex-row flex-col items-center">
+                      <span className="md:w-1/4 w-full md:mx-4 my-1">
+                        Near wallet: {info.account_id}
+                      </span>
+                      {info.information && (
+                        <div className="md:w-1/4 w-full md:mx-4 my-2 items-center flex lg:flex-row flex-col md:text-center">
+                          <span className="lg:mr-2 mb-2 md:w-auto sm:w-full">
+                            Information:
+                          </span>
+                          <textarea
+                            className="w-full h-24 border border-purple rounded-lg p-2"
+                            disabled
+                            value={info.information}
+                            style={{ resize: "none" }}
+                          ></textarea>
+                        </div>
+                      )}
+                      <span className="md:w-1/4 w-full md:mx-4 my-2">
+                        Pledge: {info.pledge} Near
+                      </span>
+                      <span className="md:w-1/4 w-full md:mx-4 my-2">
+                        Status: {info.status}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        );
+      }
+      return null;
+    };
     return (
       <>
         <div className="w-full border border-purple rounded-lg  my-2">
           <div
-            className="flex flex-rows w-full p-4 text-center items-center"
+            className="flex flex-rows w-full p-4 text-center items-center cursor-pointer"
             onClick={() => {
               setCollapsed(!collapsed);
             }}
@@ -129,10 +179,12 @@ const OfferCard = memo(
               }
             ></div>
             <span className="text-center w-full md:mr-4">
-              {!reward ? "Pledge without reward" : "Pledge with reward"}
+              {(!reward ? "Pledge without reward" : "Pledge with reward") +
+                ` - ${detail?.length || 0} bought`}
             </span>
           </div>
           {renderContent()}
+          {renderDetail()}
         </div>
       </>
     );

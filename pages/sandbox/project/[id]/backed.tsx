@@ -10,7 +10,7 @@ import { ProjectData } from "../../../../helpers/types";
 import Notify from "../../../../components/Notify";
 import Confirm from "../../../../components/Confirm";
 import BuyOffer from "../../../../components/Card/BuyOffer";
-import { utils } from "near-api-js";
+import { utils, providers } from "near-api-js";
 
 const BackedProject = memo(() => {
   const [data, setData] = useState<ProjectData>({
@@ -81,22 +81,64 @@ const BackedProject = memo(() => {
         noSetting: _data.noSetting,
         data: _data.data,
         section: _data.section,
-        pledgers: project.total_pledge + "",
-        project_target: _data.project_target + "",
+        pledgers: parseFloat(
+          `${utils.format.formatNearAmount(
+            project.total_pledge.toLocaleString("fullwide", {
+              useGrouping: false,
+            })
+          )}`
+        ),
+        project_target: _data.fee + "",
         avg_rate: project.avg_rate + "",
         project_rate: _data.project_rate + "",
+        watchers: project.pledgers.length || 0,
       });
       setMilestone(_data?.milestone || new Date().getTime());
       setOpenLoading(false);
     })();
   }, []);
 
-  const getDataWeb3 = async (cid: any, callback?: (res?: any) => void) => {
+  useEffect(() => {
+    const { nearConfig, walletConnection } = wallet;
+    let userId = walletConnection.getAccountId();
+    if (router.query.transactionHashes) {
+      const { transactionHashes }: any = router.query;
+      const rpcConnector = new providers.JsonRpcProvider(nearConfig.nodeUrl);
+      rpcConnector
+        .txStatus(transactionHashes, userId)
+        .then((rpcData: any) => {
+          if (
+            rpcData?.status?.SuccessValue == "" ||
+            rpcData?.status?.SuccessValue
+          ) {
+            onShowResult({
+              type: "success",
+              msg: "Buy offer success",
+            });
+          } else {
+            onShowResult({
+              type: "error",
+              msg: "Something went wrong, please try again",
+            });
+          }
+        })
+        .catch((err) => {
+          onShowResult({
+            type: "error",
+            msg: String(err),
+          });
+        });
+    }
+  }, [router.query]);
+
+  const getDataWeb3 = async (cid: any, callback?: (res: any) => void) => {
     const { web3Connector } = web3storage;
     return await web3Connector
       .getData(cid)
       .then((res: any) => {
-        callback?.(res);
+        if (callback) {
+          callback?.(res);
+        }
         return res.metadata;
       })
       .catch((err: any) => {
@@ -208,27 +250,40 @@ const BackedProject = memo(() => {
 
   const handleSaveOfferInformation = async (offer: any) => {
     const { walletConnection } = wallet;
-    const _index = data.offers?.findIndex((item: any) => {
-      item.id == offer.offer_id;
-    });
+    const _index: number | any = data.offers?.findIndex(
+      (item: any) => item.id == offer.offer_id
+    );
     if (_index != -1) {
       let filename = "";
       let projectId = "";
-      const _data = await getDataWeb3(offer.metadata, (res: any) => {
-        filename = res.filename;
-        projectId = res.projectId;
-      });
+      const _data = await getDataWeb3(
+        data.offers?.at(_index).metadata,
+        (res) => {
+          filename = res.filename;
+          projectId = res.projectId;
+        }
+      );
       if (_data) {
-        const _inform = [
-          ..._data.boughtInform,
-          {
-            account_id: walletConnection.getAccountId(),
-            information: offer.information,
-            pledge: offer.pledge,
-          },
-        ];
-        _data.boughtInform = _inform;
-        console.log(_data);
+        let status =""
+        if(_data.minPledge<=offer.pledge){
+          status = "completed";
+        }else{
+          status = "Not reach minimum deposit";
+        }
+        const boughtInform = {
+          account_id: walletConnection.getAccountId(),
+          information: offer.information,
+          pledge: offer.pledge,
+          status: status,
+        };
+        if (!_data.boughtInform) {
+          _data.boughtInform = [];
+          _data.boughtInform.push(boughtInform);
+        }else{
+          const _inform = [..._data.boughtInform, boughtInform];
+          _data.boughtInform = _inform;
+        }
+        console.log(_data)
         await web3storage.web3Connector.setData(projectId, filename, _data);
       }
     }
