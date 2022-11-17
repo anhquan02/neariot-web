@@ -80,7 +80,6 @@ const DetailScreen = memo(() => {
           setDescription(res.description);
           setOpenLoading(false);
         } else {
-          console.log(res);
           router.back();
         }
       })

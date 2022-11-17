@@ -134,7 +134,6 @@ const NewSectionScreen = memo(() => {
           fileInput
           // imageState,
         );
-        console.log(media_cid);
       }
       section.push({
         id: Date.now() + "",

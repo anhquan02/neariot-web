@@ -130,7 +130,7 @@ const RaiseFundScreen = memo(() => {
   };
 
   const handleFundingSummary = () => {
-    console.log("funding summary");
+    router.push(`/sandbox/project/${id}/funding-summary`);
   };
 
   const renderButton = useCallback(() => {
@@ -234,7 +234,6 @@ const RaiseFundScreen = memo(() => {
       filename,
       data
     );
-    console.log(cid);
     await contract
       .add_project_offer({
         id: id,

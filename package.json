@@ -29,6 +29,7 @@
     "react-chartjs-2": "^4.3.1",
     "react-dom": "18.1.0",
     "react-redux": "^8.0.1",
+    "react-share": "^4.4.1",
     "readable-stream": "^4.2.0",
     "redux": "^4.2.0",
     "sass": "^1.51.0",

@@ -56,14 +56,17 @@ export async function initContract() {
         "approve_project",
         "reject_project",
         "add_to_watchlist",
-        "buy_offer"
+        "buy_offer",
+        "get_pledgers",
+        "get_watchers",
+        "get_bought_offers",
       ],
       sender: walletConnection.getAccountId(),
     }
   );
 
   return { contract, currentUser, nearConfig, walletConnection };
-} 
+}
 
 export const generateUserId = () => {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {

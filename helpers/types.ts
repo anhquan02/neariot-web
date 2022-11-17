@@ -19,6 +19,9 @@ export interface ProjectData {
   apiKey?:any;
   milestones?:any;
   watchers?:any;
+  total_pledge_locked?:any;
+  total_offers_completed?:any;
+  total_offers_cancled?:any;
 };
 
 export interface ProjectCardProps{

@@ -17,9 +17,6 @@ const EditSection = memo(({id,data}:Props) => {
     setType("image");
   }, []);
 
-  useEffect(() => {
-    console.log(type);
-  }, [type]);
 
   const handleChangeFileValue = (e: any) => {
     const [file] = e.target.files;
@@ -28,7 +25,6 @@ const EditSection = memo(({id,data}:Props) => {
     reader.onload = (e: any) => {
       setImageState(e.target.result);
     };
-    console.log(file);
   };
 
   const handelCreateNewSection = () => {};
