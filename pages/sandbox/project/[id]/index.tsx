@@ -82,7 +82,7 @@ const DetailProcjet = memo(() => {
         noSetting: _data.noSetting,
         data: _data.data,
         section: _data.section,
-        fee: _data.fee,
+        fee: _data.fee || 0,
         pledgers: parseFloat(
           `${utils.format.formatNearAmount(
             project.total_pledge.toLocaleString("fullwide", {
@@ -182,6 +182,7 @@ const DetailProcjet = memo(() => {
     await contract
       .add_to_watchlist({ id: id }, 50000000000000)
       .then((res: any) => {
+        setSubcribed(true);
         onShowResult({
           type: "success",
           msg: "Subcribe success",
@@ -231,7 +232,7 @@ const DetailProcjet = memo(() => {
         </>
       );
     }
-    if (!noSetting) {
+    if (noSetting) {
       return (
         <>
           <button
@@ -349,14 +350,22 @@ const DetailProcjet = memo(() => {
       onRequestConnectWallet();
       return;
     }
-    await contract.get_projects_watched().then((res: any) => {
-      const _index = res.findIndex((item: any) => item.id == id);
-      if (_index >= 0) {
-        setSubcribed(true);
-      } else {
-        setSubcribed(false);
-      }
-    });
+    await contract
+      .get_projects_watched()
+      .then((res: any) => {
+        console.log(res)
+        const _index = res.findIndex((item: any) => item.id == id);
+        if (_index >= 0) {
+          setSubcribed(true);
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+        onShowResult({
+          type: "warning",
+          msg: "You have not subcribed this project",
+        });
+      });
   };
 
   const onEditSection = (_id: any) => {};
