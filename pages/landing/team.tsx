@@ -62,9 +62,10 @@ interface MemberInfo {
 }
 
 const Team = () => {
-  const generateMemberBox = (member: MemberInfo) => {
+  const generateMemberBox = (member: MemberInfo, index: number) => {
     return (
       <Grid
+        key={index}
         item
         sx={{
           height: "auto",
@@ -82,10 +83,12 @@ const Team = () => {
           }}
           className="object-fit: contain"
         >
-          <CardMedia component="img" image="/landing/team-img-box.png" />
-          <CardContent sx={{
-            marginTop: "-5rem",
-          }}>
+          <CardMedia component="img" image={member.image} />
+          <CardContent
+            sx={{
+              marginTop: "-5rem",
+            }}
+          >
             <Typography
               className="text-[#1b1a2d]"
               align="center"
@@ -137,7 +140,9 @@ const Team = () => {
             direction={{ xs: "column", md: "row" }}
             justifyContent={{ xs: "center", md: "space-between" }}
           >
-            {memberList.map((member) => generateMemberBox(member))}
+            {memberList.map((member, index) =>
+              generateMemberBox(member, index)
+            )}
           </Grid>
         </Grid>
         <Grid item>
@@ -151,11 +156,7 @@ const Team = () => {
             marginLeft={{ xs: "4rem", md: "10rem" }}
           >
             <Grid item>
-              <Typography
-                sx={style.title}
-              >
-                Team Work Company
-              </Typography>
+              <Typography sx={style.title}>Team Work Company</Typography>
               <Typography
                 align="center"
                 sx={style.subtitle}
@@ -179,27 +180,26 @@ const memberList: MemberInfo[] = [
   {
     name: "Thuong Nguyen",
     position: "Chief Executive Officer",
-    image: "/landing/team-img-box.png",
+    // image: "/landing/team-img-box.png",
+    image: "/landing/team-img-thuong.png",
   },
   {
     name: "Hieu Pham",
     position: "Chief Technology Officer",
-    image: "/landing/team-img-box.png",
+    // image: "/landing/team-img-box.png",
+    image: "/landing/team-img-hieu.png",
   },
   {
     name: "Quan Le",
     position: "Full-stack Developer",
-    image: "/landing/team-img-box.png",
-  },
-  {
-    name: "Minh Hoang",
-    position: "Designer",
-    image: "/landing/team-img-box.png",
+    // image: "/landing/team-img-box.png",
+    image: "/landing/team-img-quan.png",
   },
   {
     name: "Lien Pham",
     position: "Product Marketing",
-    image: "/landing/team-img-box.png",
+    // image: "/landing/team-img-box.png",
+    image: "/landing/team-img-lien.png",
   },
 ];
 

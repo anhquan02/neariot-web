@@ -60,7 +60,7 @@ const SettingScreen = memo(() => {
         descriptions: _data.descriptions,
         repository: _data.repository,
         created_at: project.created_at,
-        noSetting: _data.noSetting,
+        noSetting: _data.noSetting || false,
         data: _data.data,
         section: _data.section || [],
         pledgers: project.total_pledge + "",
