@@ -351,7 +351,7 @@ const RaiseFundScreen = memo(() => {
               Note that you need to create suggestions that are compatible with
               your project&apos;s capabilities and that you need to commit to
               completing them. Also, Don&apos;t miss the Milestone Review date.
-              You can only get 20% of the investment amount before this time,
+              You can only get 30% of the investment amount before this time,
               the rest will be transferred after this point when your investors
               agree that the results you have committed before are suitable.
               with what they expect from the project. For investors who are not
