@@ -149,7 +149,7 @@ const Team = () => {
           <Grid
             container
             sx={{
-              paddingTop: { xs: 45, md: 35 },
+              paddingTop: { xs: 45, md: 40 },
             }}
             alignItems="center"
             justifyContent="center"
@@ -162,7 +162,7 @@ const Team = () => {
                 sx={style.subtitle}
                 marginTop={{
                   xs: 0,
-                  md: 3,
+                  md: 1,
                 }}
               >
                 Teamwork has the incredible power to increase productivity, job
