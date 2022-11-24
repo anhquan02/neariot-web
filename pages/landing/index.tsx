@@ -142,6 +142,7 @@ const LandingPage = memo(() => {
             <CustomButton
               className_box="lg:w-64 lg:h-12 md:w-44 md:h-10 w-32 h-8 rounded-full border-2 border-white my-2"
               label="Start a project"
+              onClickButton={handleViewAll}
             />
           </div>
         </div>
