@@ -44,7 +44,7 @@ const Layout = (props: any) => {
         />
         <link rel="icon" href="/neariot.ico" />
       </Head>
-      <div className="lg:px-20 md:px-10 px-4 pt-8 absolute w-full" style={scrolling ? { background: "#fff" } : {}}>
+      <div className="lg:px-20 md:px-10 px-4 pt-8 absolute w-full z-20" >
         <Header />
       </div>
       <div className="pb-[406px]">

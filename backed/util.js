@@ -31,7 +31,7 @@ export async function initContract() {
     walletConnection.account(),
     nearConfig.contractName,
     {
-      viewMethods: [""],
+      viewMethods: ["get_rcm_projects"],
       changeMethods: [
         "get_clusters",
         "get_cluster",
@@ -46,7 +46,7 @@ export async function initContract() {
         "update_project",
         "get_user_projects_created",
         "get_project",
-        "get_rcm_projects",
+        // "get_rcm_projects",
         "add_project_offer",
         "get_projects_watched",
         "get_projects_funded",
