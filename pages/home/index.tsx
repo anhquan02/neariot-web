@@ -57,10 +57,10 @@ const Home = () => {
   useEffect(() => {
     const { walletConnection, contract } = wallet;
     const userId = walletConnection.getAccountId();
-    if (userId === "") {
-      onRequestConnectWallet();
-      return;
-    }
+    // if (userId === "") {
+    //   onRequestConnectWallet();
+    //   return;
+    // }
     setOpenLoading(true);
     onLoadRecommend();
   }, []);
@@ -152,7 +152,8 @@ const Home = () => {
       const { walletConnection, contract } = wallet;
       const userId = walletConnection.getAccountId();
       if (userId === "") {
-        onRequestConnectWallet();
+        setLableButton("Start a project");
+        // onRequestConnectWallet();
         return;
       }
 
