@@ -169,7 +169,7 @@ const LandingPage = memo(() => {
       <div className="relative bg-white md:mx-20 mx-10 md:mb-8 mb-4">
         <div className="flex flex-col md:mt-8 my-4 items-center ">
           <h1 className="text-primary md:text-2xl font-semibold text-lg mx-auto text-center">
-            Neariot - The world's first crypto crowdfunding platform for real
+            Neariot - The world&apos;s first crypto crowdfunding platform for real
             products
           </h1>
           <div className="grid md:grid-cols-3 gap-16 md:mx-16 mx-8 my-8">
