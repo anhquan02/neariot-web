@@ -107,6 +107,18 @@ export default function NewOffer({ onShow, onClose, onConfirm }: Props) {
     setData(_data);
   };
 
+  React.useEffect(() => {
+    let _data: any = { ...data };
+    if (_data.informationForm.length !== formFields.length) {
+      _data.informationForm.forEach((item: any, index: number) => {
+        formFields.findIndex((field: any) => {
+          return field.id === item.id;
+        }) === -1 && _data.informationForm.splice(index, 1);
+      });
+      setData(_data);
+    }
+  },[data, formFields]);
+
   const renderForm = React.useCallback(() => {
     return formFields.map((field, index) => {
       return (
