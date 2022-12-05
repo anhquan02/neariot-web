@@ -107,17 +107,14 @@ export default function NewOffer({ onShow, onClose, onConfirm }: Props) {
     setData(_data);
   };
 
-  React.useEffect(() => {
-    let _data: any = { ...data };
-    if (_data.informationForm.length !== formFields.length) {
-      _data.informationForm.forEach((item: any, index: number) => {
-        formFields.findIndex((field: any) => {
-          return field.id === item.id;
-        }) === -1 && _data.informationForm.splice(index, 1);
-      });
-      setData(_data);
-    }
-  },[data, formFields]);
+  const handleRemoveField = (id: number) => {
+    const newFormFields = formFields.filter((field) => field.id !== id);
+    setFormFields(newFormFields);
+    const newFormData = data.informationForm.filter(
+      (field: any) => field.id !== id
+    );
+    setData({ informationForm: newFormData });
+  };
 
   const renderForm = React.useCallback(() => {
     return formFields.map((field, index) => {
@@ -131,9 +128,10 @@ export default function NewOffer({ onShow, onClose, onConfirm }: Props) {
             handleSetData(data);
           }}
           onRemove={() => {
-            const newFormFields = [...formFields];
-            newFormFields.splice(index, 1);
-            setFormFields(newFormFields);
+            handleRemoveField(field.id);
+            // const newFormFields = [...formFields];
+            // newFormFields.splice(index, 1);
+            // setFormFields(newFormFields);
           }}
         />
       );
