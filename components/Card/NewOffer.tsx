@@ -107,6 +107,15 @@ export default function NewOffer({ onShow, onClose, onConfirm }: Props) {
     setData(_data);
   };
 
+  const handleRemoveField = (id: number) => {
+    const newFormFields = formFields.filter((field) => field.id !== id);
+    setFormFields(newFormFields);
+    const newFormData = data.informationForm.filter(
+      (field: any) => field.id !== id
+    );
+    setData({ informationForm: newFormData });
+  };
+
   const renderForm = React.useCallback(() => {
     return formFields.map((field, index) => {
       return (
@@ -119,9 +128,10 @@ export default function NewOffer({ onShow, onClose, onConfirm }: Props) {
             handleSetData(data);
           }}
           onRemove={() => {
-            const newFormFields = [...formFields];
-            newFormFields.splice(index, 1);
-            setFormFields(newFormFields);
+            handleRemoveField(field.id);
+            // const newFormFields = [...formFields];
+            // newFormFields.splice(index, 1);
+            // setFormFields(newFormFields);
           }}
         />
       );
