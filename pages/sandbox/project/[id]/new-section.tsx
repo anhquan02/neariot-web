@@ -313,7 +313,7 @@ const NewSectionScreen = memo(() => {
             {renderMediaPicker()}
             <div className="flex flex-row mb-2">
               <CustomButton
-                className_box=" py-2 lg:w-6/12 md:w-4/12 w-full mx-auto my-4"
+                className_box=" py-2 lg:w-6/12 md:w-4/12 w-full mx-auto my-4 rounded-2xl"
                 className_button="py-2"
                 // onClickButton={handleCreateProject}
               />

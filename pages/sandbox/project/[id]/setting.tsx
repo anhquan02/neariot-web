@@ -332,7 +332,7 @@ const SettingScreen = memo(() => {
           <div className="">
             <CustomButton
               label="Update your data"
-              className_box="px-2 py-2 mx-auto "
+              className_box="px-2 py-2 mx-auto rounded-2xl"
               className_button="py-2"
             />
           </div>
@@ -546,7 +546,7 @@ const SettingScreen = memo(() => {
             <div className="flex flex-row mb-2">
               <CustomButton
                 label="Save Changes"
-                className_box="px-2 py-2 lg:w-6/12 md:w-4/12 w-full mx-auto my-4"
+                className_box="px-2 py-2 lg:w-6/12 md:w-4/12 w-full mx-auto my-4 rounded-2xl"
                 className_button="py-2"
               />
             </div>

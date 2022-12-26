@@ -177,7 +177,7 @@ const CreateScreen = memo((props: any) => {
         snackMsg={snackMsg}
         onClose={onCloseSnack}
       />
-      <div className="pt-52 py-8 flex lg:px-16 flex-wrap md:flex-row flex-col md:w-full md:px-12 px-8">
+      <div className="pt-52 py-8 flex lg:px-16 flex-wrap md:flex-row flex-col md:w-full md:px-12 px-8 pb-16">
         <div className="mb-8 md:mx-4 w-full">
           <div className="pb-4 text-center">
             <label className="text-4xl text-primary font-extrabold">

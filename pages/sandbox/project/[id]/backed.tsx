@@ -326,7 +326,7 @@ const BackedProject = memo(() => {
         onConfirm={(data: any) => {}}
       />
       <div className="w-full mb-12 pt-36"></div>
-      <div className="w-full lg:px-16 sm:px-8">
+      <div className="w-full lg:px-16 sm:px-8 pb-16">
         <div className="flex md:flex-row flex-col p-4 justify-between">
           <div className="md:w-6/12 lg:min-h-[300px] md:min-h-[310px] items-center align-middle my-auto pb-2 w-full rounded bg-white md:mr-4 shadow-indigo-600 shadow-sm  h-full flex-grow">
             <div className="flex flex-row w-full py-2 m-2">

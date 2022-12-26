@@ -614,7 +614,7 @@ const ProfileScreen = () => {
         snackMsg={snackMsg}
         onClose={onCloseSnack}
       />
-      <div className="pt-52 py-8 flex lg:px-16 flex-wrap md:flex-row flex-col md:w-full md:px-12 px-8 ">
+      <div className="pt-52 py-8 flex lg:px-16 flex-wrap md:flex-row flex-col md:w-full md:px-12 px-8 pb-16">
         <ul className="flex flex-wrap text-sm font-medium text-center w-full rounded-t-lg border-t border-l border-r border-purple md:pl-8 pl-4">
           <li className="mr-2">
             <a

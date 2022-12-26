@@ -47,7 +47,7 @@ const Layout = (props: any) => {
       <div className="lg:px-20 md:px-10 px-4 pt-8 absolute w-full z-20" >
         <Header />
       </div>
-      <div className="pb-[406px]">
+      <div className="pb-[370px]">
         <div className="z-10 min-h-screen">{children}</div>
         {/* <div className={styles.footer}>
                     <Footer />

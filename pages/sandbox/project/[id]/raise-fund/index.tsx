@@ -137,7 +137,7 @@ const RaiseFundScreen = memo(() => {
     return (
       <>
         <CustomButton
-          className_box=" py-2  w-full mx-auto my-4"
+          className_box=" py-2  w-full mx-auto my-4 rounded-2xl"
           className_button="py-2"
           label="Funding Summary"
           onClickButton={handleFundingSummary}
@@ -319,7 +319,7 @@ const RaiseFundScreen = memo(() => {
       />
 
       <div className="w-full mb-12 pt-36"></div>
-      <div className="w-full lg:px-16 sm:px-8">
+      <div className="w-full lg:px-16 sm:px-8 pb-32">
         <div className="flex md:flex-row flex-col p-4 justify-between">
           <div className="md:w-6/12 lg:min-h-[150px] md:min-h-[160px] items-center align-middle my-auto pb-2 w-full rounded bg-white mr-4 shadow-indigo-600 shadow-sm  h-full flex-grow">
             <div className="flex flex-row w-full py-2 m-2">
@@ -392,7 +392,7 @@ const RaiseFundScreen = memo(() => {
             _icon={AddIcon}
             className_icon=""
             icon_size="large"
-            className_box=" py-2 w-auto mx-auto my-4"
+            className_box=" py-2 w-auto mx-auto my-4 rounded-2xl"
             className_button="py-2 px-4"
             label="Add new Offer"
             onClickButton={() => setOpenNewOffer(true)}

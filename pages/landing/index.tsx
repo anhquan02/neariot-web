@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Fragment, memo, useEffect, useState } from "react";
 import CustomButton from "../../components/CustomButton";
 import ForwardIcon from "@mui/icons-material/Forward";
@@ -69,7 +70,7 @@ const LandingPage = memo(() => {
           <img src={member.image} alt="" className="mx-auto" />
           <div className="absolute inset-x-0 bottom-0 mb-[5%]">
             <div className="text-center">
-              <h3 className="text-[#1b1a2d] font-bold">{member.name}</h3>
+              <h3 className="text-[#1b1a2d] font-bold text-lg">{member.name}</h3>
               <p className="text-[#1b1a2d]">{member.position}</p>
             </div>
           </div>
@@ -140,7 +141,8 @@ const LandingPage = memo(() => {
               deliver real values
             </span>
             <CustomButton
-              className_box="lg:w-64 lg:h-12 md:w-44 md:h-10 w-32 h-8 rounded-full border-2 border-white my-2"
+              className_box="lg:w-64 lg:h-12 md:w-44 md:h-10 w-32 h-8 rounded-full border-2 border-white my-2 bg-[#5825f4]"
+              className_button=""
               label="Start a project"
               onClickButton={handleViewAll}
             />
@@ -153,14 +155,14 @@ const LandingPage = memo(() => {
             Top-tier Projects
           </h1>
           <div
-            className="text-primary md:text-lg font-semibold text-xs flex flex-row items-center gap-1 hover:cursor-pointer hover:underline"
+            className="text-primary md:text-3xl font-semibold text-xl flex flex-row items-center gap-1 hover:cursor-pointer hover:underline"
             onClick={handleViewAll}
           >
             View all
-            <ForwardIcon />
+            <ForwardIcon fontSize={"large"} />
           </div>
         </div>
-        <div className="grid lg:grid-cols-4 grid-cols-2 md:gap-4 gap-2">
+        <div className="grid lg:grid-cols-4 grid-cols-2 md:gap-16 gap-8">
           {listRecommend?.map((item: any, index: any) => {
             if (index > 3) return;
             return <ProjectCard key={index} {...item} />;
@@ -169,7 +171,7 @@ const LandingPage = memo(() => {
       </div>
       <div className="relative bg-white md:mx-20 mx-10 md:mb-8 mb-4">
         <div className="flex flex-col md:mt-8 my-4 items-center ">
-          <h1 className="text-primary md:text-2xl font-semibold text-lg mx-auto text-center">
+          <h1 className="text-primary md:text-5xl font-semibold text-2xl mx-auto text-center">
             Neariot - The world&apos;s first crypto crowdfunding platform for real
             products
           </h1>
@@ -201,14 +203,14 @@ const LandingPage = memo(() => {
         <img src="/landing/road-map.png" alt="" />
       </div>
       <div className="relative bg-white md:mx-20 mx-10 md:mb-8 mb-4">
-        <div className="flex flex-row gap-4 items-center">
+        <div className="flex flex-row md:gap-16 gap-8 items-center">
           <img
             src="/landing/technology.png"
             alt="technology"
             className="w-1/4"
           />
-          <div className="w-full flex flex-col text-primary gap-2">
-            <h1 className=" lg:text-5xl md:text-3xl text-xl font-semibold">
+          <div className="w-full flex flex-col text-[#61528b] gap-2">
+            <h1 className=" lg:text-5xl md:text-4xl text-2xl font-semibold mb-8">
               Our Technology
             </h1>
             <span className="lg:text-3xl md:text-xl text-xs">
@@ -222,7 +224,7 @@ const LandingPage = memo(() => {
         </div>
       </div>
       <div className="relative bg-purple-light md:mb-8 mb-4 pb-16">
-        <h1 className="text-4xl  text-primary font-bold text-center md:py-8 py-4">
+        <h1 className="md:text-5xl text-2xl  text-[#61528b] font-bold text-center md:py-8 py-4">
           Our People
         </h1>
         <div className="grid lg:grid-cols-4 grid-cols-2 md:gap-16 gap-8 md:mx-16 mx-8">
