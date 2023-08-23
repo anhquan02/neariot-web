@@ -71,6 +71,13 @@ const DetailProcjet = memo(() => {
     (async () => {
       const project = await getProject(id);
       const _data = await getDataWeb3(project.metadata);
+      const { web3Connector } = web3storage;
+      _data.section?.map(async (item: any, index: any) => {
+        if (typeof item.image === "string")  return;
+        await web3Connector.getImage(item.image).then((res: any) => {
+          item.image = res;
+        });
+      });
       setData({
         id: project.id,
         owner: _data.owner,
@@ -353,7 +360,6 @@ const DetailProcjet = memo(() => {
     await contract
       .get_projects_watched()
       .then((res: any) => {
-        console.log(res)
         const _index = res.findIndex((item: any) => item.id == id);
         if (_index >= 0) {
           setSubcribed(true);

@@ -111,7 +111,7 @@ const NewSectionScreen = memo(() => {
 
   const handleChangeFileValue = (e: any) => {
     const [file] = e.target.files;
-    fileInput.current = e.target.files[0];
+    fileInput.current = e.target.files;
   };
 
   const handelCreateNewSection = (e: any) => {
