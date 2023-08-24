@@ -129,7 +129,7 @@ const NewSectionScreen = memo(() => {
       const section = _data.section || [];
       let media_cid = "";
       console.log("fileInput", fileInput)
-      console.log("type", type)
+      // console.log("type", type)
       if (type === "image") {
         media_cid = await web3storage.web3Connector.setFile(
           userId,
