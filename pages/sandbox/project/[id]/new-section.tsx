@@ -135,6 +135,7 @@ const NewSectionScreen = memo(() => {
           // imageState,
         );
       }
+      console.log("media_cid", media_cid)
       section.push({
         id: Date.now() + "",
         title: title,

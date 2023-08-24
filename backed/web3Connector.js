@@ -77,6 +77,7 @@ export default class Web3Connector {
   setFile = async (projectId, file) => {
     // Web 3 Storage
     // const file = makeFileObjects(filename, content);
+    console.log(file.current)
     const cid = await this.client.put(file.current);
     return cid;
     // ----------------
